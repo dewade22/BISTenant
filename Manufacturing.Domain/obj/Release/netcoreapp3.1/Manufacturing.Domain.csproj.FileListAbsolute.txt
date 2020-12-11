@@ -1,0 +1,12 @@
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.AssemblyInfoInputs.cache
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.AssemblyInfo.cs
+G:\AlVision\Manufacturing.Domain\bin\Release\netcoreapp3.1\Manufacturing.Domain.deps.json
+G:\AlVision\Manufacturing.Domain\bin\Release\netcoreapp3.1\Manufacturing.Domain.dll
+G:\AlVision\Manufacturing.Domain\bin\Release\netcoreapp3.1\Manufacturing.Domain.runtimeconfig.json
+G:\AlVision\Manufacturing.Domain\bin\Release\netcoreapp3.1\Manufacturing.Domain.runtimeconfig.dev.json
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.genruntimeconfig.cache
+G:\AlVision\Manufacturing.Domain\bin\Release\netcoreapp3.1\Manufacturing.Domain.pdb
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.dll
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.pdb
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.csproj.CoreCompileInputs.cache
+G:\AlVision\Manufacturing.Domain\obj\Release\netcoreapp3.1\Manufacturing.Domain.csprojAssemblyReference.cache

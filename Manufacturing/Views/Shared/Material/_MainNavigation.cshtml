@@ -1,0 +1,6 @@
+﻿@using static Manufacturing.Helpers.NavigationIndicatorHelper;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Microsoft.AspNetCore.Http;
+<ul class="main-menu">
+    @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
+</ul>

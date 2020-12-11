@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<!-- Mirrored from byrushan.com/projects/mae/1-0/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 08 Feb 2019 13:44:33 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Vendor CSS -->
+    <link href="~/sources/vendors/bowercomponents/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/sources/vendors/bowercomponents/google-material-color/dist/palette.css" rel="stylesheet">
+    <link href="~/sources/vendors/bowercomponents/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="~/sources/css/app.min.1.css" rel="stylesheet">
+    <link href="~/sources/css/app.min.2.css" rel="stylesheet">
+
+    <!--Style Validation-->
+    <link rel="stylesheet" href="~/sources/Validation-Scripts/css/screen.css" />
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    @RenderBody()
+
+
+
+    <!-- Javascript Libraries -->
+    <script src="~/sources/vendors/bowercomponents/jquery/dist/jquery.min.js"></script>
+    <script src="~/sources/vendors/bowercomponents/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/sources/vendors/bowercomponents/Waves/dist/waves.min.js"></script>
+
+    <script src="~/sources/js/functions.js"></script>
+
+    <!-- Jquery Validation-->
+    <script src="~/sources/Validation-Scripts/lib/jquery.js"></script>
+    <script src="~/sources/Validation-Scripts/dist/jquery.validate.min.js"></script>
+    <!--Custom JS-->
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

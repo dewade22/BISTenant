@@ -1,0 +1,5 @@
+﻿1.0.0.0 - 3 Oct 2020
+- Start Awal, Login dan Menu Side Bar
+
+1.1.0.0 - 12 Nov 2020
+- Implement Multi Tenant  
