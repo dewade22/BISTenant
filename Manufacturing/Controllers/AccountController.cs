@@ -74,6 +74,7 @@ namespace Manufacturing.Controllers
 
                             //Get Tenant Active
                             string tenantActive = GetFullTenant();
+                            HttpContext.Session.SetString("tenant", tenantActive);
 
                             return Json(new { status = true, message = "Login Successfull!", returnUrl = returnUrl });
                             //var model = SystemUserMenus;
@@ -170,7 +171,8 @@ namespace Manufacturing.Controllers
         private string GetFullTenant()
         {
             var thisLink = HttpContext.Request.GetDisplayUrl();
-            return thisLink;
+            var tenantActive = thisLink.Split("/")[3];
+            return tenantActive;
         }
     }
 }
