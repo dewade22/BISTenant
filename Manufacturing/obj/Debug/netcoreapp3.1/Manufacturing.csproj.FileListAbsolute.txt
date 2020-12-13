@@ -313,3 +313,4 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Vi
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Material\_Scripts.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Material\_Styles.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Material\_TopNavigation.cshtml.g.cs
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\index.cshtml.g.cs
