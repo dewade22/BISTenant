@@ -78,7 +78,7 @@
                         success: function (result) {
                             if (result.status == true) {
                                 if (!result.returnUrl) {
-                                    window.location.href = '@Url.Action("Index", "Item")';
+                                    window.location.href = '@Url.Action("Index", "Dashboard")';
                                 }
                                 else {
                                     window.location.href = result.returnUrl;

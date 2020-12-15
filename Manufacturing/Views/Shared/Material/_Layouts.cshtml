@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"] - BalimOOn</title>
+    <title>@ViewData["Title"] - @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))</title>
     <partial name="Material/_Styles" />
     @RenderSection("Styles", required: false)
 </head>
