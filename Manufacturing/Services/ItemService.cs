@@ -17,7 +17,7 @@ namespace Manufacturing.Services
         {
             _context = context;
         }
-        public async Task<Item[]> GetIncompleteItemsAsync()
+        public async Task<Items[]> GetIncompleteItemsAsync()
         {
             return await _context.Items
             //.Where(x => x.RowStatus == 0)

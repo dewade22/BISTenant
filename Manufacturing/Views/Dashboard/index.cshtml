@@ -1,4 +1,233 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Main Dashboard";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <!--Grafik-->
+        <div class="card">
+            <div class="card-header">
+                <h2>Sales Graph</h2>
+            </div>
+            <div class="card-body card-padding">
+                <canvas id="myChart" width="900" height="300"></canvas>
+            </div>
+        </div>
+        <!--Tenant-->
+        <input type="hidden" id="tenantActive" value=" @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))" />
+            <!--Tabel-->
+        <div class="card">
+            <div class="card-header">
+                <h2>Stock Table</h2>
+            </div>
+            <div class="card-body card-padding">
+                <table id="tabel-stock" class="table table-vmiddle" style="table-layout:auto;">
+                    <thead>
+                        <tr>
+                            <th colspan="3" id="tbl_stock_Bulan"></th>
+                            <th colspan="4">Stock</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;"> WH. Finish Goods </th>
+                            <th style="font-weight:bold;">5000 ml</th>
+                            <th style="font-weight:bold;">700 ml</th>
+                            <th style="font-weight:bold;">250 ml</th>
+                            <th colspan="2" style="text-align:center; font-weight:bold;">Material</th>
+                            <th style="font-weight:bold;">Detil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Omrach</td>
+                            <td>0</td>
+                            <td id="omrach700">0</td>
+                            <td id="omrach250">0</td>
+                            <td>Alkohol</td>
+                            <td id="matAlkohol">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showAlcohol"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Vodka 9</td>
+                            <td id="9vd5000">0</td>
+                            <td id="9vd700">0</td>
+                            <td id="9vd250">0</td>
+                            <td>Gula</td>
+                            <td id="gula">0</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Silver</td>
+                            <td id="silver5000">0</td>
+                            <td id="silver700">0</td>
+                            <td id="silver250">0</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold;">Bottle</td>
+
+                        </tr>
+                        <tr>
+                            <td>Blanco</td>
+                            <td id="blanco5">0</td>
+                            <td id="blanco700">0</td>
+                            <td id="blanco250">0</td>
+                            <td>Liqueurs 700 ML</td>
+                            <td id="botolLiq7">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showBotolLiq"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Blue Vodka</td>
+                            <td id="bmvd5">0</td>
+                            <td id="bmvd7">0</td>
+                            <td id="bmvd25">0</td>
+                            <td>700 Vodka9</td>
+                            <td id="botol9Vodka">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showBotol9"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; font-weight:bold;">Liqueurs</td>
+                            <td style="font-weight:bold;">5000 ML</td>
+                            <td style="font-weight:bold;">750 ML</td>
+                            <td style="font-weight:bold;">700 ML</td>
+                            <td>Blackbull 750 ML</td>
+                            <td id="botolBB750">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showBotolBB"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">Total</td>
+                            <td id="toLiq5" style="font-weight:bold;">0</td>
+                            <td id="toLiq75" style="font-weight:bold;">0</td>
+                            <td id="toLiq7" style="font-weight:bold;">0</td>
+                            <td>Botol Scotch 250</td>
+                            <td id="scotch250">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showBotol250"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Tripple Sec</td>
+                            <td id="ts5">0</td>
+                            <td id="ts75">0</td>
+                            <td id="ts7">0</td>
+                            <td>Botol Scotch</td>
+                            <td id="botolScotch">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showScotch"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Blue Curacao</td>
+                            <td id="bc5">0</td>
+                            <td id="bc75">0</td>
+                            <td id="bc7">0</td>
+                            <td>Botol Spirit</td>
+                            <td id="botolSpirit">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showSpirit"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Cofee</td>
+                            <td id="cof5">0</td>
+                            <td id="cof75">0</td>
+                            <td id="cof7">0</td>
+                            <td>Botol Whisky</td>
+                            <td id="botolWhisky">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showWhisky"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Coconut</td>
+                            <td id="coco5">0</td>
+                            <td id="coco75">0</td>
+                            <td id="coco7">0</td>
+                            <td>Galon</td>
+                            <td id="botolGalon">0</td>
+                            <td><button type="button" class="btn btn-primary" id="showGalon"><span class="zmdi zmdi-eye"></span> Detil</button></td>
+                        </tr>
+                        <tr>
+                            <td>Black Currant</td>
+                            <td id="bk5">0</td>
+                            <td id="bk75">0</td>
+                            <td id="bk7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Banana</td>
+                            <td id="bn5">0</td>
+                            <td id="bn75">0</td>
+                            <td id="bn7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Butter Schotch</td>
+                            <td id="bs5">0</td>
+                            <td id="bs75">0</td>
+                            <td id="bs7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Hazelnut</td>
+                            <td id="hz5">0</td>
+                            <td id="hz75">0</td>
+                            <td id="hz7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Lychee</td>
+                            <td id="lc5">0</td>
+                            <td id="lc75">0</td>
+                            <td id="lc7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Melon</td>
+                            <td id="ml5">0</td>
+                            <td id="ml75">0</td>
+                            <td id="ml7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Pineapple</td>
+                            <td id="pn5">0</td>
+                            <td id="pn75">0</td>
+                            <td id="pn7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Paper Mint</td>
+                            <td id="pm5">0</td>
+                            <td id="pm75">0</td>
+                            <td id="pm7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Black Bull</td>
+                            <td id="BB5">0</td>
+                            <td id="BB75">0</td>
+                            <td id="BB7">0</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <script type="text/javascript" src="~/backend/table/retriveWFG.js"></script>
+}

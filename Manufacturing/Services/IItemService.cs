@@ -5,6 +5,6 @@ namespace Manufacturing.Services
 {
     public interface IItemService
     {
-        Task<Item[]> GetIncompleteItemsAsync();
+        Task<Items[]> GetIncompleteItemsAsync();
     }
 }
