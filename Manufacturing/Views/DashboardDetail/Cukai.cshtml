@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Manufacturing.Models.Items.RawItem>
+@{
+    ViewData["Title"] = "Stok Pita Cukai";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Tabel Stok Pita Cukai (Semua Lokasi)</h2>
+            </div>
+            <div class="card-body card-padding">
+                <table id="tabelCukai" class="table table-vmiddle" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th data-column-id="id">ID</th>
+                            <th data-column-id="description">Item Name</th>
+                            <th data-column-id="quantity" data-formatter="money">Quantity</th>
+                            <th data-column-id="unit">Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ItemNo</td>
+                                <td>@item.Description</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.BaseUnitofMeasure</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script>
+        $('#tabelCukai').bootgrid({
+            caseSensitive: false,
+            formatters: {
+                money: function (column, row) {
+                    value = row[column.id].toString();
+                    let val = parseFloat(value).toFixed(2);
+                    value = val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                    console.log(val)
+                    return value;
+                }
+            }
+        })
+    </script>
+}

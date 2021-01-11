@@ -1,0 +1,12 @@
+﻿@using static Manufacturing.Helpers.NavigationIndicatorHelper;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Microsoft.AspNetCore.Http;
+<ul class="main-menu">
+    <li class="@Url.MakeActiveClass("/Dashboard/Index")">
+        <a asp-controller="Dashboard" asp-action="Index"><i class="zmdi zmdi-home"></i> Dashboard</a>
+    </li>
+    <li class="@Url.MakeActiveClass("/Dashboard/Wizard")">
+        <a asp-controller="Dashboard" asp-action="Wizard"><i class="zmdi zmdi-widgets"></i> Wizard</a>
+    </li>
+    @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
+</ul>

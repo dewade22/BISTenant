@@ -1,0 +1,53 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Dashboard Wizard";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>@ViewData["Title"] - Menu</h2>
+            </div>
+            <div class="card-body card-padding">
+                <input type="hidden" id="tenantActive" value=" @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))" />
+                <form id="dashboard">
+                    <center><h1>Welcome to @ViewData["Title"]</h1></center>
+                    <div class="form-group">
+                        <div class="input-group fg-float">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-widgets"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input type="text" class="form-control" name="dashboard-name" id="dashboard-name" />
+                                <label class="fg-label">Dashboard Name</label>
+                            </div>
+                        </div>
+                        <br />
+
+                    </div>
+
+                </form>
+                <div align="center">
+                    <button class="btn palette-Teal bg waves-effect" id="btnNext">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        let tenant = $('#tenantActive').val().trim();
+        let baseurl = window.location.origin;
+        let alamat = baseurl + '/' + tenant + '/Dashboard';
+        $('#btnNext').click(function () {
+            localStorage.setItem("dashboard_name", $("#dashboard-name").val());
+            localStorage.setItem("alamat", alamat);
+            window.location = alamat + "/TemplateList/";
+        })
+    </script>
+}

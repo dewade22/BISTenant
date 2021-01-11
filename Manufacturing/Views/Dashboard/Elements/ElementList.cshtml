@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard Elements";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--Awal Row Baris 1-->
+                        <div class="row">
+                            <!--Element1-->
+                            <div class="col-md-6 col-lg-6 col-xs-12">
+                                <button type="button" onclick="" class="btn palette-Amber bg waves-effect pull-right" id="1">Add</button>
+                                <div class="white-box" style="width: 400px; height: 300px">
+                                    <div class="white-box" style="height:350px; width:100%; padding-left:0px; padding-right:0px; padding-bottom:0px;">
+                                        @{ Html.RenderPartial("Element1.cshtml"); }
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Akhir Element 1-->
+                            <!--Element2-->
+                            <div class="col-md-6 col-lg-6 col-xs-12">
+                                <button type="button" onclick="" class="btn palette-Amber bg waves-effect pull-right" id="2">Add</button>
+                                <div class="white-box" style="width: 400px; height: 300px">
+                                    <div class="white-box" style="height:350px; width:100%; padding-left:0px; padding-right:0px; padding-bottom:0px;">
+                                        @{ Html.RenderPartial("Element2.cshtml"); }
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Akhir Element2-->
+                        </div>
+                        <!--Akhir row Baris 1-->
+                        <!--Awal Row baris 2-->
+                        <div class="row">
+                            <!-- Element3 -->
+                            <div class="col-md-6 col-lg-6 col-xs-12">
+                                <button type="button" onclick="" class="btn palette-Amber bg waves-effect pull-right" id="3">Add</button>
+                                <div class="white-box" style="width: 400px; height: 300px">
+                                    <div class="white-box" style="height:350px; width:100%; padding-left:0px; padding-right:0px; padding-bottom:0px;">
+                                        @{ Html.RenderPartial("Element3.cshtml"); }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Element4 -->
+                            <div class="col-md-6 col-lg-6 col-xs-12">
+                                <button type="button" onclick="" class="btn palette-Amber bg waves-effect pull-right" id="4">Add</button>
+                                <div class="white-box" style="width: 400px; height: 300px">
+                                    <div class="white-box" style="height:350px; width:100%; padding-left:0px; padding-right:0px; padding-bottom:0px;">
+                                        <br>@{ Html.RenderPartial("Element4.cshtml"); }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Akhir Row baris 2-->
+                        <!--Awal Row Baris 3-->
+                        <div class="row">
+                            <!-- Element5 -->
+                            <div class="col-md-12 col-lg-12 col-xs-12">
+                                <button type="button" onclick="" class="btn palette-Amber bg waves-effect pull-right" id="5">Add</button>
+                                <div class="white-box" style="height: 300px">
+                                    <div class="white-box" style="height:350px; width:100%; padding-left:0px; padding-right:0px; padding-bottom:0px;">
+                                        <br>@{ Html.RenderPartial("Element5.cshtml"); }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Akhir Row Baris 3-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+<script>
+    $(function() {
+        $('button.btn').on('click', function(e){
+            var dashboardId = '@ViewData["dashboardId"]';
+            $.ajax({
+                type: "POST",
+                url: localStorage.getItem("alamat")+'/AddElement',
+                data: {
+                    DashboardId: dashboardId,
+                    ElementId: this.id,
+                    Placement: localStorage.getItem("placement")
+                },
+                error: function (result) {
+                    alert(result);
+                },
+                success: function (result) {
+                    if (result == "True") {
+                        window.location = localStorage.getItem("alamat")+"/Dashboard/"+dashboardId;
+                    }
+                    else {
+                        alert("There is a Problem!");
+                    }
+                }
+            });
+        });
+    });
+    </script>
+}
+

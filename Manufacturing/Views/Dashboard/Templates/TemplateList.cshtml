@@ -1,0 +1,167 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Template List";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+    
+}
+    <section id="content">
+        <div class="container">
+            <div class="c-header">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+            <div class="card card-padding">
+                <div class="row">
+                    <!--Tenant-->
+                    <input type="hidden" id="tenantActive" value=" @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))" />
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <!--Template 1 dan 2-->
+                            <br />
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="1" type="radio" name="template" checked />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t1.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 1</code> </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="2" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t2.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 2</code> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><hr /><br />
+                        <!--Template 3 dan 4-->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="3" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t3.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 3</code> </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="4" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t4.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 4</code> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Template 5 dan 6-->
+                        <br /><hr /><br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="5" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t5.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 5</code> </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="6" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t6.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 6</code> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Template 7 dan 8-->
+                        <br /><hr /><br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="7" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t7.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 7</code> </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-1">
+                                    <div>
+                                        <input id="8" type="radio" name="template" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-11 text-right">
+                                    <img src="~/sources/img/DashboardTemplates/t8.jpg" alt="image" class="img-thumbnail" />
+                                    <p class="m-t-15 m-b-0"> <code>Template 8</code> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><hr /><br />
+                        <div align="right">
+                            <button class="btn palette-Cyan bg waves-effect" id="btnNext" style="width:100px; padding:5pt">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </section>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    console.log(localStorage.getItem("dashboard-id"))
+    $('#btnNext').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: localStorage.getItem("alamat") + '/CreateDashboard',
+            data: {
+                id: localStorage.getItem("dashboard-id"), 
+                Name: localStorage.getItem("dashboard_name"),
+                TemplateId: $('input[type=radio][name=template]:checked').attr('id')
+            },
+            error: function (result) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'There is a Problem..!!',
+                })
+            },
+            success: function (result) {
+                if (result.toLowerCase() != "false") {
+                    localStorage.setItem("dashboard-id", result)
+                    window.location = localStorage.getItem("alamat") + '/Dashboard/' + result
+                }
+                else {
+                   Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'There is a Problem..!!',
+                   })
+                }
+            }
+        });
+    })
+</script>
+ }
