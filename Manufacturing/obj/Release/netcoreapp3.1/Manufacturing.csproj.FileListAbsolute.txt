@@ -334,3 +334,4 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Release\netcoreapp3.1\Razor\
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Release\netcoreapp3.1\Razor\Views\Dashboard\Templates\TemplateList.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Release\netcoreapp3.1\Razor\Views\Dashboard\wizard.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Release\netcoreapp3.1\Razor\Views\Inventory\InventoryMovement.cshtml.g.cs
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Release\netcoreapp3.1\Razor\Views\Shared\Material\_DashboardMenu.cshtml.g.cs

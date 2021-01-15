@@ -50,7 +50,7 @@
         $('.place').click(function(event) {
             var place = $(this).attr('id');
             localStorage.setItem("placement", place);
-            window.location = localStorage.getItem("alamat")+"/ElementList/"+'@ViewData["dashboardId"]';
+            window.location = localStorage.getItem("thisAddress")+"/Dashboard/ElementList/"+'@ViewData["dashboardId"]';
         });
         /*
         function EnableDisableEditing() {

@@ -85,7 +85,7 @@
             var dashboardId = '@ViewData["dashboardId"]';
             $.ajax({
                 type: "POST",
-                url: localStorage.getItem("alamat")+'/AddElement',
+                url: localStorage.getItem("thisAddress")+'/Dashboard/AddElement',
                 data: {
                     DashboardId: dashboardId,
                     ElementId: this.id,
@@ -96,7 +96,7 @@
                 },
                 success: function (result) {
                     if (result == "True") {
-                        window.location = localStorage.getItem("alamat")+"/Dashboard/"+dashboardId;
+                        window.location = localStorage.getItem("thisAddress")+"/Dashboard/Dashboard/"+dashboardId;
                     }
                     else {
                         alert("There is a Problem!");

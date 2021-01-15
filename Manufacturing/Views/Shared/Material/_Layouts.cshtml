@@ -27,7 +27,6 @@
                     </a>
                 </li>
                 <li class="nama">@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("UserCode"))</li>
-                <!--<li class="nama">U@ser.Identity.Name</li>-->
             </ul>
 
             <partial name="Material/_MainNavigation" />
@@ -36,6 +35,7 @@
         <section id="content">
             <input type="hidden" id="userLogin" value="@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("UserCode"))" />
             @RenderBody()
+            <partial name="Material/_Footer" />
         </section>
 
 

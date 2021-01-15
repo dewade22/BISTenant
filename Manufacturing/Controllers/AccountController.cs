@@ -135,7 +135,7 @@ namespace Manufacturing.Controllers
                     DataRow[] subMenu = table.Select(String.Format("ParentId = '{0}'", pid));
                     if (subMenu.Length > 0 && !pid.Equals(parentId))
                     {
-                        string line = String.Format(@"<li class=""sub-menu""><a href=""#"" data-ma-action=""submenu-toggle""><i class=""{0}""></i>{1}</a><ul>", icon, menuText);
+                        string line = String.Format(@"<li class=""sub-menu @Url.MakeActiveClass(""{2}"")""><a href=""#"" data-ma-action=""submenu-toggle""><i class=""{0}""></i>{1}</a><ul>", icon, menuText, urllink);
                         var subMenuBuilder = new StringBuilder();
                         sb.AppendLine(line);
                         sb.Append(GenerateURL(subMenu, table, subMenuBuilder));

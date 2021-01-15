@@ -41,13 +41,9 @@
 </section>
 @section Scripts{
     <script>
-        let tenant = $('#tenantActive').val().trim();
-        let baseurl = window.location.origin;
-        let alamat = baseurl + '/' + tenant + '/Dashboard';
         $('#btnNext').click(function () {
             localStorage.setItem("dashboard_name", $("#dashboard-name").val());
-            localStorage.setItem("alamat", alamat);
-            window.location = alamat + "/TemplateList/";
+            window.location = localStorage.getItem("thisAddress") + "/Dashboard/TemplateList/";
         })
     </script>
 }

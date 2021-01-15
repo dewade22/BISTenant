@@ -1,6 +1,7 @@
 ﻿let tenantAct = $("#tenantLayout").val().trim()
 let baseUrls = window.location.origin
 localStorage.setItem("thisAddress", baseUrls + '/' + tenantAct)
+console.log(localStorage.getItem("thisAddress"));
     $(function () {
         $.ajax({
             type: "POST",
