@@ -14,7 +14,7 @@
     <partial name="Material/_TopNavigation" />
 
     <section id="main">
-
+        <input type="hidden" id="tenantLayout" value="@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))"/>
         <aside id="s-main-menu" class="sidebar">
             <div class="smm-header">
                 <i class="zmdi zmdi-long-arrow-left" data-ma-action="sidebar-close"></i>

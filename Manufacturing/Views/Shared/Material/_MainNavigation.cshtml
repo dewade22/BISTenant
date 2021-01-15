@@ -8,5 +8,9 @@
     <li class="@Url.MakeActiveClass("/Dashboard/Wizard")">
         <a asp-controller="Dashboard" asp-action="Wizard"><i class="zmdi zmdi-widgets"></i> Wizard</a>
     </li>
+    <li class="sub-menu">
+        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-menu zmdi-hc-fw"></i> Dashboard Menu</a>
+        <partial name="Material/_DashboardMenu" />
+    </li>
     @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
 </ul>
