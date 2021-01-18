@@ -22,7 +22,7 @@ namespace Manufacturing.Controllers
             return View();
         }
 
-        
+        [AuthorizedAction]
         public IActionResult getSpirit(string tenant)
         {
             if (tenant.ToLower() == "balimoon" || tenant.ToLower() == "training" || tenant.ToLower().Contains("bml"))

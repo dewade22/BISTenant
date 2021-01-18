@@ -471,8 +471,6 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\Manufact
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.csprojAssemblyReference.cache
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\staticwebassets\Manufacturing.StaticWebAssets.Manifest.cache
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\staticwebassets\Manufacturing.StaticWebAssets.xml
-D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cs
-D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cache
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.RazorAssemblyInfo.cache
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.RazorAssemblyInfo.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.AssemblyInfoInputs.cache
@@ -532,3 +530,6 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Vi
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Elements\ElementList.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\appsettings.json
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Material\_DashboardMenu.cshtml.g.cs
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cs
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cache

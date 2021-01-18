@@ -14,6 +14,10 @@ using Manufacturing.Domain.Data;
 using Manufacturing.Domain.Multitenancy;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Manufacturing.Controllers
 {
@@ -22,15 +26,18 @@ namespace Manufacturing.Controllers
         private readonly SystemDbContext _context;
         private readonly ApplicationDbContext _ApplicationDbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private IConfiguration _config;
 
         public AccountController(
             SystemDbContext context,
             ApplicationDbContext applicationDbContext,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IConfiguration config)
         {
             _context = context;
             _ApplicationDbContext = applicationDbContext;
             _httpContextAccessor = httpContextAccessor;
+            _config = config;
         }
 
         public string ReturnUrl { get; set; }
@@ -41,9 +48,16 @@ namespace Manufacturing.Controllers
             return View();
         }
 
+        //public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null)
+        //dibawah untuk JWT
+        //[AllowAnonymous]
+        [HttpPost]
         public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null)
         {
-           var client = _httpContextAccessor.HttpContext.GetClient();
+            IActionResult response = Unauthorized();
+
+            var user = AuthUsers(SystemUsers);
+            var client = _httpContextAccessor.HttpContext.GetClient();
             if (client != null)
             {
                 if (SystemUsers.EMailAddress != "" && SystemUsers.EMailAddress != null)
@@ -54,6 +68,10 @@ namespace Manufacturing.Controllers
                         string userpass = dbSecurity.MD5(SystemUsers.UserPassword);
                         if (_SystemsUsers.UserPassword == userpass)
                         {
+                            //JWT Create Token
+
+                            var tokenString = GenerateJSONWebToken(user);
+                            
    
                             HttpContext.Session.SetString("EMailAddress", _SystemsUsers.EMailAddress);
                             HttpContext.Session.SetString("UserCode", _SystemsUsers.UserName);
@@ -79,9 +97,8 @@ namespace Manufacturing.Controllers
                             string tenantActive = GetFullTenant();
                             HttpContext.Session.SetString("tenant", tenantActive);
 
-                            return Json(new { status = true, message = "Login Successfull!", returnUrl = returnUrl });
-                            //var model = SystemUserMenus;
-                            //return View("Views/Home/Index.cshtml",model);
+                            return Json(new { status = true, message = "Login Successfull!", returnUrl = returnUrl, token = tokenString });
+                            
                         }
                         else
                         {
@@ -105,8 +122,35 @@ namespace Manufacturing.Controllers
         }
 
 
+        //JWT AuthUser
+        private SystemUsers AuthUsers(SystemUsers SystemUsers)
+        {
+            SystemUsers user = null;
+            var getUser = _context.SystemUsers.Where(s => s.EMailAddress == SystemUsers.EMailAddress).FirstOrDefault();
+            if ( getUser != null)
+            {
+                user = new SystemUsers { UserCode = getUser.UserCode, EMailAddress = getUser.EMailAddress };
+            }
+            return user;
+        }
+
+        //JWT Generate Token
+        private string GenerateJSONWebToken(SystemUsers users)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Issuer"],
+                null,
+                expires: DateTime.Now.AddMinutes(5),
+                signingCredentials: credentials);
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+            return (accessToken);
+        }
+
         public ActionResult Logout()
         {
+            var users = HttpContext.Session.GetString("EMailAddress");
+
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }

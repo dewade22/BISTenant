@@ -71,6 +71,7 @@
                             UserPassword: $('#password').val(),
                             returnUrl: '@ViewBag.ReturnUrl'
                         },
+
                         error: function (result) {
                             $("#form-show-error").show();
                             $("#message").text("There is a Problem, Try Again!");
