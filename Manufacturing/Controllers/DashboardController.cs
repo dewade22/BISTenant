@@ -22,7 +22,7 @@ namespace Manufacturing.Controllers
             return View();
         }
 
-        [AuthorizedAction]
+        [AuthorizedAPI]
         public IActionResult getSpirit(string tenant)
         {
             if (tenant.ToLower() == "balimoon" || tenant.ToLower() == "training" || tenant.ToLower().Contains("bml"))
@@ -58,6 +58,7 @@ namespace Manufacturing.Controllers
             
         }
 
+        [AuthorizedAPI]
         public IActionResult getLiq(string tenant)
         {
             if(tenant.ToLower() == "balimoon" || tenant.ToLower() == "training" || tenant.ToLower().Contains("bml"))
@@ -97,6 +98,7 @@ namespace Manufacturing.Controllers
             }
         }
 
+        [AuthorizedAPI]
         public ActionResult DataSales(int tahun)
         {
             string[] dates = new string[12] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" };
@@ -139,6 +141,7 @@ namespace Manufacturing.Controllers
         }
 
         [HttpGet]
+        [AuthorizedAPI]
         public ActionResult getStock(string productGroup)
         {
             var result = (from itemLedger in _appContext.ItemLedgerEntry
@@ -151,6 +154,7 @@ namespace Manufacturing.Controllers
         }
 
         [HttpGet]
+        [AuthorizedAPI]
         public IActionResult getCukai()
         {
             var result = (from itemledger in _appContext.ItemLedgerEntry

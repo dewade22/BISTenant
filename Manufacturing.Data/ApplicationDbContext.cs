@@ -29,6 +29,7 @@ namespace Manufacturing.Data
         public virtual DbSet<Dashboards_Info> Dashboards_Info { get; set; }
         public virtual DbSet<Element> Element { get; set; }
         public virtual DbSet<DashboardLinkedElements> DashboardLinkedElements { get; set; }
+        public virtual DbSet<Vendors> Vendors { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -75,45 +76,7 @@ namespace Manufacturing.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
-            //Items
-            modelBuilder.Entity<Items>()
-                .HasKey(e => e.ItemId);
-            modelBuilder.Entity<Items>()
-                .Property(e=>e.ItemId)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
-
-            //Item Ledger Entry
-            modelBuilder.Entity<ItemLedgerEntry>()
-                .HasKey(e => e.ItemLedgerEntryId);
-            modelBuilder.Entity<ItemLedgerEntry>()
-                .Property(e => e.ItemLedgerEntryId)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
-
-            //Item Budget Entry
-            modelBuilder.Entity<ItemBudgetEntry>()
-                .HasKey(e => e.ItemBudgetEntryId);
-            modelBuilder.Entity<ItemBudgetEntry>()
-                .Property(e => e.ItemBudgetEntryId)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
-
-            //Sales Invoice Line
-            modelBuilder.Entity<SalesInvoiceLine>()
-                .HasKey(e => e.SalesInvoiceLineId);
-            modelBuilder.Entity<SalesInvoiceLine>()
-                .Property(e => e.SalesInvoiceLineId)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
-
-            //Dashboard_Info
-            modelBuilder.Entity<Dashboard_Info>()
-                .Property(e => e.id)
-                .ValueGeneratedOnAdd()
-                .UseIdentityColumn();
-            */
+           
             base.OnModelCreating(modelBuilder);
         }
         

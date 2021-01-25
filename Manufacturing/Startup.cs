@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,8 +54,11 @@ namespace Manufacturing
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
             //    Configuration["Data:ManufacturingApplication:ConnectionString"]));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+           /* services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                {
+                PasswordHasher = new CustomPasswordHasher();
+                };*/
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -87,7 +89,7 @@ namespace Manufacturing
             services.AddMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             services.AddControllersWithViews();
             services.AddRazorPages();

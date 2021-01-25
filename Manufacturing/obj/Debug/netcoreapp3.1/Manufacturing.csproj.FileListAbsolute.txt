@@ -531,5 +531,7 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Vi
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\appsettings.json
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Material\_DashboardMenu.cshtml.g.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.MvcApplicationPartsAssemblyInfo.cache
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\Vendors\Index.cshtml.g.cs

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Vendor Card";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+ }
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1 class="card-title">@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Vendor List</h2>
+            </div>
+            <div class="card-body card-padding">
+                <table id="tableVendors" class="display table table-primary">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Contact</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/backend/vendors/index.js"></script>
+ }

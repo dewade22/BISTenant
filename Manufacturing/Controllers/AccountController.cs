@@ -27,6 +27,7 @@ namespace Manufacturing.Controllers
         private readonly ApplicationDbContext _ApplicationDbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private IConfiguration _config;
+        
 
         public AccountController(
             SystemDbContext context,
@@ -141,7 +142,7 @@ namespace Manufacturing.Controllers
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Issuer"],
                 null,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
             return (accessToken);

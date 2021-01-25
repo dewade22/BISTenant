@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Manufacturing.Domain.Multitenancy
 {
@@ -8,6 +10,8 @@ namespace Manufacturing.Domain.Multitenancy
 
         public string UserCode { get; set; }
         public string UserName { get; set; }
+
+        [JsonIgnore]
         public string UserPassword { get; set; }
         public DateTime? AllowPostingFrom { get; set; }
         public DateTime? AllowPostingTo { get; set; }
@@ -18,6 +22,8 @@ namespace Manufacturing.Domain.Multitenancy
         public int PurchaseAmountApprovalLimit { get; set; }
         public byte UnlimitedSalesApproval { get; set; }
         public byte UnlimitedPurchaseApproval { get; set; }
+
+
         public string Substitute { get; set; }
         public string EMailAddress { get; set; }
         public int RequestAmountApprovalLimit { get; set; }
