@@ -8,13 +8,14 @@
     <title>@ViewData["Title"] - @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))</title>
     <partial name="Material/_Styles" />
     @RenderSection("Styles", required: false)
+    <partial name="Material/_StylesBottom" />
 </head>
 
 <body data-ma-header="teal">
     <partial name="Material/_TopNavigation" />
 
     <section id="main">
-        <input type="hidden" id="tenantLayout" value="@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))"/>
+        <input type="hidden" id="tenantLayout" value="@Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("tenant"))" />
         <aside id="s-main-menu" class="sidebar">
             <div class="smm-header">
                 <i class="zmdi zmdi-long-arrow-left" data-ma-action="sidebar-close"></i>
@@ -51,6 +52,7 @@
     </div>
     <partial name="Material/_Scripts" />
     @RenderSection("Scripts", required: false)
+    <partial name="Material/_ScriptsBottom" />
 </body>
 
 </html>

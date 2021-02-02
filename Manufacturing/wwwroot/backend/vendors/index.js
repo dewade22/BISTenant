@@ -1,32 +1,21 @@
 ﻿$(function () {
-    //init DataTable
-    $('#tableVendors').DataTable({
-        processing: true,
-        serverSide: true,
-        //Paging Setup
-        paging: true,
-        ajax: {
-            url: localStorage.getItem('thisAddress')+'/Vendors/VendorList',
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: function (d) {
-                return JSON.stringify(d);
-                
-            }
+    $('#tableVendors').bootgrid({
+        caseSensitive: false,
+        css: {
+            icon: 'zmdi icon',
+            iconColumns: 'zmdi-view-module',
+            iconDown: 'zmdi-expand-more',
+            iconRefresh: 'zmdi-refresh',
+            iconUp: 'zmdi-expand-less'
         },
-        columns:
-            [
-                { data: 'VendorId', isIdentity: true, visible: false },
-                { data: 'VendorNo' },
-                { data: 'VendorName' },
-                { data: 'VendorAddress' },
-                { data: 'VendorContact' },
-                {
-                    render: function (data, type, full, meta) {
-                        return "<a href='#' class='btn btn-outline-info'><span class='zmdi zmdi-eye'></span></a>";
-                    }
-                }
-            ]
-    })
-})
+        formatters: {
+            "action": function (column, row) {
+                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" data-row-id=\"" + row.VendorId + "\" onclick=\"Show("+row.VendorId+")\"><span class=\"zmdi zmdi-edit\"></span></button>";
+            }
+        }
+    });
+
+});
+function Show(Id) {
+    window.location = localStorage.getItem('thisAddress') + '/Vendors/Detil/' + Id;
+}

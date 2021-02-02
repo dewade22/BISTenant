@@ -1,0 +1,152 @@
+﻿@model Manufacturing.Data.Entities.Vendors;
+@{
+    ViewData["Title"] = "Detil Vendors";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/summernote/dist/summernote.css" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1 class="card-title">@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Vendor Card</h2>
+            </div>
+            <div class="card-body card-padding">
+                <form id="editVendor">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <input asp-for="VendorId" type="hidden" />
+                        <div class="col-sm-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorNo" type="text" class="input-lg form-control fg-input" disabled />
+                                    <label asp-for="VendorNo" class="fg-label">No</label>
+                                    <span asp-validation-for="VendorNo" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorName" type="text" class="input-lg form-control fg-input" />
+                                    <label asp-for="VendorName" class="fg-label">Name</label>
+                                    <span asp-validation-for="VendorName" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorName2" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorName2" class="fg-label">Name 2</label>
+                                    <span asp-validation-for="VendorName2" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorAddress" type="text" class="input-lg form-control fg-input" />
+                                    <label asp-for="VendorAddress" class="fg-label">Address</label>
+                                    <span asp-validation-for="VendorAddress" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorAddress2" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorAddress2" class="fg-label">Address 2</label>
+                                    <span asp-validation-for="VendorAddress2" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorCity" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorCity" class="fg-label">City</label>
+                                    <span asp-validation-for="VendorCity" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <label asp-for="Country" />
+                                    <select class="chosen" data-placeholder="Choose a Country" asp-for="Country" asp-items="@ViewBag.Countries" data-width="100%">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="PostCode" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="PostCode" class="fg-label">Post Code</label>
+                                    <span asp-validation-for="PostCode" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorPhoneNo" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorPhoneNo" class="fg-label">Phone No</label>
+                                    <span asp-validation-for="VendorPhoneNo" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorFaxNo" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorFaxNo" class="fg-label">Fax No</label>
+                                    <span asp-validation-for="VendorFaxNo" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="VendorContact" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="VendorContact" class="fg-label">Contact</label>
+                                    <span asp-validation-for="VendorContact" class="text-danger" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="MobileNo" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="MobileNo" class="fg-label">Mobile Phone No</label>
+                                    <span asp-validation-for="MobileNo" class="text-danger" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <label asp-for="Blocked" class="fg-label">Blocked</label><br />
+                                    <input name="Blocked" id="Blocked" type="checkbox" @(Model.Blocked == 1 ? "checked" : "") />
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input asp-for="PaymentTermsCode" type="text" class="input-sm form-control fg-input" />
+                                    <label asp-for="PaymentTermsCode" class="fg-label">Payment Terms</label>
+                                    <span asp-validation-for="PaymentTermsCode" class="text-danger" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/fileinput/fileinput.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/input-mask/input-mask.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/farbtastic/farbtastic.min.js"></script>
+}

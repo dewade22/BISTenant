@@ -30,6 +30,7 @@ namespace Manufacturing.Data
         public virtual DbSet<Element> Element { get; set; }
         public virtual DbSet<DashboardLinkedElements> DashboardLinkedElements { get; set; }
         public virtual DbSet<Vendors> Vendors { get; set; }
+        public virtual DbSet<CountryRegion> CountryRegion { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

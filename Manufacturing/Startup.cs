@@ -15,6 +15,7 @@ using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json.Converters;
 
 namespace Manufacturing
 {
@@ -50,6 +51,12 @@ namespace Manufacturing
             services.AddDbContext<SystemDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ManufacturingMainSystem:ConnectionString"]));
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+
             services.AddScoped<ApplicationDbContext>();
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
             //    Configuration["Data:ManufacturingApplication:ConnectionString"]));
@@ -82,7 +89,7 @@ namespace Manufacturing
                     }
                 };
             });
-
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IItemService, ItemService>();
 
@@ -91,7 +98,7 @@ namespace Manufacturing
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
-            services.AddControllersWithViews();
+           
             services.AddRazorPages();
 
             if (Configuration.GetValue<bool>("UseRedis"))

@@ -1,11 +1,9 @@
-﻿@{
+﻿@model IEnumerable<Manufacturing.Models.Vendors.VendorViewModel>
+@{
     ViewData["Title"] = "Vendor Card";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 
-@section Styles{
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
- }
 <section id="content">
     <div class="container">
         <div class="c-header">
@@ -19,21 +17,32 @@
                 <table id="tableVendors" class="display table table-primary">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Contact</th>
-                            <th>Action</th>
+                            <th data-column-id="VendorId">Id</th>
+                            <th data-column-id="VendorNo">No</th>
+                            <th data-column-id="VendorName">Name</th>
+                            <th data-column-id="VendorAddress">Address</th>
+                            <th data-column-id="VendorContact">Contact</th>
+                            <th data-column-id="action" data-formatter="action">Action</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        @foreach (var vendors in Model)
+                        {
+                            <tr>
+                                <td>@vendors.VendorId</td>
+                                <td>@vendors.VendorNo</td>
+                                <td>@vendors.VendorName</td>
+                                <td>@vendors.VendorAddress</td>
+                                <td>@vendors.VendorContact</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </section>
 @section Scripts{
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script type="text/javascript" src="~/backend/vendors/index.js"></script>
  }

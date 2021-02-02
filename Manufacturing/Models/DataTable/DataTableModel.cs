@@ -4,24 +4,18 @@ namespace Manufacturing.Models.DataTable
 {
     public class DTResult<T>
     {
-        public int draw { get; set; }
-
-        public int recordsTotal { get; set; }
-
-        public int recordsFiltered { get; set; }
-
-        public IEnumerable<T> data { get; set; }
+        public int Draw { get; set; }
+        public int RecordsTotal { get; set; }
+        public int RecordsFiltered { get; set; }
+        public IEnumerable<T> Data { get; set; }
     }
 
     public abstract class DTRow
     {
         public virtual string DT_RowId => null;
-
         public virtual string DT_RowClass => null;
-
         public virtual object DT_RowData => null;
     }
-
     public class DTParameters
     {
         public int Draw { get; set; }
@@ -37,7 +31,6 @@ namespace Manufacturing.Models.DataTable
         public IEnumerable<string> AdditionalValues { get; set; }
 
     }
-
     public class DTColumn
     {
         public string Data { get; set; }
@@ -46,11 +39,9 @@ namespace Manufacturing.Models.DataTable
         public bool Orderable { get; set; }
         public DTSearch Search { get; set; }
     }
-
     public class DTOrder
     {
         public int Column { get; set; }
-
         public DTOrderDir Dir { get; set; }
     }
 
@@ -59,11 +50,9 @@ namespace Manufacturing.Models.DataTable
         ASC,
         DESC
     }
-
     public class DTSearch
     {
         public string Value { get; set; }
-
         public bool Regex { get; set; }
     }
 }
