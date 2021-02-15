@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Sales Actual BMI";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">BMI</h2>
+        </div>
+        <div class="card-body card-padding">
+            <h2>PT Balimoon Indonesia - Sales (Shipment - Return) Actual Report</h2>
+            <table>
+                <tr>
+                    <td width="190px">Transaction Date </td>
+                    <td width="10px"> :</td>
+                    <td width="300px" id="transactionDate"></td>
+                </tr>
+                <tr>
+                    <td>No Days </td>
+                    <td> :</td>
+                    <td id="noDays"></td>
+                </tr>
+                <tr>
+                    <td>Total Days </td>
+                    <td> :</td>
+                    <td id="totalDays"></td>
+                </tr>
+            </table>
+            <br />
+            <div class="table-responsive">
+                <table id="tableBMI" class="table table-valign-middle table-bordered table-hover" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>Revenue</th>
+                            <th>Transaksi Hari ini</th>
+                            <th colspan="2">Transaksi Bulan Ini</th>
+                            <th rowspan="2">Rata-rata / Hari</th>
+                            <th rowspan="2">Target Bulan ini</th>
+                            <th rowspan="2">Total Sisa Bulan ini</th>
+                            <th rowspan="2">Rata-rata Sisa Perhari</th>
+                        </tr>
+                        <tr>
+                            <th>Type</th>
+                            <th id="tglIni">tgl</th>
+                            <th id="sdTglIni">tgl</th>
+                            <th id="persenHari">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Blanco</td>
+                            <td id="todayBlanco"></td>
+                            <td id="sdBlanco"></td>
+                            <td id="rataBlanco"></td>
+                            <td id="targetBlanco"></td>
+                            <td id="rataBaseBlanco"></td>
+                            <td id="totalSisaBlanco"></td>
+                            <td id="rataSisaBlanco"></td>
+                        </tr>
+                        <tr>
+                            <td>GIN</td>
+                            <td id="todayGIN"></td>
+                            <td id="sdGIN"></td>
+                            <td id="rataGIN"></td>
+                            <td id="targetGIN"></td>
+                            <td id="rataBaseGIN"></td>
+                            <td id="totalSisaGIN"></td>
+                            <td id="rataSisaGIN"></td>
+                        </tr>
+                        <tr>
+                            <td>Liqueurs</td>
+                            <td id="todayLiqueurs"></td>
+                            <td id="sdLiqueurs"></td>
+                            <td id="rataLiqueurs"></td>
+                            <td id="targetLiqueurs"></td>
+                            <td id="rataBaseLiqueurs"></td>
+                            <td id="totalSisaLiqueurs"></td>
+                            <td id="rataSisaLiqueurs"></td>
+                        </tr>
+                        <tr>
+                            <td>TEQ</td>
+                            <td id="todayTEQ"></td>
+                            <td id="sdTEQ"></td>
+                            <td id="rataTEQ"></td>
+                            <td id="targetTEQ"></td>
+                            <td id="rataBaseTEQ"></td>
+                            <td id="totalSisaTEQ"></td>
+                            <td id="rataSisaTEQ"></td>
+                        </tr>
+                        <tr>
+                            <td>Vodka</td>
+                            <td id="todayVodka"></td>
+                            <td id="sdVodka"></td>
+                            <td id="rataVodka"></td>
+                            <td id="targetVodka"></td>
+                            <td id="rataBaseVodka"></td>
+                            <td id="totalSisaVodka"></td>
+                            <td id="rataSisaVodka"></td>
+                        </tr>
+                        <tr>
+                            <td>Whisky</td>
+                            <td id="todayWhisky"></td>
+                            <td id="sdWhisky"></td>
+                            <td id="rataWhisky"></td>
+                            <td id="targetWhisky"></td>
+                            <td id="rataBaseWhisky"></td>
+                            <td id="totalSisaWhisky"></td>
+                            <td id="rataSisaWhisky"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                        </tr>
+                        <tr>
+                            <td>Landed Cost</td>
+                            <td id="todayLandedC"></td>
+                            <td id="sdLandedC"></td>
+                            <td id="rataLandedC"></td>
+                            <td id="targetLandedC"></td>
+                            <td id="rataBaseLandedC"></td>
+                            <td id="totalSisaLandedC"></td>
+                            <td id="rataSisaLandedC"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8"></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="todayTotal"></td>
+                            <td id="sdTotal"></td>
+                            <td id="rataTotal"></td>
+                            <td id="targetTotal"></td>
+                            <td id="rataBaseTotal"></td>
+                            <td id="totalSisaTotal"></td>
+                            <td id="rataSisaTotal"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>
+@section Scripts{
+
+    <script type="text/javascript" src="~/backend/SalesActual/BMIForms.js"></script>
+}

@@ -31,6 +31,12 @@ namespace Manufacturing.Data
         public virtual DbSet<DashboardLinkedElements> DashboardLinkedElements { get; set; }
         public virtual DbSet<Vendors> Vendors { get; set; }
         public virtual DbSet<CountryRegion> CountryRegion { get; set; }
+        public virtual DbSet<ShopCalendarHoliday> ShopCalendarHoliday { get; set; }
+        public virtual DbSet<SalesShipmentLine> SalesShipmentLine { get; set; }
+        public virtual DbSet<SalesShipmentHeader> SalesShipmentHeader { get; set; }
+        public virtual DbSet<SalesInvoiceHeader> SalesInvoiceHeader { get; set; }
+        public virtual DbSet<SalesCrMemoHeader> SalesCrMemoHeader { get; set; }
+        public virtual DbSet<SalesCrMemoLine> SalesCrMemoLine { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

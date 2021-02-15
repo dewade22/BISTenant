@@ -1,5 +1,12 @@
 ﻿let tenantAct = $("#tenantLayout").val().trim()
 let baseUrls = window.location.origin
+
+if (tenantAct.toLowerCase().includes('bmi')) {
+    $('#SABIP').hide()
+}
+else if (tenantAct.toLowerCase().includes('bip')) {
+    $('#SABMI').hide()
+}
 localStorage.setItem("thisAddress", baseUrls + '/' + tenantAct)
 localStorage.getItem("thisAddress");
     $(function () {

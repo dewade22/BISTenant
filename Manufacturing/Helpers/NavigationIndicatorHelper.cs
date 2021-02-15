@@ -29,6 +29,25 @@ namespace Manufacturing.Helpers
                 return null;
             }
         }
+        public static string MakeActiveSubMenu(this IUrlHelper urlHelper, string link)
+        {
+            try
+            {
+                string result = "active";
+                if (string.IsNullOrEmpty(link)) return null;
+                string controllerName = urlHelper.ActionContext.RouteData.Values["controller"].ToString();
+                var controller = link.Split("/")[1];
+                if (controllerName.Equals(controller, StringComparison.OrdinalIgnoreCase))
+                {
+                    return result;
+                }
+                return null;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
     }
 }
 

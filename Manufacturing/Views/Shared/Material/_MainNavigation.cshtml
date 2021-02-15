@@ -12,5 +12,16 @@
         <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-menu zmdi-hc-fw"></i> Dashboard Menu</a>
         <partial name="Material/_DashboardMenu" />
     </li>
+    <li class="sub-menu @Url.MakeActiveSubMenu("/SalesActual")">
+        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Sales Actual</a>
+        <ul>
+            <li class="@Url.MakeActiveClass("/SalesActual/BMI")" id="SABMI">
+                <a asp-action="BMI" asp-controller="SalesActual">PT BMI</a>
+            </li>
+            <li class="@Url.MakeActiveClass("/SalesActual/BIP")" id="SABIP">
+                <a asp-action="BIP" asp-controller="SalesActual">PT BIP</a>
+            </li>
+        </ul>
+    </li>
     @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))
 </ul>

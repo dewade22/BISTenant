@@ -567,3 +567,4 @@ D:\MyDocument\BIS\BISTenant\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.
 D:\MyDocument\BIS\BISTenant\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.dll
 D:\MyDocument\BIS\BISTenant\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.pdb
 D:\MyDocument\BIS\BISTenant\Manufacturing\obj\Debug\netcoreapp3.1\Manufacturing.genruntimeconfig.cache
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing\obj\Debug\netcoreapp3.1\Razor\Views\SalesActual\BMI.cshtml.g.cs
