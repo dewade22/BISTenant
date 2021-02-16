@@ -40,12 +40,11 @@ namespace Manufacturing.Controllers
                 dateTime = DateTime.Now;
             }
 
-            var Monthly = TodayTransactionMonth(dateTime);
-            var tes = TestingTransaksi(dateTime);
+            var SalesBudget = TodayTransactionMonth(dateTime);
+            
+           
 
-            //combine
-
-            return new JsonResult( new{ MonthlyRev = Monthly, Category = tes});
+            return new JsonResult( new{ MonthlyRev = SalesBudget});
         }
 
         
@@ -53,59 +52,66 @@ namespace Manufacturing.Controllers
         public IActionResult TodayTransactionMonth(DateTime? dateTime)
         {
             DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
-            var query = (from budget in _context.ItemBudgetEntry
-                         where budget.Date.Value.Year == dateTime.Value.Year
-                         group budget by new { category = budget.BudgetDimension2Code } into budgets
-                         select new
-                         {
-                             ProductGroup = budgets.Key.category,
-                             BudgetAmount = budgets.Sum(a => a.Date.Value.Month == dateTime.Value.Month ? a.SalesAmount : 0)
-                         });
-            var query2 = (from SI_Line in _context.SalesInvoiceLine
-                         group SI_Line by new { category = SI_Line.ItemCategoryCode } into ress
-                         select new
-                         {
-                             ProductGroup = ress.Key.category,
-                             TodayRev = ress.Sum(a => a.ShipmentDate.Value.Date == dateTime.Value.Date ? a.AmountIncludingVat : 0),
-                             UntilTodayRev = ress.Sum(a => a.ShipmentDate.Value.Date <= dateTime.Value.Date
-                             && a.ShipmentDate.Value.Date >= firstDate.Date ? a.AmountIncludingVat : 0)
-                         });
-            var ressult = from q1 in query
-                          join q2 in query2 on q1.ProductGroup equals q2.ProductGroup into hasil
-                          from q2 in hasil.DefaultIfEmpty()
-                          select new
-                          {
-                              ProductGroup = q1.ProductGroup,
-                              TodayRev = q2.TodayRev ?? 0,
-                              UntilTodayRev = q2.UntilTodayRev ?? 0,
-                              BudgetAmount = q1.BudgetAmount ?? 0
-                          };
-
-            return Ok(ressult);
-        }
-
-        public IActionResult TestingTransaksi(DateTime? dateTime)
-        {
             //Kategori
-            var kategori = _context.DimensionValue.Where(a => a.DimensionCode.ToLower().Equals("category") && a.RowStatus == 0).Select(a=>a.DimensionValueName);
+            var kategori = _context.DimensionValue.Where(a => a.DimensionCode.ToLower().Equals("category") && a.RowStatus == 0).Select(a => a.DimensionValueName);
 
             //Item Budget Entry
             var budgetEntry = (from budget in _context.ItemBudgetEntry
                                where budget.Date.Value.Year == dateTime.Value.Year
-                               group budget by new {category = budget.BudgetDimension2Code} into result
+                               group budget by new { category = budget.BudgetDimension2Code } into result
                                select new
                                {
                                    catrgory = result.Key.category,
-                                   MonthlyLitersBudget = result.Sum(a=> a.Date.Value.Month == dateTime.Value.Month ? a.Liters : 0),
-                                   MonthlyRevenueBudget = result.Sum(a=>a.Date.Value.Month == dateTime.Value.Month ? a.SalesAmount : 0),
-                                   YearlyLitersBudget = result.Sum(a=>a.Liters ?? 0),
-                                   YearlyRevenueBudget = result.Sum(a=>a.SalesAmount ?? 0)
+                                   MonthlyLitersBudget = result.Sum(a => a.Date.Value.Month == dateTime.Value.Month ? a.Liters : 0),
+                                   MonthlyRevenueBudget = result.Sum(a => a.Date.Value.Month == dateTime.Value.Month ? a.SalesAmount : 0),
+                                   YearlyLitersBudget = result.Sum(a => a.Liters ?? 0),
+                                   YearlyRevenueBudget = result.Sum(a => a.SalesAmount ?? 0)
                                });
 
-            return Ok(budgetEntry);
+            //SalesInvoice Line
+            var SalesInvoice = (from invoiceHeader in _context.SalesInvoiceHeader
+                                join invoiceLine in _context.SalesInvoiceLine
+                                on invoiceHeader.SalesInvoiceHeaderId equals invoiceLine.SalesInvoiceHeaderId
+                                join item in _context.Items
+                                on invoiceLine.RecordNo equals item.ItemNo
+                                where invoiceHeader.ShipmentDate.Value.Year == dateTime.Value.Year
+                                group new { invoiceLine, invoiceHeader, item } by new { category = invoiceLine.ItemCategoryCode} into result  
+                                select new
+                                { 
+                                    category = result.Key.category,
+                                    TodayRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? a.invoiceLine.AmountIncludingVat : 0),
+                                    TodayLiters = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? a.invoiceLine.Quantity * a.item.LiterQty : 0),
+                                    MonthlyRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.invoiceHeader.ShipmentDate.Value.Day <= dateTime.Value.Day ? a.invoiceLine.AmountIncludingVat : 0),
+                                    MonthlyLiters = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month ? a.invoiceLine.Quantity * a.item.LiterQty : 0),
+                                    YearlyRevenue = result.Sum(a=>a.invoiceLine.AmountIncludingVat ?? 0),
+                                    YearlyLiters = result.Sum(a=>a.invoiceLine.Quantity * a.item.LiterQty ?? 0)
+                                });
+
+            //Sales Cr Memo( untuk mengurangi yg diatas )
+            var SalesCrMemo = (from crMemoHeader in _context.SalesCrMemoHeader
+                               join crMemoLine in _context.SalesCrMemoLine
+                               on crMemoHeader.SalesCrMemoHeaderId equals crMemoLine.SalesCrMemoHeaderId
+                               join item in _context.Items
+                               on crMemoLine.No equals item.ItemNo
+                               where crMemoHeader.ShipmentDate.Value.Year == dateTime.Value.Year
+                               group new { crMemoHeader, crMemoLine, item } by new { category = crMemoLine.ItemCategoryCode } into result
+                               select new
+                               {
+                                   category = result.Key.category,
+                                   TodayRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
+                                   TodayLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1*(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
+                                   MonthlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Day <= dateTime.Value.Day ? -1 * a.crMemoLine.AmountIncludingVat : 0),
+                                   MonthlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month ? -1 *(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
+                                   YearlyRevenue = result.Sum(a=>a.crMemoLine.AmountIncludingVat*(-1) ?? 0),
+                                   YearlyLiters = result.Sum(a=>(a.crMemoLine.Quantity*a.item.LiterQty)*(-1) ?? 0),
+                               });
+
+            var RevenueResult = SalesInvoice.Concat(SalesCrMemo);
+                                
+            return Ok(RevenueResult);
         }
 
-
+        
         public int getTotalDaysInMonthBMI(DateTime? dateTime)
         {
             if(dateTime == null)
