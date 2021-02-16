@@ -2,6 +2,8 @@
 
 # dependencies
 /Manufacturing/appsetting.json
+//Manufacturing/appsetting.json
 /Manufacturing/obj
+/Manufacturing/bin
 appsettings.json
 /apps
