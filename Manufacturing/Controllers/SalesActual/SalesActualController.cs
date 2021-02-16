@@ -41,19 +41,21 @@ namespace Manufacturing.Controllers
             }
 
             var SalesBudget = TodayTransactionMonth(dateTime);
-            
-           
 
-            return new JsonResult( new{ MonthlyRev = SalesBudget});
+            return new JsonResult( new{ SalesActual = SalesBudget});
         }
-
-        
 
         public IActionResult TodayTransactionMonth(DateTime? dateTime)
         {
-            DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
             //Kategori
-            var kategori = _context.DimensionValue.Where(a => a.DimensionCode.ToLower().Equals("category") && a.RowStatus == 0).Select(a => a.DimensionValueName);
+            var kategori = from cat in _context.DimensionValue
+                           where cat.DimensionCode.ToLower() == "category" && cat.RowStatus == 0
+                           orderby cat.DimensionValueId
+                           select new
+                           {
+                               category = cat.DimensionValueName
+                           };
+                
 
             //Item Budget Entry
             var budgetEntry = (from budget in _context.ItemBudgetEntry
@@ -64,27 +66,39 @@ namespace Manufacturing.Controllers
                                    catrgory = result.Key.category,
                                    MonthlyLitersBudget = result.Sum(a => a.Date.Value.Month == dateTime.Value.Month ? a.Liters : 0),
                                    MonthlyRevenueBudget = result.Sum(a => a.Date.Value.Month == dateTime.Value.Month ? a.SalesAmount : 0),
-                                   YearlyLitersBudget = result.Sum(a => a.Liters ?? 0),
-                                   YearlyRevenueBudget = result.Sum(a => a.SalesAmount ?? 0)
+                                   YearlyLitersBudget = result.Sum(a => a.Date.Value.Year == dateTime.Value.Year ? a.Liters : 0),
+                                   YearlyRevenueBudget = result.Sum(a => a.Date.Value.Year == dateTime.Value.Year ? a.SalesAmount : 0)
                                });
 
+            var Budget = (from kat in kategori
+                          join budget in budgetEntry
+                          on kat.category equals budget.catrgory into hasil
+                          from budget in hasil.DefaultIfEmpty()
+                          select new
+                          {
+                              catrgory = kat.category,
+                              MonthlyLitersBudget = budget.MonthlyLitersBudget,
+                              MonthlyRevenueBudget = budget.MonthlyRevenueBudget,
+                              YearlyLitersBudget = budget.YearlyLitersBudget,
+                              YearlyRevenueBudget = budget.YearlyRevenueBudget
+                          });
             //SalesInvoice Line
             var SalesInvoice = (from invoiceHeader in _context.SalesInvoiceHeader
                                 join invoiceLine in _context.SalesInvoiceLine
                                 on invoiceHeader.SalesInvoiceHeaderId equals invoiceLine.SalesInvoiceHeaderId
                                 join item in _context.Items
                                 on invoiceLine.RecordNo equals item.ItemNo
-                                where invoiceHeader.ShipmentDate.Value.Year == dateTime.Value.Year
+                                where invoiceHeader.ShipmentDate.Value.Year == dateTime.Value.Year && invoiceHeader.DocumentType < 6
                                 group new { invoiceLine, invoiceHeader, item } by new { category = invoiceLine.ItemCategoryCode} into result  
                                 select new
                                 { 
                                     category = result.Key.category,
                                     TodayRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? a.invoiceLine.AmountIncludingVat : 0),
                                     TodayLiters = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? a.invoiceLine.Quantity * a.item.LiterQty : 0),
-                                    MonthlyRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.invoiceHeader.ShipmentDate.Value.Day <= dateTime.Value.Day ? a.invoiceLine.AmountIncludingVat : 0),
-                                    MonthlyLiters = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month ? a.invoiceLine.Quantity * a.item.LiterQty : 0),
-                                    YearlyRevenue = result.Sum(a=>a.invoiceLine.AmountIncludingVat ?? 0),
-                                    YearlyLiters = result.Sum(a=>a.invoiceLine.Quantity * a.item.LiterQty ?? 0)
+                                    MonthlyRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.invoiceHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.invoiceLine.AmountIncludingVat : 0),
+                                    MonthlyLiters = result.Sum(a=> a.invoiceHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.invoiceHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.invoiceLine.Quantity * a.item.LiterQty : 0),
+                                    YearlyRevenue = result.Sum(a=>a.invoiceHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.invoiceLine.AmountIncludingVat : 0),
+                                    YearlyLiters = result.Sum(a=> a.invoiceHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.invoiceLine.Quantity * a.item.LiterQty : 0)
                                 });
 
             //Sales Cr Memo( untuk mengurangi yg diatas )
@@ -100,17 +114,47 @@ namespace Manufacturing.Controllers
                                    category = result.Key.category,
                                    TodayRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
                                    TodayLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1*(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
-                                   MonthlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Day <= dateTime.Value.Day ? -1 * a.crMemoLine.AmountIncludingVat : 0),
-                                   MonthlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month ? -1 *(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
-                                   YearlyRevenue = result.Sum(a=>a.crMemoLine.AmountIncludingVat*(-1) ?? 0),
-                                   YearlyLiters = result.Sum(a=>(a.crMemoLine.Quantity*a.item.LiterQty)*(-1) ?? 0),
+                                   MonthlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
+                                   MonthlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 *(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
+                                   YearlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.crMemoLine.AmountIncludingVat*(-1) : 0),
+                                   YearlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date  ? (a.crMemoLine.Quantity*a.item.LiterQty)*(-1) : 0),
                                });
+            //Dapatkan Sales Actual dari penjumlahan Invoice dan CrMemo
+            var RevenueResult = from si in SalesInvoice
+                                join cr in SalesCrMemo
+                                on si.category equals cr.category into hasil
+                                from cr in hasil.DefaultIfEmpty()
+                                select new
+                                {
+                                category = si.category,
+                                TodayRevenue = si.TodayRevenue + cr.TodayRevenue,
+                                TodayLiters= si.TodayLiters + cr.TodayLiters,
+                                MonthlyRevenue = si.MonthlyRevenue + cr.MonthlyRevenue,
+                                MonthlyLiters = si.MonthlyLiters + cr.MonthlyLiters,
+                                YearlyRevenue = si.YearlyRevenue + cr.YearlyRevenue,
+                                YearlyLiters = si.YearlyLiters + cr.YearlyLiters
+                                };
 
-            var RevenueResult = SalesInvoice.Concat(SalesCrMemo);
+            var salesActual = (from budget in Budget
+                               join revenue in RevenueResult
+                               on budget.catrgory equals revenue.category into hasil
+                               from revenue in hasil.DefaultIfEmpty()
+                               select new {
+                                   category = budget.catrgory,
+                                   TodayRevenue = revenue.TodayRevenue ?? 0,
+                                   TodayLiters = revenue.TodayLiters ?? 0,
+                                   MonthlyRevenue = revenue.MonthlyRevenue ?? 0,
+                                   MonthlyRevenueBudget = budget.MonthlyRevenueBudget ?? 0,
+                                   MonthlyLiters = revenue.MonthlyLiters ?? 0,
+                                   MonthlyLitersBudget = budget.MonthlyLitersBudget ?? 0,
+                                   YearlyRevenue = revenue.YearlyRevenue ?? 0,
+                                   YearlyRevenueBudget = budget.YearlyRevenueBudget ?? 0,
+                                   YearlyLiters = revenue.YearlyLiters ?? 0,
+                                   YearlyLitersBudget = budget.YearlyLitersBudget ?? 0
+                               });
                                 
-            return Ok(RevenueResult);
+            return Ok(salesActual);
         }
-
         
         public int getTotalDaysInMonthBMI(DateTime? dateTime)
         {
