@@ -23,15 +23,34 @@ namespace Manufacturing.Controllers
             return View();
         }
 
+        [AuthorizedAction]
+        public IActionResult BIP()
+        {
+            return View();
+        }
+        /*BMI*/
         [AuthorizedAPI]
         public IActionResult BMIDaysMonth(DateTime? dateTime)
         {
-            int noDaysMonth = getNoDaysInMonthBMI(dateTime);
-            int DayinMonth = getTotalDaysInMonthBMI(dateTime);
+            if(dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
 
-            return new JsonResult(new { NoDaysMonth = noDaysMonth, TotalDayMonth = DayinMonth });
+            List<DateTime> HolidaysMonth = new List<DateTime>();
+            HolidaysMonth = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Year == dateTime.Value.Year && calendar.Date.Month == dateTime.Value.Month).Select(calendar => calendar.Date).ToList();
+            List<DateTime> HolidaysYear = new List<DateTime>();
+            HolidaysYear = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Year == dateTime.Value.Year).Select(calendar => calendar.Date).ToList();
+            int noDaysMonth = getNoDaysInMonthBMI(dateTime, HolidaysMonth);
+            int DayinMonth = getTotalDaysInMonthBMI(dateTime, HolidaysMonth);
+            int DayinYear = getTotalDaysInYearBMI(dateTime, HolidaysYear);
+            int noDaysYear = getNoDaysInYearBMI(dateTime, HolidaysYear);
+            
+
+            return new JsonResult(new { noDaysM = noDaysMonth, DayM = DayinMonth, noDaysY = noDaysYear, DayY=DayinYear });
         }
 
+        /*Mix BMI BIP*/
         [AuthorizedAPI]
         public IActionResult BMISalesAndTarget(DateTime? dateTime)
         {
@@ -41,10 +60,32 @@ namespace Manufacturing.Controllers
             }
 
             var SalesBudget = TodayTransactionMonth(dateTime);
+            var landedCost = LandedCostBMI(dateTime);
 
-            return new JsonResult( new{ SalesActual = SalesBudget});
+            return new JsonResult( new{ SalesActual = SalesBudget, LandedCost = landedCost});
         }
 
+        /*BIP*/
+        [AuthorizedAPI]
+        public IActionResult BIPDaysMonth(DateTime? dateTime)
+        {
+            if(dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            List<DateTime> HolidaysMonth = new List<DateTime>();
+            HolidaysMonth = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Year == dateTime.Value.Year && calendar.Date.Month == dateTime.Value.Month).Select(calendar => calendar.Date).ToList();
+            List<DateTime> HolidaysYear = new List<DateTime>();
+            HolidaysYear = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Year == dateTime.Value.Year).Select(calendar => calendar.Date).ToList();
+            int noDaysMonth = getNoDaysInMonthBIP(dateTime, HolidaysMonth);
+            int DayinMonth = getTotalDaysInMonthBIP(dateTime, HolidaysMonth);
+            int DayinYear = getTotalDaysInYearBIP(dateTime, HolidaysYear);
+            int noDaysYear = getNoDaysInYearBIP(dateTime, HolidaysYear);
+
+            return new JsonResult(new { noDaysM = noDaysMonth, DayM = DayinMonth, noDaysY = noDaysYear, DayY = DayinYear });
+        }
+
+        /*Mix BMI BIP*/
         public IActionResult TodayTransactionMonth(DateTime? dateTime)
         {
             //Kategori
@@ -108,16 +149,16 @@ namespace Manufacturing.Controllers
                                join item in _context.Items
                                on crMemoLine.No equals item.ItemNo
                                where crMemoHeader.ShipmentDate.Value.Year == dateTime.Value.Year
-                               group new { crMemoHeader, crMemoLine, item } by new { category = crMemoLine.ItemCategoryCode } into result
+                               group new { crMemoHeader, crMemoLine, item } by new { category = crMemoLine.ItemCategoryCode} into result
                                select new
                                {
                                    category = result.Key.category,
-                                   TodayRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
-                                   TodayLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1*(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
-                                   MonthlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
-                                   MonthlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 *(a.crMemoLine.Quantity*a.item.LiterQty) : 0),
-                                   YearlyRevenue = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.crMemoLine.AmountIncludingVat*(-1) : 0),
-                                   YearlyLiters = result.Sum(a=>a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date  ? (a.crMemoLine.Quantity*a.item.LiterQty)*(-1) : 0),
+                                   TodayRevenue = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
+                                   TodayLiters = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Date == dateTime.Value.Date ? -1 * (a.crMemoLine.Quantity * a.item.LiterQty) : 0),
+                                   MonthlyRevenue = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 * a.crMemoLine.AmountIncludingVat : 0),
+                                   MonthlyLiters = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Month == dateTime.Value.Month && a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? -1 * (a.crMemoLine.Quantity * a.item.LiterQty) : 0),
+                                   YearlyRevenue = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? a.crMemoLine.AmountIncludingVat * (-1) : 0),
+                                   YearlyLiters = result.Sum(a => a.crMemoHeader.ShipmentDate.Value.Date <= dateTime.Value.Date ? (a.crMemoLine.Quantity * a.item.LiterQty) * (-1) : 0),
                                });
             //Dapatkan Sales Actual dari penjumlahan Invoice dan CrMemo
             var RevenueResult = from si in SalesInvoice
@@ -127,12 +168,12 @@ namespace Manufacturing.Controllers
                                 select new
                                 {
                                 category = si.category,
-                                TodayRevenue = si.TodayRevenue + cr.TodayRevenue,
-                                TodayLiters= si.TodayLiters + cr.TodayLiters,
-                                MonthlyRevenue = si.MonthlyRevenue + cr.MonthlyRevenue,
-                                MonthlyLiters = si.MonthlyLiters + cr.MonthlyLiters,
-                                YearlyRevenue = si.YearlyRevenue + cr.YearlyRevenue,
-                                YearlyLiters = si.YearlyLiters + cr.YearlyLiters
+                                TodayRevenue = si.TodayRevenue + (cr.TodayRevenue ?? 0),
+                                TodayLiters= si.TodayLiters + (cr.TodayLiters ?? 0),
+                                MonthlyRevenue = si.MonthlyRevenue + (cr.MonthlyRevenue ?? 0),
+                                MonthlyLiters = si.MonthlyLiters + (cr.MonthlyLiters ?? 0),
+                                YearlyRevenue = si.YearlyRevenue + (cr.YearlyRevenue ?? 0),
+                                YearlyLiters = si.YearlyLiters + (cr.YearlyLiters ?? 0)
                                 };
 
             var salesActual = (from budget in Budget
@@ -152,19 +193,57 @@ namespace Manufacturing.Controllers
                                    YearlyLiters = revenue.YearlyLiters ?? 0,
                                    YearlyLitersBudget = budget.YearlyLitersBudget ?? 0
                                });
+           
                                 
             return Ok(salesActual);
         }
+
+        /*Mix BMI BIP*/
+        public IActionResult LandedCostBMI(DateTime? dateTime) {
+            //landed Cost Invoice
+            var landedCost = (from salesInvoiceH in _context.SalesInvoiceHeader
+                              where salesInvoiceH.ShipmentDate.Value.Year == dateTime.Value.Year
+                              group salesInvoiceH by new {year = salesInvoiceH.ShipmentDate.Value.Year} into hasil
+                              select new
+                              { 
+                                  year = hasil.Key.year,
+                                  TodayLandedCost = hasil.Sum(a=>a.PostingDate.Value.Date == dateTime.Value.Date ? a.LandedCost : 0),
+                                  MonthLandedCost = hasil.Sum(a=>a.PostingDate.Value.Month == dateTime.Value.Month && a.PostingDate.Value.Date <= dateTime.Value.Date ? a.LandedCost : 0),
+                                  YearLandedCost = hasil.Sum(a=>a.PostingDate.Value.Date <= dateTime.Value.Date ? a.LandedCost : 0)
+                              });
+            //Landed Cost CrMemo
+            var landedCMemo = (from CrMemo in _context.SalesCrMemoHeader
+                               where CrMemo.ShipmentDate.Value.Year == dateTime.Value.Year
+                               group CrMemo by new { year = CrMemo.ShipmentDate.Value.Year } into hasil
+                               select new
+                               {
+                                   year = hasil.Key.year,
+                                   TodayLandedCost = hasil.Sum(a=>a.PostingDate.Value.Date == dateTime.Value.Date ? a.LandedCost :0),
+                                   MonthLandedCost = hasil.Sum(a => a.PostingDate.Value.Month == dateTime.Value.Month && a.PostingDate.Value.Date <= dateTime.Value.Date ? a.LandedCost : 0),
+                                   YearLandedCost = hasil.Sum(a => a.PostingDate.Value.Date <= dateTime.Value.Date ? a.LandedCost : 0)
+                               });
+            //Combine
+            var finalLandedCost = (from LC in landedCost
+                                   join LCr in landedCMemo
+                                   on LC.year equals LCr.year into hasil
+                                   from LCr in hasil.DefaultIfEmpty()
+                                   select new
+                                   {
+                                       year = LC.year,
+                                       TodayLandedCost = (LC.TodayLandedCost ?? 0) - (LCr.TodayLandedCost ?? 0),
+                                       MonthLandedCost = (LC.MonthLandedCost ?? 0) - (LCr.MonthLandedCost ?? 0),
+                                       YearLandedCost = (LC.YearLandedCost ?? 0) - (LCr.YearLandedCost ?? 0)
+                                   });
+
+
+            return Ok(finalLandedCost);
+        }
         
-        public int getTotalDaysInMonthBMI(DateTime? dateTime)
+
+
+        public int getTotalDaysInMonthBMI(DateTime? dateTime, List<DateTime> Holidays)
         {
-            if(dateTime == null)
-            {
-                dateTime = DateTime.Now;
-            }
-            List<DateTime> Holidays = new List<DateTime>();
-            Holidays = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Month == dateTime.Value.Month && calendar.Date.Year == dateTime.Value.Year).Select(calendar => calendar.Date).ToList();
-            //int daysInMonth = DateTime.DaysInMonth(dateTime.Value.Year, dateTime.Value.Month);
+            List<DateTime> libur = Holidays;
             DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
             DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
             int totalDays = 0;
@@ -178,21 +257,33 @@ namespace Manufacturing.Controllers
             }           
             return totalDays;
         }
-       
-        public int getNoDaysInMonthBMI(DateTime? dateTime)
+
+        public int getTotalDaysInMonthBIP(DateTime? dateTime, List<DateTime> Holidays)
         {
-            if(dateTime == null)
+            List<DateTime> libur = Holidays;
+            DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
+            DateTime lastDate = firstDate.AddMonths(1).AddDays(-1);
+            int totalDays = 0;
+            for (DateTime dates = firstDate; dates <= lastDate; dates.AddDays(1))
             {
-                dateTime = DateTime.Now;
+                if ((dates.DayOfWeek != DayOfWeek.Sunday && dates.DayOfWeek != DayOfWeek.Saturday) && !Holidays.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
             }
-            List<DateTime> Holidays = new List<DateTime>();
-            Holidays = _context.ShopCalendarHoliday.Where(calendar => calendar.Date.Month == dateTime.Value.Month && calendar.Date.Year == dateTime.Value.Year).Select(calendar => calendar.Date).ToList();
+            return totalDays;
+        }
+
+        public int getNoDaysInMonthBMI(DateTime? dateTime, List<DateTime> Holidays)
+        {
+            List<DateTime> libur = Holidays;
             DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
             DateTime lastDate = Convert.ToDateTime(dateTime);
             int totalDays = 0;
             for (DateTime dates = firstDate; dates <= lastDate; dates.AddDays(1))
             {
-                if (dates.DayOfWeek != DayOfWeek.Sunday && !Holidays.Contains(dates))
+                if (dates.DayOfWeek != DayOfWeek.Sunday && !libur.Contains(dates))
                 {
                     totalDays++;
                 }
@@ -200,6 +291,92 @@ namespace Manufacturing.Controllers
             }
             return totalDays;
 
+        }
+
+        public int getNoDaysInMonthBIP(DateTime? dateTime, List<DateTime> Holidays)
+        {
+            List<DateTime> libur = Holidays;
+            DateTime firstDate = new DateTime(dateTime.Value.Year, dateTime.Value.Month, 1);
+            DateTime lastDate = Convert.ToDateTime(dateTime);
+            int totalDays = 0;
+            for (DateTime dates = firstDate; dates <= lastDate; dates.AddDays(1))
+            {
+                if ((dates.DayOfWeek != DayOfWeek.Sunday && dates.DayOfWeek != DayOfWeek.Saturday) && !libur.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
+            }
+            return totalDays;
+
+        }
+
+        public int getTotalDaysInYearBMI(DateTime? dateTime, List<DateTime> Holidays)
+        {
+            List<DateTime> libur =Holidays;
+            DateTime firstDate = new DateTime(dateTime.Value.Year, 1, 1);
+            DateTime lastDate = firstDate.AddYears(1).AddDays(-1);
+            int totalDays = 0;
+            for(DateTime dates = firstDate; dates<=lastDate; dates.AddDays(1))
+            {
+                if(dates.DayOfWeek != DayOfWeek.Sunday && !libur.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
+            }
+            return totalDays;
+        }
+
+        public int getTotalDaysInYearBIP(DateTime? dateTime, List<DateTime> Holidays)
+        {
+            List<DateTime> libur = Holidays;
+            DateTime firstDate = new DateTime(dateTime.Value.Year, 1, 1);
+            DateTime lastDate = firstDate.AddYears(1).AddDays(-1);
+            int totalDays = 0;
+            for (DateTime dates = firstDate; dates <= lastDate; dates.AddDays(1))
+            {
+                if ((dates.DayOfWeek != DayOfWeek.Sunday && dates.DayOfWeek != DayOfWeek.Saturday) && !libur.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
+            }
+            return totalDays;
+        }
+
+        public int getNoDaysInYearBMI(DateTime? dateTime, List<DateTime>Holidays)
+        {
+            List<DateTime> libur = Holidays; 
+            DateTime firstDate = new DateTime(dateTime.Value.Year, 1, 1);
+            DateTime lastDate = Convert.ToDateTime(dateTime);
+            int totalDays = 0;
+            for(DateTime dates = firstDate; dates<= lastDate; dates.AddDays(1))
+            {
+                if(dates.DayOfWeek != DayOfWeek.Sunday && !libur.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
+            }
+            return totalDays;
+        }
+
+        public int getNoDaysInYearBIP(DateTime? dateTime, List<DateTime> Holidays)
+        {
+            List<DateTime> libur = Holidays;
+            DateTime firstDate = new DateTime(dateTime.Value.Year, 1, 1);
+            DateTime lastDate = Convert.ToDateTime(dateTime);
+            int totalDays = 0;
+            for (DateTime dates = firstDate; dates <= lastDate; dates.AddDays(1))
+            {
+                if ((dates.DayOfWeek != DayOfWeek.Sunday && dates.DayOfWeek != DayOfWeek.Saturday ) && !libur.Contains(dates))
+                {
+                    totalDays++;
+                }
+                dates = dates.AddDays(1);
+            }
+            return totalDays;
         }
     }
 }

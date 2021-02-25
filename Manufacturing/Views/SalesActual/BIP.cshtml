@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewData["Title"] = "Sales Actual BIP";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link href="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+<!--Main App-->
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Monthly</h2>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <p class="c-black f-500 m-b-20">Choose Date</p>
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                    <div class="dtp-container fg-line">
+                        <input type='text' id="datePicker" class="form-control date-picker" placeholder="Click here...">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <br />
+                <button class="btn btn-info btn-icon waves-effect waves-circle waves-float" id="search"><i class="zmdi zmdi-search"></i></button>
+            </div>
+        </div>
+        <div class="card-body card-padding">
+            <h2>PT Buana Indo Pratama - Sales (Shipment - Return) Actual Report</h2>
+
+            <table>
+                <tr>
+                    <td width="190px">Transaction Date </td>
+                    <td width="10px"> :</td>
+                    <td width="300px" id="transactionDate"></td>
+                </tr>
+                <tr>
+                    <td>No Days </td>
+                    <td> :</td>
+                    <td id="noDays"></td>
+                </tr>
+                <tr>
+                    <td>Total Days </td>
+                    <td> :</td>
+                    <td id="totalDays"></td>
+                </tr>
+            </table>
+            <br />
+            <div class="table-responsive">
+                <table id="tableBIPMonth" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th style="font-weight:bold; width:200px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Hari ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px">Transaksi Bulan Ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata-rata / Hari</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Target Bulan ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2/Hari Base on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Total Sisa Bulan ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2 Sisa Perhari</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight:bold">Type</th>
+                            <th id="tglIni" style="font-weight:bold">tgl</th>
+                            <th id="sdTglIni" style="font-weight:bold">tgl</th>
+                            <th id="persenHari" style="font-weight:bold">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <br /><br />
+            <div class="table-responsive">
+                <table id="tableBIPMonthLiters" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th style="font-weight:bold; width:200px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Hari ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px">Transaksi Bulan Ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata-rata / Hari</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Target Bulan ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2/Hari Base on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Total Sisa Bulan ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2 Sisa Perhari</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight:bold">Liters</th>
+                            <th id="tglIniL" style="font-weight:bold">tgl</th>
+                            <th id="sdTglIniL" style="font-weight:bold">tgl</th>
+                            <th id="persenHariL" style="font-weight:bold">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--YearLy-->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Yearly</h2>
+        </div>
+        <div class="card-body card-padding">
+            <h2>PT Balimoon Indonesia - Sales (Shipment - Return) Actual Report</h2>
+            <table>
+                <tr>
+                    <td width="190px">Transaction Date </td>
+                    <td width="10px"> :</td>
+                    <td width="300px" id="transactionDateYear"></td>
+                </tr>
+                <tr>
+                    <td>No Days </td>
+                    <td> :</td>
+                    <td id="noDaysYear"></td>
+                </tr>
+                <tr>
+                    <td>Total Days </td>
+                    <td> :</td>
+                    <td id="totalDaysYear"></td>
+                </tr>
+            </table>
+            <div class="table-responsive">
+                <table id="tableBIPYear" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th style="font-weight:bold; width:200px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Bulan Ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px">Transaksi Tahun Ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata-rata / Bulan</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Target Tahun ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2/Bulan Base on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Total Sisa Tahun ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2 Sisa Perbulan</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight:bold">Type</th>
+                            <th id="BulanIni" style="font-weight:bold">tgl</th>
+                            <th id="sdBulanIni" style="font-weight:bold">tgl</th>
+                            <th id="persenBulan" style="font-weight:bold">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <br /><br />
+            <div class="table-responsive">
+                <table id="tableBIPYearlyLiters" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed" ; width="100%">
+                    <thead>
+                        <tr>
+                            <th style="font-weight:bold; width:200px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Bulan Ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px">Transaksi Tahun Ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata-rata / Bulan</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Target Tahun ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2/Bulan Base on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Total Sisa Tahun ini</th>
+                            <th rowspan="2" style="font-weight:bold; width:200px">Rata2 Sisa Perbulan</th>
+                        </tr>
+                        <tr>
+                            <th style="font-weight:bold">Liters</th>
+                            <th id="BulanIniL" style="font-weight:bold">tgl</th>
+                            <th id="sdBulanIniL" style="font-weight:bold">tgl</th>
+                            <th id="persenBulanL" style="font-weight:bold">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Summary-->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Summary of Sales Actual</h2>
+        </div>
+        <div class="card-body card-padding">
+            <h2>PT BalimOOn Indonesia - Monthly Summary</h2>
+            <p id="transactionDateSum">Report Base</p>
+            <div class="table-responsive">
+                <table id="summaryRevenue" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="font-weight:bold; width:300px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Hari Ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px" id="transBulanSum">Transaksi Bulan</th>
+                            <th style="font-weight:bold; width:200px">Rata2/Hari</th>
+                            <th rowspan="2" id="TargetBulan" style="font-weight:bold; width:250px">Target</th>
+                            <th style="font-weight:bold; width:250px">Rata2/Hari based on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:250px" id="totalSisaSum">Total Sisa di Bulan</th>
+                            <th rowspan="2" style="font-weight:bold; width:250px" id="rataSisaSum">Rata2 Sisa Perhari</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="font-weight:bold">Company</th>
+                            <th id="tglTransaksiSum" style="font-weight:bold"></th>
+                            <th id="sdtglTransaksiSum" style="font-weight:bold"></th>
+                            <th style="font-weight:bold">% Capaian</th>
+                            <th style="font-weight:bold">Avg</th>
+                            <th style="font-weight:bold">Avg</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <br /><br />
+            <h2>PT Balimoon Indonesia - Yearly Summary</h2>
+            <p id="transactionDateSumYear">Report Base</p>
+            <div class="table-responsive">
+                <table id="summaryRevenueYear" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="font-weight:bold; width:300px">Revenue</th>
+                            <th style="font-weight:bold; width:200px">Transaksi Bulan Ini</th>
+                            <th colspan="2" style="font-weight:bold; width:300px" id="transTahunSum">Transaksi s/d Bulan</th>
+                            <th style="font-weight:bold; width:200px">Rata2/Bulan</th>
+                            <th rowspan="2" id="TargetTahun" style="font-weight:bold; width:250px">Target</th>
+                            <th style="font-weight:bold; width:250px">Rata2/Bulan Based on Target</th>
+                            <th rowspan="2" style="font-weight:bold; width:250px" id="totalSisaSumYear">Total Sisa di Tahun</th>
+                            <th rowspan="2" style="font-weight:bold; width:250px" id="rataSisaSumYear">Rata2 Sisa PerBulan</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="font-weight:bold">Company</th>
+                            <th id="tglTransaksiSumYear" style="font-weight:bold"></th>
+                            <th id="sdtglTransaksiSumYear" style="font-weight:bold"></th>
+                            <th style="font-weight:bold">% Capaian</th>
+                            <th style="font-weight:bold">Avg</th>
+                            <th style="font-weight:bold">Avg</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="~/backend/SalesActual/BIPForms.js"></script>
+}
