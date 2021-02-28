@@ -12,6 +12,7 @@ using System.Linq;
 using Manufacturing.Domain.Multitenancy;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+
 namespace Manufacturing.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext
@@ -37,7 +38,8 @@ namespace Manufacturing.Data
         public virtual DbSet<SalesInvoiceHeader> SalesInvoiceHeader { get; set; }
         public virtual DbSet<SalesCrMemoHeader> SalesCrMemoHeader { get; set; }
         public virtual DbSet<SalesCrMemoLine> SalesCrMemoLine { get; set; }
-
+        public virtual DbSet<spRptSalesActualModel> SpRptSalesActualModels { get; set; }
+        public virtual DbSet<spRptSalesActual_LandedCostModel> SpRptSalesActual_LandedCosts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -83,9 +85,12 @@ namespace Manufacturing.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<spRptSalesActual_LandedCostModel>()
+                .HasNoKey();
+            base.OnModelCreating(modelBuilder);           
         }
+
         
+       
     }
 }

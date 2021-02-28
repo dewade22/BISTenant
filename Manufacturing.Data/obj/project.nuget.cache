@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "myrXbi2TaQ5kyBLSO1sBCSGizpBhgj8TV0N2NmtsVT++0QrDizrCiEvHwJpIs7JMFwoH1RUz5pA2o3/ZYXg14A==",
+  "dgSpecHash": "g8g7j/t794j/BYfXlAjXAYN41sbUArNgbzwDkCWOpUHke7eIhO3zJufYgDo3DI72NGYRoidybVCN9yKiDtjekg==",
   "success": true,
   "projectFilePath": "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Data\\Manufacturing.Data.csproj",
   "expectedPackageFiles": [
@@ -61,7 +61,10 @@
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.9\\microsoft.entityframeworkcore.analyzers.3.1.9.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.design\\3.1.9\\microsoft.entityframeworkcore.design.3.1.9.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\3.1.9\\microsoft.entityframeworkcore.relational.3.1.9.nupkg.sha512",
+    "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.relational.design\\1.1.6\\microsoft.entityframeworkcore.relational.design.1.1.6.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\3.1.9\\microsoft.entityframeworkcore.sqlserver.3.1.9.nupkg.sha512",
+    "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver.design\\1.1.6\\microsoft.entityframeworkcore.sqlserver.design.1.1.6.nupkg.sha512",
+    "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\3.1.9\\microsoft.entityframeworkcore.tools.3.1.9.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\3.1.9\\microsoft.extensions.caching.abstractions.3.1.9.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.extensions.caching.memory\\3.1.9\\microsoft.extensions.caching.memory.3.1.9.nupkg.sha512",
     "C:\\Users\\Ode Antara\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.9\\microsoft.extensions.configuration.3.1.9.nupkg.sha512",
