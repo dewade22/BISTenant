@@ -24,6 +24,7 @@ $('#search').click(function () {
         jQuery('#tableBMIYearlyLiters tbody').empty();
         jQuery('#summaryRevenue tbody').empty();
         jQuery('#summaryRevenueYear tbody').empty();
+        localStorage.setItem("salesActualDate", myDate);
         Days(myDate);
     }
 })
@@ -82,6 +83,7 @@ function Days(date = fullDT) {
 }
 
 function MonthlyRevenueBMI(myDate, result) {
+    let dates = myDate.getMonth() + 1 + '-' + myDate.getDate() + '-' + myDate.getFullYear();
     let sales = result.salesActual;
     //Untuk dijadikan total
     let totalToday = 0;

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Manufacturing.Data.Entities.spSalesInvoiceSummaryPivotModel>
+@{
+    ViewData["Title"] = "Today Sales";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"] - @ViewBag.Category</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>List of Transaction</h2>
+            </div>
+            <div class="table-responsive">
+                <table id="tableSales" class="table table-valign-middle table-bordered table-hover"  style="table-layout:fixed; width:100%">
+                    <thead>
+                        <tr>
+                            <th>SO Number</th>
+                            <th>Document No</th>
+                            <th>Sales Person</th>
+                            <th>Customers</th>
+                            <th>Qty</th>
+                            <th>Liter</th>
+                            <th>Cost</th>
+                            <th>Amount</th>
+                            <th>Discount</th>
+                            <th>Tax</th>
+                            <th>Amount Incd Tax</th>
+                            <th>Landed Cost</th>
+                            <th>Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script>
+        $('#tableSales').bootgrid({
+            caseSensitive: false
+        });
+    </script>
+}
+

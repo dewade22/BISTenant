@@ -8,6 +8,7 @@ using Manufacturing.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Manufacturing.Data.Entities;
+using System.Data;
 
 namespace Manufacturing.Controllers
 {
@@ -75,6 +76,55 @@ namespace Manufacturing.Controllers
                 throw ex;
             }
             return LandedCost;
+        }
+
+        public IActionResult TodaySalesBMI(string category)
+        {
+            //var salesDetil = TransactionDetail(dateTime, category);
+            /*var DetilTransaksi = (from transaksi in salesDetil
+                                    group transaksi by new { transaksi.SONumber, transaksi.SalesPerson, transaksi.BilltoName, transaksi.DocumentNo, transaksi.Category } into hasil
+                                    select new spSalesInvoiceSummaryPivotModel
+                                    {
+                                        SONumber = hasil.Key.SONumber,
+                                        SalesPerson = hasil.Key.SalesPerson,
+                                        BilltoName = hasil.Key.BilltoName,
+                                        DocumentNo = hasil.Key.DocumentNo,
+                                        Qty = hasil.Sum(a => a.Qty),
+                                        Liters = hasil.Sum(a => a.Liters),
+                                        Cost = hasil.Sum(a => a.Cost),
+                                        Amount = hasil.Sum(a => a.Amount),
+                                        Discount = hasil.Sum(a => a.Discount),
+                                        Tax = hasil.Sum(a => a.Tax),
+                                        AmountIncdTax = hasil.Sum(a => a.AmountIncdTax),
+                                        LandedCost = hasil.Sum(a => a.LandedCost),
+                                        Revenue = hasil.Sum(a => a.Revenue),
+                                        Category = hasil.Key.Category,
+                                        Liters_Sub = hasil.Sum(a => a.Liters_Sub),
+                                        AmountIncdTax_Sub = hasil.Sum(a => a.AmountIncdTax_Sub)
+                                    }).ToList();*/
+            ViewBag.Category = category; 
+            return View();
+        }
+
+        public IEnumerable<spSalesInvoiceSummaryPivotModel>TransactionDetail(DateTime? dateTime, string category)
+        {
+            List<spSalesInvoiceSummaryPivotModel> DetilTransaksi = new List<spSalesInvoiceSummaryPivotModel>();
+            var parameters = new[]
+            {
+                new SqlParameter("@StartPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = dateTime.Value.Date},
+                new SqlParameter("@EndPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = dateTime.Value.Date},
+                new SqlParameter("@prmCategory", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = category}
+            };
+            try {
+                DetilTransaksi = _context.SpSalesInvoiceSummaryPivotModels.FromSqlRaw(@"exec spSalesInvoiceSummaryPivot @StartPeriod, @EndPeriod, @prmCategory", parameters).ToList();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            //Filter Lagi Berdasarkan SO
+            
+            return DetilTransaksi;
         }
     }
 }

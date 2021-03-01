@@ -40,6 +40,7 @@ namespace Manufacturing.Data
         public virtual DbSet<SalesCrMemoLine> SalesCrMemoLine { get; set; }
         public virtual DbSet<spRptSalesActualModel> SpRptSalesActualModels { get; set; }
         public virtual DbSet<spRptSalesActual_LandedCostModel> SpRptSalesActual_LandedCosts { get; set; }
+        public virtual DbSet<spSalesInvoiceSummaryPivotModel> SpSalesInvoiceSummaryPivotModels { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -86,6 +87,8 @@ namespace Manufacturing.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<spRptSalesActual_LandedCostModel>()
+                .HasNoKey();
+            modelBuilder.Entity<spSalesInvoiceSummaryPivotModel>()
                 .HasNoKey();
             base.OnModelCreating(modelBuilder);           
         }
