@@ -78,32 +78,48 @@ namespace Manufacturing.Controllers
             return LandedCost;
         }
 
-        public IActionResult TodaySalesBMI(string category)
+        [AuthorizedAction]
+        public IActionResult TodaySalesBMI(DateTime? dateTime, string category)
         {
-            //var salesDetil = TransactionDetail(dateTime, category);
-            /*var DetilTransaksi = (from transaksi in salesDetil
-                                    group transaksi by new { transaksi.SONumber, transaksi.SalesPerson, transaksi.BilltoName, transaksi.DocumentNo, transaksi.Category } into hasil
-                                    select new spSalesInvoiceSummaryPivotModel
-                                    {
-                                        SONumber = hasil.Key.SONumber,
-                                        SalesPerson = hasil.Key.SalesPerson,
-                                        BilltoName = hasil.Key.BilltoName,
-                                        DocumentNo = hasil.Key.DocumentNo,
-                                        Qty = hasil.Sum(a => a.Qty),
-                                        Liters = hasil.Sum(a => a.Liters),
-                                        Cost = hasil.Sum(a => a.Cost),
-                                        Amount = hasil.Sum(a => a.Amount),
-                                        Discount = hasil.Sum(a => a.Discount),
-                                        Tax = hasil.Sum(a => a.Tax),
-                                        AmountIncdTax = hasil.Sum(a => a.AmountIncdTax),
-                                        LandedCost = hasil.Sum(a => a.LandedCost),
-                                        Revenue = hasil.Sum(a => a.Revenue),
-                                        Category = hasil.Key.Category,
-                                        Liters_Sub = hasil.Sum(a => a.Liters_Sub),
-                                        AmountIncdTax_Sub = hasil.Sum(a => a.AmountIncdTax_Sub)
-                                    }).ToList();*/
+            
             ViewBag.Category = category; 
             return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult TodaySalesBIP(DateTime? dateTime, string category)
+        {
+
+            ViewBag.Category = category;
+            return View();
+        }
+
+        //[AuthorizedAPI]
+        public IActionResult TodaySales(DateTime? dateTime, string category)
+        {
+            var transaksi = TransactionDetail(dateTime, category);
+            var DetilTransaksi = (from trans in transaksi
+                                  group trans by new { trans.SONumber, trans.SalesPerson, trans.BilltoName, trans.DocumentNo, trans.Category } into hasil
+                                  select new spSalesInvoiceSummaryPivotModel
+                                  {
+                                      SONumber = hasil.Key.SONumber,
+                                      SalesPerson = hasil.Key.SalesPerson,
+                                      BilltoName = hasil.Key.BilltoName,
+                                      DocumentNo = hasil.Key.DocumentNo,
+                                      Qty = hasil.Sum(a => a.Qty),
+                                      Liters = hasil.Sum(a => a.Liters),
+                                      Cost = hasil.Sum(a => a.Cost),
+                                      Amount = hasil.Sum(a => a.Amount),
+                                      Discount = hasil.Sum(a => a.Discount),
+                                      Tax = hasil.Sum(a => a.Tax),
+                                      AmountIncdTax = hasil.Sum(a => a.AmountIncdTax),
+                                      LandedCost = hasil.Sum(a => a.LandedCost),
+                                      Revenue = hasil.Sum(a => a.Revenue),
+                                      Category = hasil.Key.Category,
+                                      Liters_Sub = hasil.Sum(a => a.Liters_Sub),
+                                      AmountIncdTax_Sub = hasil.Sum(a => a.AmountIncdTax_Sub)
+                                  }).ToList();
+            return new JsonResult(DetilTransaksi);
         }
 
         public IEnumerable<spSalesInvoiceSummaryPivotModel>TransactionDetail(DateTime? dateTime, string category)

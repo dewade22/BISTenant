@@ -12,6 +12,7 @@ let bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oc
 
 $(document).ready(function () {
     Days();
+    console.log(window.location.href)
 })
 
 $('#search').click(function () {
@@ -95,7 +96,7 @@ function MonthlyRevenueBMI(myDate, result) {
     for (let i = 0; i < sales.length; i++) {
         let product = `<tr>
                         <td>${sales[i].itemCategory}</td>
-                        <td>Rp. ${(sales[i].revenueDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${sales[i].revenueDay == 0 ? `RP. ${(sales[i].revenueDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/TodaySalesBMI?dateTime=${dates}&category=${sales[i].itemCategory}">Rp. ${(sales[i].revenueDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
                         <td>Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td>${Math.round(((sales[i].revenueMonth / sales[i].revenueBudget * 100) + Number.EPSILON) * 100) / 100} %</td>
                         <td>Rp. ${(sales[i].revenueMonth / sales[i].daysNo).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>

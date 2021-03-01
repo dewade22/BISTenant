@@ -120,7 +120,7 @@ namespace Manufacturing.Controllers
                             join b in _appContext.Items on a.RecordNo equals b.ItemNo
                             where a.ShipmentDate.Value.Year == tahun
                             group new { a, b } by new{ bulan = a.ShipmentDate.Value.Month } into c
-                            select new { c.Key.bulan, jumlah = c.Sum(a => a.a.Quantity * a.b.UnitPrice ) }).ToList();
+                            select new { c.Key.bulan, jumlah = c.Sum(a => a.a.AmountIncludingVat ) }).ToList();
 
             string[] sumInvoices = (from month in months
                                     from a in invoices.Where(a => month == a.bulan).DefaultIfEmpty()
@@ -130,7 +130,7 @@ namespace Manufacturing.Controllers
                                    where a.ShipmentDate.Value.Year == lastYear
                                    join b in _appContext.Items on a.RecordNo equals b.ItemNo
                                    group new { a, b } by new { bulan = a.ShipmentDate.Value.Month } into c
-                                   select new { c.Key.bulan, jumlah = c.Sum(a => a.a.Quantity * a.b.UnitPrice) }).ToList();
+                                   select new { c.Key.bulan, jumlah = c.Sum(a => a.a.AmountIncludingVat) }).ToList();
 
             string[] sumLastYear = (from month in months
                                     from a in lastyearInvoces.Where(a => month == a.bulan).DefaultIfEmpty()
