@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Today Sales";
+    ViewData["Title"] = "Monthly Sales";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
@@ -19,6 +19,7 @@
                 <table id="tableSales" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
                     <thead>
                         <tr>
+                            <th data-column-id="documentDate">Date</th>
                             <th data-column-id="soNumber">SO Number</th>
                             <th data-column-id="documentNo">Document No</th>
                             <th data-column-id="salesPerson">Sales Person</th>
@@ -45,5 +46,6 @@
 
 @section Scripts{
     <script src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
-    <script src="~/backend/SalesActual/BIPDetilForms.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/moment/min/moment.min.js"></script>
+    <script src="~/backend/SalesActual/BMIMonthlyForm.js"></script>
 }

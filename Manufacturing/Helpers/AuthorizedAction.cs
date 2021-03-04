@@ -26,10 +26,9 @@ namespace Manufacturing.Helpers
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new
                     {
-                        //Client = "Balimoon",
                         Controller = "Account",
                         Action = "Index",
-                        returnUrl = filterContext.HttpContext.Request.Path.ToUriComponent()
+                        returnUrl = filterContext.HttpContext.Request.Path.ToUriComponent()+""+filterContext.HttpContext.Request.QueryString.ToUriComponent()                    
                     }));
                 return;
             }

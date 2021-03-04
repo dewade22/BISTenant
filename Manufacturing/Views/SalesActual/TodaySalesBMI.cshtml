@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
-
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
 }
 
 <section id="content">
@@ -16,26 +16,26 @@
                 <h2>List of Transaction</h2>
             </div>
             <div class="table-responsive">
-                <table id="tableSales" class="table table-valign-middle table-bordered table-hover"  style="table-layout:fixed; width:100%">
+                <table id="tableSales" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
                     <thead>
                         <tr>
-                            <th style="font-weight:bold; width:200px">SO Number</th>
-                            <th style="font-weight:bold; width:200px">Document No</th>
-                            <th style="font-weight:bold; width:200px">Sales Person</th>
-                            <th style="font-weight:bold; width:250px">Customers</th>
-                            <th style="font-weight:bold; width:150px">Qty</th>
-                            <th style="font-weight:bold; width:150px">Liter</th>
-                            <th style="font-weight:bold; width:250px">Cost</th>
-                            <th style="font-weight:bold; width:250px">Amount</th>
-                            <th style="font-weight:bold; width:250px">Discount</th>
-                            <th style="font-weight:bold; width:200px">Tax</th>
-                            <th style="font-weight:bold; width:300px">Amount Incd Tax</th>
-                            <th style="font-weight:bold; width:150px">Landed Cost</th>
-                            <th style="font-weight:bold; width:250px">Revenue</th>
+                            <th data-column-id="soNumber">SO Number</th>
+                            <th data-column-id="documentNo">Document No</th>
+                            <th data-column-id="salesPerson">Sales Person</th>
+                            <th data-column-id="billtoName">Customers</th>
+                            <th data-column-id="category">Product</th>
+                            <th data-column-id="qty">Qty</th>
+                            <th data-column-id="liters" data-formatter="liters">Liter</th>
+                            <th data-column-id="cost" data-formatter="cost">Cost</th>
+                            <th data-column-id="amount" data-formatter="amount">Amount</th>
+                            <th data-column-id="discount" data-formatter="discount">Discount</th>
+                            <th data-column-id="tax" data-formatter="tax">Tax</th>
+                            <th data-column-id="amountIncdTax" data-formatter="amountIncdTax">Amount Incd Tax</th>
+                            <th data-column-id="landedCost" data-formatter="landedCost">Landed Cost</th>
+                            <th data-column-id="revenue" data-formatter="revenue">Revenue</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
                     </tbody>
                 </table>
             </div>
@@ -44,6 +44,7 @@
 </section>
 
 @section Scripts{
+    <script src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script src="~/backend/SalesActual/BMIDetilForms.js"></script>
 }
 

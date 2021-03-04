@@ -8,10 +8,11 @@ function Sales() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: baseurl + '/BalimoonBIP/SalesActual/TodaySalesDataBIP' + param,
+        url: baseurl + '/BalimoonBMI/SalesActual/MonthlySalesDataBMI' + param,
         success: function (result) {
             for (let i = 0; i < result.length; i++) {
                 let transaksi = `<tr>
+                                    <td>${(moment(result[i].documentDate)).format('YYYY-MM-DD')}</td>
                                     <td>${result[i].soNumber}</td>
                                     <td>${result[i].documentNo}</td>
                                     <td>${result[i].salesPerson}</td>
@@ -29,7 +30,6 @@ function Sales() {
                                  </tr>`
                 jQuery("#tableSales tbody").append(transaksi);
             }
-
         }
     }).done(function () {
         initDataTable();

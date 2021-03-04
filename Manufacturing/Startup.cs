@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 namespace Manufacturing
 {
@@ -51,12 +52,14 @@ namespace Manufacturing
             services.AddDbContext<SystemDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ManufacturingMainSystem:ConnectionString"]));
 
+            services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 });
-
+            
             services.AddScoped<ApplicationDbContext>();
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
             //    Configuration["Data:ManufacturingApplication:ConnectionString"]));

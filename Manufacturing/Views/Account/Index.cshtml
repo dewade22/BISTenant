@@ -69,7 +69,7 @@
                         data: {
                             EMailAddress : $('#email').val(),
                             UserPassword: $('#password').val(),
-                            returnUrl: '@ViewBag.ReturnUrl'
+                            returnUrl: '@Html.Raw(ViewBag.ReturnUrl)'
                         },
 
                         error: function (result) {

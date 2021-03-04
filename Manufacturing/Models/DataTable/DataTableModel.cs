@@ -1,56 +1,68 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Manufacturing.Models.DataTable
 {
-    public class DTResult<T>
+    public class DtResult<T>
     {
+        [JsonProperty("draw")]
         public int Draw { get; set; }
+        [JsonProperty("recordsTotal")]
         public int RecordsTotal { get; set; }
+        [JsonProperty("recordsFiltered")]
         public int RecordsFiltered { get; set; }
+        [JsonProperty("data")]
         public IEnumerable<T> Data { get; set; }
+        [JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
+        public string Error { get; set; }
     }
 
-    public abstract class DTRow
+    public abstract class DtRow
     {
-        public virtual string DT_RowId => null;
-        public virtual string DT_RowClass => null;
-        public virtual object DT_RowData => null;
+        [JsonProperty("DT_RowId")]
+        public virtual string DtRowId => null;
+        [JsonProperty("DT_RowClass")]
+        public virtual string DtRowClass => null;
+        [JsonProperty("DT_RowData")]
+        public virtual object DtRowData => null;
+        [JsonProperty("DT_RowAttr")]
+        public virtual object DtRowAttr => null;
     }
-    public class DTParameters
+    public class DtParameters
     {
         public int Draw { get; set; }
-        public DTColumn[] Columns { get; set; }
-        public DTOrder[] Order { get; set; }
+        public DtColumn[] Columns { get; set; }
+        public DtOrder[] Order { get; set; }
         public int Start { get; set; }
         public int Length { get; set; }
-        public DTSearch Search { get; set; }
+        public DtSearch Search { get; set; }
         public string SortOrder => Columns != null && Order != null && Order.Length > 0
             ? (Columns[Order[0].Column].Data +
-               (Order[0].Dir == DTOrderDir.DESC ? " " + Order[0].Dir : string.Empty))
+               (Order[0].Dir == DtOrderDir.Desc ? " " + Order[0].Dir : string.Empty))
             : null;
         public IEnumerable<string> AdditionalValues { get; set; }
 
     }
-    public class DTColumn
+    public class DtColumn
     {
         public string Data { get; set; }
         public string Name { get; set; }
         public bool Searchable { get; set; }
         public bool Orderable { get; set; }
-        public DTSearch Search { get; set; }
+        public DtSearch Search { get; set; }
     }
-    public class DTOrder
+    public class DtOrder
     {
         public int Column { get; set; }
-        public DTOrderDir Dir { get; set; }
+        public DtOrderDir Dir { get; set; }
     }
 
-    public enum DTOrderDir
+    public enum DtOrderDir
     {
-        ASC,
-        DESC
+        Asc,
+        Desc
     }
-    public class DTSearch
+    public class DtSearch
     {
         public string Value { get; set; }
         public bool Regex { get; set; }

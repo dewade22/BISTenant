@@ -12,7 +12,6 @@ let bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oc
 
 $(document).ready(function () {
     Days();
-    console.log(window.location.href)
 })
 
 $('#search').click(function () {
@@ -97,7 +96,7 @@ function MonthlyRevenueBMI(myDate, result) {
         let product = `<tr>
                         <td>${sales[i].itemCategory}</td>
                         <td>${sales[i].revenueDay == 0 ? `RP. ${(sales[i].revenueDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/TodaySalesBMI?dateTime=${dates}&category=${sales[i].itemCategory}">Rp. ${(sales[i].revenueDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
-                        <td>Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${sales[i].revenueMonth == 0 ? `Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/MonthlySalesBMI?dateTime=${dates}&category=${sales[i].itemCategory}">Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</a>`}</td>
                         <td>${Math.round(((sales[i].revenueMonth / sales[i].revenueBudget * 100) + Number.EPSILON) * 100) / 100} %</td>
                         <td>Rp. ${(sales[i].revenueMonth / sales[i].daysNo).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td>Rp. ${(sales[i].revenueBudget).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -135,8 +134,8 @@ function MonthlyRevenueBMI(myDate, result) {
     //Total
     let rowTotal = `<tr>
                         <td style="font-weight:bold">Total</td>
-                        <td style="font-weight:bold">Rp. ${totalToday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td style="font-weight:bold">Rp. ${totalBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td style="font-weight:bold">${totalToday == 0 ? `Rp. ${(totalToday).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/TodaySalesBMI?dateTime=${dates}&category=">Rp. ${(totalToday).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
+                        <td style="font-weight:bold">${totalBulan == 0 ? `Rp. ${(totalBulan).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/MonthlySalesBMI?dateTime=${dates}&category=">Rp. ${(totalBulan).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`} </td>
                         <td style="font-weight:bold">${Math.round(((totalBulan / targetBulan * 100) + Number.EPSILON) * 100) / 100}%</td>
                         <td style="font-weight:bold">Rp. ${rataHari.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td style="font-weight:bold">Rp. ${targetBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -222,6 +221,7 @@ function MonthlyLitersBMI(myDate, result) {
 }
 
 function YearlyRevenueBMI(myDate, result) {
+    let dates = myDate.getMonth() + 1 + '-' + myDate.getDate() + '-' + myDate.getFullYear();
     let sales = result.salesActual;
     //Untuk dijadikan total
     let totalBulan = 0;
@@ -233,8 +233,8 @@ function YearlyRevenueBMI(myDate, result) {
     for (let i = 0; i < sales.length; i++) {
         let product = `<tr>
                         <td>${sales[i].itemCategory}</td>
-                        <td>Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td>Rp. ${(sales[i].revenueYear).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${sales[i].revenueMonth == 0 ? `Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/MonthlySalesBMI?dateTime=${dates}&category=${sales[i].itemCategory}">Rp. ${(sales[i].revenueMonth).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
+                        <td>${sales[i].revenueYear == 0 ? `Rp. ${sales[i].revenueYear.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/YearlySalesBMI?dateTime=${dates}&category=${sales[i].itemCategory}">Rp. ${sales[i].revenueYear.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
                         <td>${Math.round(((sales[i].revenueYear / sales[i].revenueYearlyBudget * 100) + Number.EPSILON) * 100) / 100} %</td>
                         <td>Rp. ${(sales[i].revenueYear / (myDate.getMonth()+1)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td>Rp. ${(sales[i].revenueYearlyBudget).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -273,8 +273,8 @@ function YearlyRevenueBMI(myDate, result) {
     //Total
     let rowTotal = `<tr>
                         <td style="font-weight:bold">Total</td>
-                        <td style="font-weight:bold">Rp. ${totalBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td style="font-weight:bold">Rp. ${totalTahun.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td style="font-weight:bold">${totalBulan == 0 ? `Rp. ${totalBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/MonthlySalesBMI?dateTime=${dates}&category=">Rp. ${totalBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
+                        <td style="font-weight:bold">${totalTahun == 0 ? `Rp. ${totalTahun.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `<a href="${baseurl}/Balimoon/SalesActual/YearlySalesBMI?dateTime=${dates}&category=">Rp. ${totalTahun.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</a>`}</td>
                         <td style="font-weight:bold">${Math.round(((totalTahun / targetTahun * 100) + Number.EPSILON) * 100) / 100}%</td>
                         <td style="font-weight:bold">Rp. ${rataBulan.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td style="font-weight:bold">Rp. ${targetTahun.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>

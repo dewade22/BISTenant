@@ -55,8 +55,7 @@ namespace Manufacturing.Controllers
         [HttpPost]
         public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null)
         {
-            IActionResult response = Unauthorized();
-
+            IActionResult response = Unauthorized(); 
             var user = AuthUsers(SystemUsers);
             var client = _httpContextAccessor.HttpContext.GetClient();
             if (client != null)
