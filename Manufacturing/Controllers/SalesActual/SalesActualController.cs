@@ -126,7 +126,7 @@ namespace Manufacturing.Controllers
             List<spSalesInvoiceSummaryPivotModel> DetilTransaksi = new List<spSalesInvoiceSummaryPivotModel>();
             
             try {
-                DetilTransaksi = _context.SpSalesInvoiceSummaryPivotModels.FromSqlRaw(@"exec spSalesInvoiceSummaryPivot @StartPeriod, @EndPeriod, @prmCategory", parameters).ToList();
+                DetilTransaksi = _context.SpSalesInvoiceSummaryPivotModels.FromSqlRaw(@"exec spSalesInvoiceSummaryPivot @StartPeriod, @EndPeriod, @prmCategory", parameters).AsNoTracking().ToList();
             }
             catch(Exception ex)
             {
@@ -241,13 +241,26 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult YearlySalesBMI(DateTime? dateTime, string category)
         {
+            var cat = category;
             if (category == null)
             {
                 category = "All";
+                cat = "";
             }
-
             ViewBag.Category = category;
-            return View();
+
+            //untuk client side
+            var startDate = new DateTime(dateTime.Value.Year, 1, 1);
+            var parameters = new[]
+            {
+                new SqlParameter("@StartPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = startDate},
+                new SqlParameter("@EndPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = dateTime.Value.Date},
+                new SqlParameter("@prmCategory", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = cat}
+            };
+            var transaksi = TransactionDetailBMI(parameters);
+            var filtered = FilterSO(transaksi);
+
+            return View(filtered);
         }
 
         [AuthorizedAPI]

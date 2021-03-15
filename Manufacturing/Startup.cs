@@ -61,6 +61,9 @@ namespace Manufacturing
                 });
             
             services.AddScoped<ApplicationDbContext>();
+
+
+
             //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
             //    Configuration["Data:ManufacturingApplication:ConnectionString"]));
 

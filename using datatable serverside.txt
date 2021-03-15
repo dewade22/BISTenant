@@ -1,0 +1,104 @@
+//Controller
+[AuthorizedAPI]
+        [HttpPost]
+        public IActionResult YearlySalesDataBMI([FromBody] DtParameters dtParameters, DateTime? dateTime, string category)
+        {
+           if (category == null)
+            {
+                category = "";
+            }
+            var startDate = new DateTime(dateTime.Value.Year, 1, 1);
+            var parameters = new[]
+            {
+                new SqlParameter("@StartPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = startDate},
+                new SqlParameter("@EndPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = dateTime.Value.Date},
+                new SqlParameter("@prmCategory", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = category}
+            };
+            var transaksi = TransactionDetailBMI(parameters);
+            var filtered = FilterSO(transaksi);
+            var result = filtered.AsQueryable();
+            var filters = filtered;
+            var searchBy = dtParameters.Search?.Value;
+
+            // if we have an empty search then just order the results by Id ascending
+            var orderCriteria = "Id";
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.SalesPerson != null && r.SalesPerson.ToLower().Contains(searchBy.ToLower()) ||
+                r.DocumentNo != null && r.DocumentNo.ToLower().Contains(searchBy.ToLower()) ||
+                r.SONumber != null && r.SONumber.ToLower().Contains(searchBy.ToLower()) ||
+                r.BilltoName != null && r.BilltoName.ToLower().Contains(searchBy.ToLower()) ||
+                r.Category != null && r.Category.ToLower().Contains(searchBy.ToLower())
+                );
+            }
+            result =orderAscendingDirection ? result.OrderByDynamic(orderCriteria, (LinqExtension.Order)DtOrderDir.Asc) : result.OrderByDynamic(orderCriteria, (LinqExtension.Order)DtOrderDir.Desc);
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = filters.Count();
+
+            return Json(new DtResult<spSalesInvoiceSummaryPivotModel>
+            {
+                Draw = dtParameters.Draw,
+                RecordsTotal = totalResultsCount,
+                RecordsFiltered = filteredResultsCount,
+                Data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            });
+
+//JS
+
+let param = window.location.search;
+let baseurl = window.location.origin;
+
+$(document).ready(function () {
+    Sales();
+})
+
+function Sales() {
+    $('#tableSales').DataTable({
+        stateSave: true,
+        autoWidth: true,
+        scrollX: true,
+        processing: true,
+        serverSide: true,
+        paging: true,
+        searching: { regex: true },
+        ajax: {
+            url: baseurl + '/BalimoonBMI/SalesActual/YearlySalesDataBMI' + param,
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+        },
+        columns: [
+            { data: "documentDate" },
+            { data: "soNumber" },
+            { data: "documentNo" },
+            { data: "salesPerson" },
+            { data: "billtoName" },
+            { data: "category" },
+            { data: "qty" },
+            { data: "liters" },
+            { data: "cost" },
+            { data: "amount" },
+            { data: "discount" },
+            { data: "tax" },
+            { data: "amountIncdTax" },
+            { data: "landedCost" },
+            { data: "revenue" }
+            
+        ]
+    })
+}

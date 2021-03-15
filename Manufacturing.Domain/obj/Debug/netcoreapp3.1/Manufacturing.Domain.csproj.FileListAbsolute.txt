@@ -31,3 +31,4 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Domain\obj\Debug\netcoreapp3.1\M
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.AssemblyInfo.cs
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.dll
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
+D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.csprojAssemblyReference.cache
