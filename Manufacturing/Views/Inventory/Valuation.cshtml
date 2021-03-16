@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "Inventory Valuation";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link href="~/sources/vendors/bowercomponents/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Inventory Valuation</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <p class="c-black f-500 m-b-5 m-t-20">Parameters</p>
+                    <div class="col-sm-4">
+                        <p class="c-black f-500 m-b-20">Start Date</p>
+
+                        <div class="input-group form-group">
+                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                            <div class="dtp-container fg-line">
+                                <input type='text' class="form-control date-picker" id="startDate" placeholder="Click here...">
+                            </div>
+                        </div>
+                        <br />
+                        <p class="c-black f-500 m-b-20">End Date</p>
+
+                        <div class="input-group form-group">
+                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                            <div class="dtp-container fg-line">
+                                <input type='text' class="form-control date-picker" id="endDate" placeholder="Click here...">
+                            </div>
+                        </div>
+                        <br />
+                        <p class="f-500 m-b-15 c-black">Inventory Rpt</p>
+                        <select asp-items="@ViewBag.cboInventRpt" class="selectpicker" id="invenRpt" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="c-black f-500 m-b-20">Category</p>
+                        <select asp-items="@ViewBag.cboCategory" class="selectpicker" id="cboCategory" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                        <br />
+
+                        <p class="c-black f-500 m-b-20">Product Group</p>
+                        <select asp-items="@ViewBag.cboProductGroups" class="selectpicker" id="cboProductGroups" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                        <br />
+
+                        <p class="c-black f-500 m-b-20">Location Code</p>
+                        <select asp-items="@ViewBag.cboLocation" class="selectpicker" id="cboLocation" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="c-black f-500 m-b-20">Flavour</p>
+                        <select asp-items="@ViewBag.cboFlavour" class="selectpicker" id="cboFlavour" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                        <br />
+
+                        <p class="c-black f-500 m-b-20">Size</p>
+                        <select asp-items="@ViewBag.cboSize" class="selectpicker" id="cboSize" data-width="100%" data-placeholder="Choose a Record">
+                            <option value="">All</option>
+                        </select>
+                        <br />
+                        <br />
+                    </div>
+
+                </div>
+                <center><button id="search" type="button" class="btn btn-primary btn-icon-text waves-effect"><i class="zmdi zmdi-search"></i>Search</button></center>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="~/backend/Inventory/ValuationForm.js"></script>
+}
