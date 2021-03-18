@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Manufacturing.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Manufacturing.Models;
+using Manufacturing.Helpers;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using Manufacturing.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manufacturing.Controllers
 {
@@ -22,6 +26,7 @@ namespace Manufacturing.Controllers
             return View();
         }
 
+        [AuthorizedAction]
         public IActionResult Valuation()
         {
             //Inven Report
@@ -51,10 +56,35 @@ namespace Manufacturing.Controllers
             return View();
         }
 
-        public JsonResult ValuationData(ValuationFilter models)
+        public IActionResult ValuationData(ValuationFilter models)
         {
             var res = models;
-            return new JsonResult(models);
+            var parameters = new[]
+           {
+                new SqlParameter("@StartingPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = res.startDate},
+                new SqlParameter("@EndingPeriod", System.Data.SqlDbType.Date) { Direction = ParameterDirection.Input, Value = res.endDate},
+                new SqlParameter("@prmInventory", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = ""},
+                new SqlParameter("@prmCategory", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.category},
+                new SqlParameter("@prmProductGroup", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.prodGroups},
+                new SqlParameter("@prmSizes", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.Size},
+                new SqlParameter("@prmFlavour", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.Flavour},
+                new SqlParameter("@prmInventRpt", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.invenRPT},
+                new SqlParameter("@prmLocation", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = res.location},
+                new SqlParameter("@ItemNo", System.Data.SqlDbType.VarChar) { Direction = ParameterDirection.Input, Value = ""},
+            };
+
+            //Define Model
+            List<spRptInventoryValuationModel> Valuation = new List<spRptInventoryValuationModel>();
+            try
+            {
+                Valuation = _context.SpRptInventoryValuationModel.FromSqlRaw(@"exec spRptInventoryValuation @StartingPeriod, @EndingPeriod, @prmInventory, @prmCategory, @prmProductGroup, @prmSizes, @prmFlavour, @prmInventRpt, @prmLocation, @ItemNo", parameters).AsNoTracking().ToList();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            return new JsonResult(Valuation);
         }
     }
 }

@@ -41,6 +41,7 @@ namespace Manufacturing.Data
         public virtual DbSet<spRptSalesActualModel> SpRptSalesActualModels { get; set; }
         public virtual DbSet<spRptSalesActual_LandedCostModel> SpRptSalesActual_LandedCosts { get; set; }
         public virtual DbSet<spSalesInvoiceSummaryPivotModel> SpSalesInvoiceSummaryPivotModels { get; set; }
+        public virtual DbSet<spRptInventoryValuationModel> SpRptInventoryValuationModel { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -89,6 +90,8 @@ namespace Manufacturing.Data
             modelBuilder.Entity<spRptSalesActual_LandedCostModel>()
                 .HasNoKey();
             modelBuilder.Entity<spSalesInvoiceSummaryPivotModel>()
+                .HasNoKey();
+            modelBuilder.Entity<spRptInventoryValuationModel>()
                 .HasNoKey();
             base.OnModelCreating(modelBuilder);           
         }

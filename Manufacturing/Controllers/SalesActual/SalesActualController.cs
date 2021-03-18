@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Manufacturing.Helpers;
 using Manufacturing.Data;
 using Microsoft.Data.SqlClient;
