@@ -56,6 +56,7 @@ namespace Manufacturing.Controllers
             return View();
         }
 
+        [AuthorizedAPI]
         public IActionResult ValuationData(ValuationFilter models)
         {
             var res = models;

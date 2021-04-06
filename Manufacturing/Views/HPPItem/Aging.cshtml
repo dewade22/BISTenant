@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewData["Title"] = "Aging";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Aging Data</h2>
+            </div>
+            <div class="card-body card-padding">
+                <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!--TextBox 1-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyMesin">
+                                <label class="fg-label">Qty Mesin</label>
+                            </div>
+                        </div>
+                        <!--TextBox 2-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="KapasitasMesin">
+                                <label class="fg-label">Kapasitas Mesin</label>
+                            </div>
+                        </div>
+                        <!--TextBox 3-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="JamKerja">
+                                <label class="fg-label">Jam Kerja</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <!--TextBox 1-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai">
+                                <label class="fg-label">Tangki Terpakai</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 m-b-20">
+                            <p class="f-500 c-black m-b-15">Kapasitas Tangki</p>
+                            <select id="KapasitasTangki" class="chosen" data-placeholder="Pilih Tangki">
+                                <option value="">Pilih Tangki</option>
+                                <option value="200">200 L</option>
+                                <option value="500">500 L</option>
+                                <option value="1000">1000 L</option>
+                                <option value="2000">2000 L</option>
+                                <option value="5000">5000 L</option>
+                                <option value="8000">8000 L</option>
+                            </select>
+                        </div>
+                        <br /><br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Table Summary</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="table-responsive">
+                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /><br /><br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" disabled>
+                            <label class="fg-label">Total Per Machine Capacity</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" disabled>
+                            <label class="fg-label">Total Per Unit of Measure</label>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
+                </div>
+            </div>
+        </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/AgingForm.js"></script>
+}

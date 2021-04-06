@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Formula";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+ }
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"]</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Calculate Formula</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!--Chosen 1st-->
+                        <p class="f-500 c-black m-b-15">List of MMEA</p>
+                        <select asp-items="@ViewBag.ListMMEA" id="selectMMEA" class="chosen" data-placeholder="Choose MMEA">
+                            <option value="">Choose MMEA</option>
+                        </select>
+                        <br /><br />
+                        <p class="f-500 c-black m-b-15">List of BOM</p>
+                        <select id="sMMEA2" class="chosen" data-placeholder="Choose BOM">
+                            <option value="">Choose BOM</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <center><button type="button" class="btn btn-primary" id="btnNext">Next</button></center>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{ 
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/formulaForm.js"></script>
+}

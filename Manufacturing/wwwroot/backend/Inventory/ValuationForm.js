@@ -3,6 +3,17 @@
 let dataTables = $('#tableValuation').DataTable({
     "scrollX": true,
     "autoWidth": true,
+    "dom": 'Bfrtip',
+    "buttons": [
+        'copy',
+        {
+            extend: 'excelHtml5',
+            filename: function () {
+                let d = new Date();
+                return d.getTime() +' - Inventory Valuation';
+            },
+        },
+    ],
     "columnDefs": [
         {
             "render": function (data, type, row) {
@@ -77,6 +88,9 @@ function doSomething(startingDate = '', endingDate = '', invenRPT = '', category
         }
         else {
             dataTables.clear();
+            //Header Table add Date
+            $('#startDateTable').html(`Start Date : ${startingDate}`);
+            $('#endDateTable').html(`End Date : ${endingDate}`);
             //Ajax
             $.ajax({
                 type: 'GET',

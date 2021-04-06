@@ -42,6 +42,8 @@ namespace Manufacturing.Data
         public virtual DbSet<spRptSalesActual_LandedCostModel> SpRptSalesActual_LandedCosts { get; set; }
         public virtual DbSet<spSalesInvoiceSummaryPivotModel> SpSalesInvoiceSummaryPivotModels { get; set; }
         public virtual DbSet<spRptInventoryValuationModel> SpRptInventoryValuationModel { get; set; }
+        public virtual DbSet<ProductionBomheader> ProductionBomheader { get; set; }
+        public virtual DbSet<ProductionBomline> ProductionBomline { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
