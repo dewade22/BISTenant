@@ -111,7 +111,7 @@
                         <!--TextBox 3-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHWater" disabled>
+                                <input type="number" class="input-sm form-control fg-input" id="FOHWater">
                                 <label class="fg-label">FOH Water</label>
                             </div>
                         </div>
@@ -136,94 +136,91 @@
             </div>
             <div class="card-body card-padding">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <!--Combo Box-->
-                        <div class="col-sm-12 m-b-20">
-                            <p class="f-500 c-black m-b-15">Tampung Air</p>
-                            <select id="PompaTampungAir" class="chosen" data-placeholder="Choose Pompa">
-                                <option value="">Choose Pompa</option>
-                                <option value="A">Pompa A</option>
-                                <option value="B">Pompa Ebara - 0.43KW</option>
-                            </select>
-                        </div>
-                        <br /><br /><br />
-                        <div class="col-sm-3 m-b-20">
-                            <div class="form-group fg-line">
-                                <label>Waktu (Menit)</label>
-                                <input type="number" id="WaktuTampungAir" class="form-control" disabled>
-                            </div>
-                        </div>
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Tampung Air</p>
+                        <select id="PompaTampungAir" class="chosen" data-placeholder="Choose Pompa">
+                            <option value="">Choose Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-25">
                         <br />
-
-                        <div class="col-sm-12 m-b-20">
-                            <p class="f-500 c-black m-b-15">Masukkan Alkohol</p>
-                            <select id="PompaMasukAlkohol" class="chosen" data-placeholder="Choose Pompa">
-                                <option value="">Choose Pompa</option>
-                                <option value="A">Pompa A</option>
-                                <option value="B">Pompa Ebara - 0.43KW</option>
-                            </select>
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuTampungAir" class="form-control">
                         </div>
-                        <br /><br /><br />
-                        <div class="col-sm-3 m-b-20">
-                            <div class="form-group fg-line">
-                                <label>Waktu (Menit)</label>
-                                <input type="number" id="WaktuMasukAlkohol" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div class="col-sm-12 m-b-20">
-                            <p class="f-500 c-black m-b-15">Masukkan Air</p>
-                            <select id="PompaMasukAir" class="chosen" data-placeholder="Choose Pompa">
-                                <option value="">Choose Pompa</option>
-                                <option value="A">Pompa A</option>
-                                <option value="B">Pompa Ebara - 0.43KW</option>
-                            </select>
-                        </div>
-                        <br /><br /><br />
-                        <div class="col-sm-3 m-b-20">
-                            <div class="form-group fg-line">
-                                <label>Waktu (Menit)</label>
-                                <input type="number" id="WaktuMasukAir" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div class="col-sm-12 m-b-20">
-                            <p class="f-500 c-black m-b-15">Sirkulasi</p>
-                            <select id="PompaSirkulasi" class="chosen" data-placeholder="Choose Pompa">
-                                <option value="">Choose Pompa</option>
-                                <option value="A">Pompa A</option>
-                                <option value="B">Pompa Ebara - 0.43KW</option>
-                            </select>
-                        </div>
-                        <br /><br /><br />
-                        <div class="col-sm-3 m-b-20">
-                            <div class="form-group fg-line">
-                                <label>Waktu (Menit)</label>
-                                <input type="number" id="WaktuSirkulasi" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <br />
-
-                        <div class="col-sm-12 m-b-20">
-                            <p class="f-500 c-black m-b-15">Transfer</p>
-                            <select id="PompaTransfer" class="chosen" data-placeholder="Choose Pompa">
-                                <option value="">Choose Pompa</option>
-                                <option value="A">Pompa A</option>
-                                <option value="B">Pompa Ebara - 0.43KW</option>
-                            </select>
-                        </div>
-                        <br /><br /><br />
-                        <div class="col-sm-3 m-b-20">
-                            <div class="form-group fg-line">
-                                <label>Waktu (Menit)</label>
-                                <input type="number" id="WaktuTransfer" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <br />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Masukkan Alkohol</p>
+                        <select id="PompaMasukAlkohol" class="chosen" data-placeholder="Choose Pompa">
+                            <option value="">Choose Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-25">
+                        <br />
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuMasukAlkohol" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Masukkan Air</p>
+                        <select id="PompaMasukAir" class="chosen" data-placeholder="Choose Pompa">
+                            <option value="">Choose Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-25">
+                        <br />
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuMasukAir" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Sirkulasi</p>
+                        <select id="PompaSirkulasi" class="chosen" data-placeholder="Choose Pompa">
+                            <option value="">Choose Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-25">
+                        <br />
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuSirkulasi" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Transfer</p>
+                        <select id="PompaTransfer" class="chosen" data-placeholder="Choose Pompa">
+                            <option value="">Choose Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 m-b-25">
+                        <br />
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuTransfer" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -279,4 +276,3 @@
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/backend/HPP/MixingForm.js"></script>
 }
-

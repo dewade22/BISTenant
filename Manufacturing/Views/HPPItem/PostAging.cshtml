@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "POST Aging";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["Title"] Data</h2>
+            </div>
+            <div class="card-body card-padding">
+                <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <!--TextBox 1-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyMesin">
+                                <label class="fg-label">Qty Mesin</label>
+                            </div>
+                        </div>
+                        <!--TextBox 2-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="KapasitasMesin">
+                                <label class="fg-label">Kapasitas Mesin</label>
+                            </div>
+                        </div>
+                        <!--TextBox 3-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="JamKerjaMesin">
+                                <label class="fg-label">Jam Kerja Mesin</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <!--TextBox 4-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="KapasitasTangki">
+                                <label class="fg-label">Kapasitas Tangki</label>
+                            </div>
+                        </div>
+                        <!--TextBox 5-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai">
+                                <label class="fg-label">Tangki Terpakai</label>
+                            </div>
+                        </div>
+                        <!--SelectBox-->
+                        <p class="f-500 c-black m-b-15">Tipe Labour</p>
+                        <select id="LabourType" class="chosen" data-placeholder="Pilih NaKer">
+                            <option value="">Pilih NaKer</option>
+                            <option value="15625">Daily Worker</option>
+                            <option value="35000">Production Staff</option>
+                            <option value="45000">Supervisor</option>
+                            <option value="50000">Tenaga Ahli</option>
+                        </select>
+                        <br /><br />
+                        <!--TextBox 6-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="LabourHour">
+                                <label class="fg-label">Labour Jam</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <!--TextBox 7-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" disabled>
+                                <label class="fg-label">FOH Electricity</label>
+                            </div>
+                        </div>
+                        <!--TextBox 8-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHGas">
+                                <label class="fg-label">FOH Gas</label>
+                            </div>
+                        </div>
+                        <!--TextBox 9-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel">
+                                <label class="fg-label">FOH Fuel</label>
+                            </div>
+                        </div>
+                        <!--TextBox 9-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHWater">
+                                <label class="fg-label">FOH Water</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["Title"] - Alocation Method</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Transfer</p>
+                        <select id="PompaTransfer" class="chosen" data-placeholder="Pilih Pompa">
+                            <option value="">Pilih Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa B</option>
+                            <option value="C">Pompa C</option>
+                            <option value="D">Pompa D</option>
+                            <option value="E">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="col-sm-4 m-b-25">
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuTransfer" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 m-b-25">
+                        <p class="f-500 c-black m-b-15">Sirkulasi</p>
+                        <select id="PompaSirkulasi" class="chosen" data-placeholder="Pilih Pompa">
+                            <option value="">Pilih Pompa</option>
+                            <option value="A">Pompa A</option>
+                            <option value="B">Pompa B</option>
+                            <option value="C">Pompa C</option>
+                            <option value="D">Pompa D</option>
+                            <option value="E">Pompa Ebara - 0.43KW</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="col-sm-4 m-b-25">
+                        <div class="form-group fg-line">
+                            <label>Waktu (Menit)</label>
+                            <input type="number" id="WaktuSirkulasi" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["Title"] - Summary Table</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="table-responsive">
+                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /><br /><br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" disabled>
+                            <label class="fg-label">Total Per Machine Capacity</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" disabled>
+                            <label class="fg-label">Total Per Unit of Measure</label>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/PostAgingForm.js"></script>
+}

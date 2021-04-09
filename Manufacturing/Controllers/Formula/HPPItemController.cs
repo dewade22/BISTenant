@@ -41,18 +41,26 @@ namespace Manufacturing.Controllers
            
             return new JsonResult(BomLine);
         }
+
+        public string GetBOMName(string BoMId)
+        {
+            string BoMName = _context.ProductionBomheader.Where(a => a.ProductionBomheaderNo == BoMId).Select(a => a.Description).FirstOrDefault();
+            return BoMName;
+        }
+
         [AuthorizedAction]
         public IActionResult PraMixing(string BoMId)
         {
             ViewBag.BomId = BoMId;
-            ViewBag.BomName = _context.ProductionBomheader.Where(a => a.ProductionBomheaderNo == BoMId).Select(a=>a.Description).FirstOrDefault();
+            ViewBag.BomName = GetBOMName(BoMId);
             return View();
         }
+        
         [AuthorizedAction]
         public IActionResult Mixing(string BoMId)
         {
             ViewBag.BomId = BoMId;
-            ViewBag.BomName = _context.ProductionBomheader.Where(a => a.ProductionBomheaderNo == BoMId).Select(a => a.Description).FirstOrDefault();
+            ViewBag.BomName = GetBOMName(BoMId);
             return View();
         }
 
@@ -60,7 +68,39 @@ namespace Manufacturing.Controllers
         public IActionResult Aging(string BoMId)
         {
             ViewBag.BomId = BoMId;
-            ViewBag.BomName = _context.ProductionBomheader.Where(a => a.ProductionBomheaderNo == BoMId).Select(a => a.Description).FirstOrDefault();
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult PostAging(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult CuciBotol(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult Bottling(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult Labeling(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
             return View();
         }
     }

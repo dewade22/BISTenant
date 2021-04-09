@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewData["Title"] = "Cuci Botol";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Perendaman</h2>
+            </div>
+            <div class="card-body card-padding">
+                <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
+                <div class="row">
+                    <div class="col-sm-6 m-b-20">
+                        <!--TextBox 1-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyLabourRendam">
+                                <label class="fg-label">Qty Labour</label>
+                            </div>
+                        </div>
+                        <!--TextBox 2-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyAsamCuka">
+                                <label class="fg-label">Qty Asam Cuka (ML)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 m-b-20">
+                        <!--TextBox 3-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyCatee">
+                                <label class="fg-label">Qty Catee (Satuan?)</label>
+                            </div>
+                        </div>
+                        <!--TextBox 4-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyAirPanas">
+                                <label class="fg-label">Qty Air Panas (Satuan?)</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Pencucian & FOH</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-6 m-b-20">
+                        <!--TextBox 5-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyLabourCuci">
+                                <label class="fg-label">Qty Labour</label>
+                            </div>
+                        </div>
+                        <!--TextBox 6-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtySabunCuci">
+                                <label class="fg-label">Qty Sunlight</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 m-b-20">
+                        <!--TextBox 7-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyKeranjang">
+                                <label class="fg-label">Qty Keranjang</label>
+                            </div>
+                        </div>
+                        <!--TextBox 7-->
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyMesinRinser">
+                                <label class="fg-label">Qty Mesin Rinser</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Summary Table</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="table-responsive">
+                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /><br /><br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerBotol" disabled>
+                            <label class="fg-label">Total Per Botol</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPlusWaste" disabled>
+                            <label class="fg-label">Total Plus Waste</label>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/backend/HPP/CuciBotolForm.js"></script>
+}
