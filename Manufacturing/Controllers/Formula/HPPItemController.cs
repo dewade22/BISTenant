@@ -103,5 +103,29 @@ namespace Manufacturing.Controllers
             ViewBag.BomName = GetBOMName(BoMId);
             return View();
         }
+
+        [AuthorizedAction]
+        public IActionResult PackingBox(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult PackingCukai(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult Summary(string BoMId)
+        {
+            ViewBag.BomId = BoMId;
+            ViewBag.BomName = GetBOMName(BoMId);
+            return View();
+        }
     }
 }

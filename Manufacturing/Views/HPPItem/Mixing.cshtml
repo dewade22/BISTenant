@@ -23,35 +23,35 @@
                         <!--TextBox 1-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="QtyMixer">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyMixer" value="0">
                                 <label class="fg-label">Qty Mixer</label>
                             </div>
                         </div>
                         <!--TextBox 2-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="MixerCapacity">
+                                <input type="number" class="input-sm form-control fg-input" id="MixerCapacity" value="0">
                                 <label class="fg-label">Mixer Capacity</label>
                             </div>
                         </div>
                         <!--TextBox 3-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="JamKerjaMesin" disabled>
+                                <input type="number" class="input-sm form-control fg-input" id="JamKerjaMesin" value="0" disabled>
                                 <label class="fg-label">Jam Kerja Mesin</label>
                             </div>
                         </div>
                         <!--TextBox 4-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai">
+                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai" value="0">
                                 <label class="fg-label">Tank Used</label>
                             </div>
                         </div>
                         <!--TextBox 5-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiKapasitas">
+                                <input type="number" class="input-sm form-control fg-input" id="TangkiKapasitas" value="0">
                                 <label class="fg-label">Tank Capacity</label>
                             </div>
                         </div>
@@ -62,14 +62,14 @@
                         <!--TextBox 1-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour">
+                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour" value="0">
                                 <label class="fg-label">Total Labour</label>
                             </div>
                         </div>
                         <!--TextBox 2-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="Batch">
+                                <input type="number" class="input-sm form-control fg-input" id="Batch" value="0">
                                 <label class="fg-label">1 Batch</label>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <!--TextBox 4-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="LabourHour">
+                                <input type="number" class="input-sm form-control fg-input" id="LabourHour" value="0">
                                 <label class="fg-label">Labour Hour</label>
                             </div>
                         </div>
@@ -97,28 +97,28 @@
                         <!--TextBox 1-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" disabled>
+                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" value="0" disabled>
                                 <label class="fg-label">FOH Electricity</label>
                             </div>
                         </div>
                         <!--TextBox 2-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel" value="0">
                                 <label class="fg-label">FOH Fuel</label>
                             </div>
                         </div>
                         <!--TextBox 3-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHWater">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHWater" value="0">
                                 <label class="fg-label">FOH Water</label>
                             </div>
                         </div>
                         <!--TextBox 4-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHGas">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHGas" value="0">
                                 <label class="fg-label">FOH Gas</label>
                             </div>
                         </div>
@@ -139,9 +139,9 @@
                     <div class="col-sm-8 m-b-25">
                         <p class="f-500 c-black m-b-15">Tampung Air</p>
                         <select id="PompaTampungAir" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="">Choose Pompa</option>
-                            <option value="A">Pompa A</option>
-                            <option value="B">Pompa Ebara - 0.43KW</option>
+                            <option value="0">Choose Pompa</option>
+                            <option value="0.75">Pompa A - 0.75KW</option>
+                            <option value="0.43">Pompa Ebara - 0.43KW</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-25">
@@ -156,9 +156,9 @@
                     <div class="col-sm-8 m-b-25">
                         <p class="f-500 c-black m-b-15">Masukkan Alkohol</p>
                         <select id="PompaMasukAlkohol" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="">Choose Pompa</option>
-                            <option value="A">Pompa A</option>
-                            <option value="B">Pompa Ebara - 0.43KW</option>
+                            <option value="0">Choose Pompa</option>
+                            <option value="0.75">Pompa A - 0.75KW</option>
+                            <option value="0.43">Pompa Ebara - 0.43KW</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-25">
@@ -173,9 +173,9 @@
                     <div class="col-sm-8 m-b-25">
                         <p class="f-500 c-black m-b-15">Masukkan Air</p>
                         <select id="PompaMasukAir" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="">Choose Pompa</option>
-                            <option value="A">Pompa A</option>
-                            <option value="B">Pompa Ebara - 0.43KW</option>
+                            <option value="0">Choose Pompa</option>
+                            <option value="0.75">Pompa A - 0.75KW</option>
+                            <option value="0.43">Pompa Ebara - 0.43KW</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-25">
@@ -190,9 +190,9 @@
                     <div class="col-sm-8 m-b-25">
                         <p class="f-500 c-black m-b-15">Sirkulasi</p>
                         <select id="PompaSirkulasi" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="">Choose Pompa</option>
-                            <option value="A">Pompa A</option>
-                            <option value="B">Pompa Ebara - 0.43KW</option>
+                            <option value="0">Choose Pompa</option>
+                            <option value="0.75">Pompa A - 0.75KW</option>
+                            <option value="0.43">Pompa Ebara - 0.43KW</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-25">
@@ -207,9 +207,9 @@
                     <div class="col-sm-8 m-b-25">
                         <p class="f-500 c-black m-b-15">Transfer</p>
                         <select id="PompaTransfer" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="">Choose Pompa</option>
-                            <option value="A">Pompa A</option>
-                            <option value="B">Pompa Ebara - 0.43KW</option>
+                            <option value="0">Choose Pompa</option>
+                            <option value="0.75">Pompa A - 0.75KW</option>
+                            <option value="0.43">Pompa Ebara - 0.43KW</option>
                         </select>
                     </div>
                     <div class="col-sm-4 m-b-25">
@@ -242,11 +242,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>Mesin Mixer</td>
+                                <td id="TQtyMixer">0</td>
+                                <td id="TPriceMixer">5000000</td>
+                                <td id="TTypeMixer">FOH</td>
+                                <td class="total" id="TTotalMixer">0</td>
                             </tr>
                         </tbody>
                     </table>

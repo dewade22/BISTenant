@@ -3,7 +3,9 @@
     ViewData["Title"] = "Labeling";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
-
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+}
 <section id="content">
     <div class="container">
         <div class="c-header">
@@ -14,8 +16,209 @@
                 <h2 class="card-title">@ViewData["Title"] Data</h2>
             </div>
             <div class="card-body card-padding">
-                <h1 class="text-capitalize">Coming Soon !!</h1>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="BottlePerBatch">
+                                <label class="fg-label">Bottle Per Batch</label>
+                            </div>
+                        </div>
+                        <p class="f-500 c-black m-b-15">Labour Type</p>
+                        <select id="LabourType" class="chosen" data-placeholder="Choose Labour Type">
+                            <option value="">Choose Labour</option>
+                            <option value="35000">Production Staff</option>
+                            <option value="45000">Supervisor</option>
+                            <option value="15625">Daily Worker</option>
+                            <option value="50000">Tenaga Ahli</option>
+                        </select>
+                        <br /><br />
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyLabour" value="1">
+                                <label class="fg-label">Qty Labour</label>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="LabourHour" value="1">
+                                <label class="fg-label">Labour Hour</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" value="0" disabled>
+                                <label class="fg-label">FOH Electricity</label>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHGas" value="0">
+                                <label class="fg-label">FOH Gas</label>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel" value="0">
+                                <label class="fg-label">FOH Fuel</label>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="FOHWater" value="0">
+                                <label class="fg-label">FOH Water</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["Title"] - FOH Electricity</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="f-500 c-black m-b-15">Heatgun 1</p>
+                        <select id="Heatgun1" class="chosen" data-placeholder="Choose HeatGun">
+                            <option value="">Choose Heatgun</option>
+                            <option value="A">HeatGun A</option>
+                            <option value="B">HeatGun B</option>
+                            <option value="C">HeatGun C</option>
+                            <option value="D">HeatGun D</option>
+                        </select>
+                        <br /><br /><br />
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyHeatGun1" value="0">
+                                <label class="fg-label">Qty HeatGun</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="HeatGunTime1" value="0">
+                                <label class="fg-label">Time (Minutes)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p class="f-500 c-black m-b-15">Heatgun 2</p>
+                        <select id="Heatgun2" class="chosen" data-placeholder="Choose HeatGun">
+                            <option value="">Choose Heatgun</option>
+                            <option value="A">HeatGun A</option>
+                            <option value="B">HeatGun B</option>
+                            <option value="C">HeatGun C</option>
+                            <option value="D">HeatGun D</option>
+                        </select>
+                        <br /><br /><br />
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyHeatGun2" value="0">
+                                <label class="fg-label">Qty HeatGun</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="HeatGunTime2" value="0">
+                                <label class="fg-label">Time (Minutes)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="TDL" value="0">
+                                <label class="fg-label">TDL</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="KWHUsed" value="0" disabled>
+                                <label class="fg-label">Total KWh Used</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="TotalFOHE" value="0" disabled>
+                                <label class="fg-label">Total FOH Electricity</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Summary Table</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="table-responsive">
+                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /><br /><br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerBatch" disabled>
+                            <label class="fg-label">Total Per Batch</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group fg-float">
+                        <div class="fg-line">
+                            <input type="number" class="input-sm form-control fg-input" id="TotalPerBottle" disabled>
+                            <label class="fg-label">Total Per Bottle</label>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/LabelingForm.js"></script>
+}

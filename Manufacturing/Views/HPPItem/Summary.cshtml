@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "Summary (Cost Sheet)";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+<section id="conntent">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["Title"]</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="input-sm form-control fg-input" id="Margin" value="0">
+                                <label class="fg-label">Profit Margin (%)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Product</th>
+                                <th colspan="5" id="Product">@ViewBag.BomName</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4">per liter (isi)</th>
+                                <th>kemasan (isi + packing)</th>
+                            </tr>
+                            <tr>
+                                <th>Jenis</th>
+                                <th>Original</th>
+                                <th>Variant 1</th>
+                                <th>Variant 2</th>
+                                <th>Variant 3</th>
+                                <th id="KemasanBotol"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Production Size</td>
+                                <td id="SizeOriginal"></td>
+                                <td id="SizeVariant1"></td>
+                                <td id="SizeVariant2"></td>
+                                <td id="SizeVariant3"></td>
+                                <td id="SizeKemasan"></td>
+                            </tr>
+                            <tr>
+                                <td>Production Cost</td>
+                                <td id="CostOriginal"></td>
+                                <td id="CostVariant1"></td>
+                                <td id="CostVariant2"></td>
+                                <td id="CostVariant3"></td>
+                                <td id="CostKemasan"></td>
+                            </tr>
+                            <tr>
+                                <td id="margintxt">Profit Margin</td>
+                                <td id="MarginOriginal"></td>
+                                <td id="MarginVariant1"></td>
+                                <td id="MarginVariant2"></td>
+                                <td id="MarginVariant3"></td>
+                                <td id="MarginKemasan"></td>
+                            </tr>
+                            <tr>
+                                <td>Sale Price</td>
+                                <td id="SPOriginal"></td>
+                                <td id="SPVariant1"></td>
+                                <td id="SPVariant2"></td>
+                                <td id="SPVariant3"></td>
+                                <td id="SPKemasan"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/backend/HPP/SummaryForm.js"></script>
+
+}

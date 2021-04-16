@@ -20,58 +20,18 @@
                 <p class="m-b-25 m-t-25 c-black f-500">Data</p>
                 <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
                 <div class="row">
-                    <div class="col-sm-4">
-                        <!--TextBox 1-->
+                   <div class="col-sm-6">
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="QtyKompor">
+                                <input type="number" class="input-sm form-control fg-input" id="QtyKompor" value="0">
                                 <label class="fg-label">Qty Kompor</label>
                             </div>
                         </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="MixerCapacity">
-                                <label class="fg-label">Mixer Capacity</label>
-                            </div>
-                        </div>
-                        <!--TextBox 3-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="JamKerjaMesin" disabled>
-                                <label class="fg-label">Jam Kerja Mesin</label>
-                            </div>
-                        </div>
-                        <!--TextBox 4-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai">
-                                <label class="fg-label">Tank Used</label>
-                            </div>
-                        </div>
-                        <!--TextBox 5-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiKapasitas">
-                                <label class="fg-label">Tank Capacity</label>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--Row 2-->
-                    <div class="col-sm-4">
                         <!--TextBox 1-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour">
+                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour" value="0">
                                 <label class="fg-label">Total Labour</label>
-                            </div>
-                        </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="Batch">
-                                <label class="fg-label">1 Batch</label>
                             </div>
                         </div>
                         <!--Combo Box-->
@@ -87,43 +47,49 @@
                         <!--TextBox 4-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="LabourHour">
+                                <input type="number" class="input-sm form-control fg-input" id="LabourHour" value="0">
                                 <label class="fg-label">Labour Hour</label>
                             </div>
                         </div>
 
                     </div>
                     <!--Row 3-->
-                    <div class="col-sm-4">
-                        <!--TextBox 1-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity">
-                                <label class="fg-label">FOH Electricity</label>
-                            </div>
-                        </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel">
-                                <label class="fg-label">FOH Fuel</label>
-                            </div>
-                        </div>
-                        <!--TextBox 3-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHWater">
-                                <label class="fg-label">FOH Water</label>
-                            </div>
-                        </div>
-                        <!--TextBox 4-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHGas">
-                                <label class="fg-label">FOH Gas</label>
-                            </div>
-                        </div>
-                    </div>
+                   <div class="col-sm-6">
+                       <div class="form-group fg-float">
+                           <div class="fg-line">
+                               <input type="number" class="input-sm form-control fg-input" id="MixerCapacity" value="0">
+                               <label class="fg-label">Mixer Capacity (Kg)</label>
+                           </div>
+                       </div>
+                       <!--TextBox 1-->
+                       <div class="form-group fg-float">
+                           <div class="fg-line">
+                               <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" value="0">
+                               <label class="fg-label">FOH Electricity (KW)</label>
+                           </div>
+                       </div>
+                       <!--TextBox 2-->
+                       <div class="form-group fg-float">
+                           <div class="fg-line">
+                               <input type="number" class="input-sm form-control fg-input" id="FOHFuel" value="0">
+                               <label class="fg-label">FOH Fuel (Liters)</label>
+                           </div>
+                       </div>
+                       <!--TextBox 3-->
+                       <div class="form-group fg-float">
+                           <div class="fg-line">
+                               <input type="number" class="input-sm form-control fg-input" id="FOHWater" value="0">
+                               <label class="fg-label">FOH Water (Liters)</label>
+                           </div>
+                       </div>
+                       <!--TextBox 4-->
+                       <div class="form-group fg-float">
+                           <div class="fg-line">
+                               <input type="number" class="input-sm form-control fg-input" id="FOHGas" value="0">
+                               <label class="fg-label">FOH Gas (Kg)</label>
+                           </div>
+                       </div>
+                   </div>
                 </div>
                 <hr />
                 <br />
@@ -142,11 +108,46 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>Kompor</td>
+                                        <td id="TQTYKompor">0</td>
+                                        <td class="harga" id="TPriceKompor">0</td>
+                                        <td id="TTypeKompor">FOH</td>
+                                        <td class="total harga" id="TTotalKompor">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="labourText">Labour</td>
+                                        <td id="TQTYLabour">0</td>
+                                        <td class="harga" id="TPriceLabour">0</td>
+                                        <td id="TTypeLabour">Labour</td>
+                                        <td class="total harga" id="TTotalLabour">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Electricity</td>
+                                        <td id="TQTYElectricity">0</td>
+                                        <td class="harga" id="TPriceElectricity">1614.008</td>
+                                        <td id="TTypeElectricity">FOH</td>
+                                        <td class="total harga" id="TTotalElectricity">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fuel</td>
+                                        <td id="TQTYFuel">0</td>
+                                        <td class="harga" id="TPriceFuel">0</td>
+                                        <td id="TTypeFuel">FOH</td>
+                                        <td class="total harga" id="TTotalFuel">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Water</td>
+                                        <td id="TQTYWater">0</td>
+                                        <td class="harga" id="TPriceWater">22</td>
+                                        <td id="TTypeWater">FOH</td>
+                                        <td class="total harga" id="TTotalWater">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GAS</td>
+                                        <td id="TQTYGas">0</td>
+                                        <td class="harga" id="TPriceGas">11625</td>
+                                        <td id="TTypeGas">FOH</td>
+                                        <td class="total harga" id="TTotalGas">0</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -155,14 +156,14 @@
                         <br /><br /><br />
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" disabled>
+                                <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" value="0" disabled>
                                 <label class="fg-label">Total Per Machine Capacity</label>
                             </div>
                         </div>
                         <br />
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" disabled>
+                                <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" value="0" disabled>
                                 <label class="fg-label">Total Per Unit of Measure</label>
                             </div>
                         </div>
