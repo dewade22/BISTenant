@@ -6,6 +6,7 @@ if (tenantAct.toLowerCase().includes('bmi')) {
 }
 else if (tenantAct.toLowerCase().includes('bip')) {
     $('#SABMI').hide()
+    $('#SBBMI').hide()
 }
 localStorage.setItem("thisAddress", baseUrls + '/' + tenantAct)
 localStorage.getItem("thisAddress");

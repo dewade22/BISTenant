@@ -33,6 +33,12 @@ namespace Manufacturing.Controllers
         {
             return View();
         }
+
+        [AuthorizedAction]
+        public IActionResult SalesBoardBMI()
+        {
+            return View();
+        }
        
 
         //untuk Form SalesActual dan LandedCost BMI BIP
