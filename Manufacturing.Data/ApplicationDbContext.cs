@@ -44,6 +44,7 @@ namespace Manufacturing.Data
         public virtual DbSet<spRptInventoryValuationModel> SpRptInventoryValuationModel { get; set; }
         public virtual DbSet<ProductionBomheader> ProductionBomheader { get; set; }
         public virtual DbSet<ProductionBomline> ProductionBomline { get; set; }
+        public virtual DbSet<spRptSalesBoardModel> SpRptSalesBoardModel { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -95,6 +96,8 @@ namespace Manufacturing.Data
                 .HasNoKey();
             modelBuilder.Entity<spRptInventoryValuationModel>()
                 .HasNoKey();
+            modelBuilder.Entity<spRptSalesBoardModel>()
+               .HasNoKey();
             base.OnModelCreating(modelBuilder);           
         }
 

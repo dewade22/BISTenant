@@ -5,6 +5,7 @@
 
 @section Styles{
     <link href="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/myCustomTable.css" />
 }
 <section id="content">
     <div class="container">
@@ -17,27 +18,47 @@
             <h2 class="card-title"></h2>
         </div>
         <div class="card-body card-padding">
-            <div class="col-sm-12">
-                <div class="col-sm-6 col-sm-offset-2">
-                    <p class="c-black f-500 m-b-20">Choose Date</p>
-                    <div class="input-group form-group">
-                        <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
-                        <div class="dtp-container fg-line">
-                            <input type='text' id="datePicker" class="form-control date-picker" placeholder="Click here...">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-6 col-sm-offset-2">
+                        <p class="c-black f-500 m-b-20">Choose Date</p>
+                        <div class="input-group form-group">
+                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                            <div class="dtp-container fg-line">
+                                <input type='text' id="datePicker" class="form-control date-picker" placeholder="Click here...">
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-1">
+                        <br /><br />
+                        <button class="btn btn-info btn-icon waves-effect waves-circle waves-float" id="search"><i class="zmdi zmdi-search"></i></button>
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                    <br />
-                    <button class="btn btn-info btn-icon waves-effect waves-circle waves-float" id="search"><i class="zmdi zmdi-search"></i></button>
+            </div>
+            <div class="row">
+                <h2 class="text-black-50">PT BalimOOn Indonesia - Sales Board</h2>
+                <p>Report Base on Transaction Date : <label id="tgl-transaksi"></label></p>
+                <p>No Days : <label id="No-Days"></label></p>
+                <p>Total Days : <label id="total-Days"></label></p>
+                <br /><br />
+                <div class="table-responsive  wraptable">
+                    <table id="tabel-SalesBoard" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="headcol" style="width:300px">Produk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        
     </div>
 </section>
 @section Scripts{
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="~/backend/SalesActual/SBBMIForm.js"></script>
+
 }

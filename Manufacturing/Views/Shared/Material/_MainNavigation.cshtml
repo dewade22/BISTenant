@@ -24,6 +24,9 @@
             <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBMI")" id="SBBMI">
                 <a asp-action="SalesBoardBMI" asp-controller="SalesActual">Sales Board PT BMI</a>
             </li>
+            <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBIP")" id="SBBIP">
+                <a asp-action="SalesBoardBIP" asp-controller="SalesActual">Sales Board PT BIP</a>
+            </li>
         </ul>
     </li>
     @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))

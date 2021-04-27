@@ -3,6 +3,7 @@ let baseUrls = window.location.origin
 
 if (tenantAct.toLowerCase().includes('bmi')) {
     $('#SABIP').hide()
+    $('#SBBIP').hide()
 }
 else if (tenantAct.toLowerCase().includes('bip')) {
     $('#SABMI').hide()

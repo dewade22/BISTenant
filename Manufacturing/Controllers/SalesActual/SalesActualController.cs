@@ -39,6 +39,12 @@ namespace Manufacturing.Controllers
         {
             return View();
         }
+
+        [AuthorizedAction]
+        public IActionResult SalesBoardBIP()
+        {
+            return View();
+        }
        
 
         //untuk Form SalesActual dan LandedCost BMI BIP
@@ -352,6 +358,70 @@ namespace Manufacturing.Controllers
                                       AmountIncdTax_Sub = hasil.Sum(a => a.AmountIncdTax_Sub)
                                   }).ToList();
             return DetilTransaksi;
+        }
+
+        [AuthorizedAPI]
+        public IActionResult SBBMI(DateTime? dateTime)
+        {
+            if(dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            var getSalesBoard = SalesBoard(dateTime);
+            var getTotalProduct = TotalProduct(getSalesBoard);
+            var getTotalSales = TotalSalesPerson(getSalesBoard);
+            return new JsonResult(new { hasil = getSalesBoard, product = getTotalProduct, sales = getTotalSales});
+        }
+
+        public IEnumerable<spRptSalesBoardModel> SalesBoard(DateTime? dateTime)
+        {
+            List<spRptSalesBoardModel> SalesBoards = new List<spRptSalesBoardModel>();
+            try
+            {
+                SalesBoards = _context.SpRptSalesBoardModel.FromSqlRaw(@"exec [dbo].[spRptSalesBoard] {0}", dateTime.Value.Date).AsNoTracking().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return (SalesBoards);
+        }
+
+        public int TotalProduct(IEnumerable<spRptSalesBoardModel> models)
+        {
+            var DataProduct = (from product in models
+                               group product by new { product.ItemCategory } into hasil
+                               select new spRptSalesBoardModel
+                               {
+                                   ItemCategory = hasil.Key.ItemCategory
+                               }).ToList();
+            var totalProduct = DataProduct.Count();
+            return (totalProduct);
+        }
+
+        public int TotalSalesPerson(IEnumerable<spRptSalesBoardModel> models)
+        {
+            var DataPerson = (from product in models
+                               group product by new { product.SalesPerson } into hasil
+                               select new spRptSalesBoardModel
+                               {
+                                   ItemCategory = hasil.Key.SalesPerson
+                               }).ToList();
+            var totalSalesPerson = DataPerson.Count();
+            return (totalSalesPerson);
+        }
+
+        [AuthorizedAPI]
+        public IActionResult SBBIP(DateTime? dateTime)
+        {
+            if (dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            var getSalesBoard = SalesBoard(dateTime);
+            var getTotalProduct = TotalProduct(getSalesBoard);
+            var getTotalSales = TotalSalesPerson(getSalesBoard);
+            return new JsonResult(new { hasil = getSalesBoard, product = getTotalProduct, sales = getTotalSales });
         }
     }
 }

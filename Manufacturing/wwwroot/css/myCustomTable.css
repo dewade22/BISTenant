@@ -1,0 +1,70 @@
+﻿.wraptable {
+    overflow-x: scroll;
+    overflow-y: visible;
+    height: 550px;
+    /*margin-left:15%;*/
+    width: 100%;
+}
+
+/* Just common table stuff. */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px 16px;
+}
+
+th {
+    background: #eee;
+}
+
+/*
+.headcol {
+    position: fixed;
+    margin: -15%;
+    background-color: #ffffff
+}
+*/
+/*
+table {
+    border-collapse: collapse;
+    width: 700px;
+    overflow-x: scroll;
+    display: block;
+}
+
+thead {
+    background-color: #EFEFEF;
+}
+
+thead, tbody {
+    display: block;
+}
+
+tbody {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 550px;
+}
+
+td, th {
+    min-width: 100px;
+    height: 25px;
+    border: dashed 1px lightblue;
+}
+
+
+table thead tr th:first-child,
+table tbody tr td:first-child {
+    position: relative;
+    z-index: 10;
+    background-color: #EFEFEF;
+}
+
+table tbody tr td:first-child {
+    background-color: #fff;
+}
+*/
