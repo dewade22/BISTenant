@@ -423,5 +423,11 @@ namespace Manufacturing.Controllers
             var getTotalSales = TotalSalesPerson(getSalesBoard);
             return new JsonResult(new { hasil = getSalesBoard, product = getTotalProduct, sales = getTotalSales });
         }
+
+        [AuthorizedAction]
+        public IActionResult DetilSalesBoard(DateTime? dateTime, string sales)
+        {
+            return View();
+        }
     }
 }

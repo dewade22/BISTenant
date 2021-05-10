@@ -56,12 +56,13 @@ namespace Manufacturing.Controllers
         public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null)
         {
             IActionResult response = Unauthorized(); 
-            var user = AuthUsers(SystemUsers);
+            
             var client = _httpContextAccessor.HttpContext.GetClient();
             if (client != null)
             {
                 if (SystemUsers.EMailAddress != "" && SystemUsers.EMailAddress != null)
                 {
+                    var user = AuthUsers(SystemUsers);
                     SystemUsers _SystemsUsers = _context.SystemUsers.Where(s => s.EMailAddress == SystemUsers.EMailAddress).FirstOrDefault();
                     if (_SystemsUsers != null)
                     {
@@ -69,7 +70,7 @@ namespace Manufacturing.Controllers
                         if (_SystemsUsers.UserPassword == userpass)
                         {
                             //JWT Create Token
-
+                            
                             var tokenString = GenerateJSONWebToken(user);
                             
    
