@@ -1,26 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Balimoon\\Manufacturing_1_1_0_0\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {}
+    "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {}
   },
   "projects": {
-    "D:\\Balimoon\\Manufacturing_1_1_0_0\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {
+    "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Balimoon\\Manufacturing_1_1_0_0\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
+        "projectUniqueName": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
         "projectName": "Manufacturing.Domain",
-        "projectPath": "D:\\Balimoon\\Manufacturing_1_1_0_0\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
-        "packagesPath": "C:\\Users\\IT-Dev\\.nuget\\packages\\",
-        "outputPath": "D:\\Balimoon\\Manufacturing_1_1_0_0\\Manufacturing.Domain\\obj\\",
+        "projectPath": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
+        "packagesPath": "C:\\Users\\IT-DEV\\.nuget\\packages\\",
+        "outputPath": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\IT-Dev\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\IT-DEV\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -31,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -42,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -99,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.114\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

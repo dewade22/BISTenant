@@ -427,7 +427,36 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult DetilSalesBoard(DateTime? dateTime, string sales)
         {
+            if(dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            ViewBag.DateTime = dateTime.Value.Date;
+            ViewBag.SalesPerson = sales;
             return View();
+        }
+
+        [AuthorizedAPI]
+        public IActionResult SalesBoardBMIPerSales(DateTime? dateTime, string sales)
+        {
+            if(dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            var salesBoards = SalesBoard(dateTime);
+            var persales = filterPerSales(salesBoards, sales);
+            return new JsonResult (new {hasil = persales});
+        }
+
+        public IEnumerable<spRptSalesBoardModel> filterPerSales(IEnumerable<spRptSalesBoardModel> model, string sales)
+        {
+            List<spRptSalesBoardModel> data = new List<spRptSalesBoardModel>();
+
+            data = (from mod in model
+                    where mod.SalesPerson == sales
+                    select mod
+                    ).ToList();
+            return data;
         }
     }
 }
