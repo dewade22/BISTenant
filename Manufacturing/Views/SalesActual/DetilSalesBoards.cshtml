@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Detil Sales Board";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link href="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">@ViewData["Title"] -  @ViewBag.SalesPerson</h2>
+            <p class="text-black-50">@ViewBag.DateTime</p>
+        </div>
+        <div class="card-body card-padding">
+            <div class="row">
+                <div class="table-responsive" id="tempatTable">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="~/backend/SalesActual/DetilSalesBoardBIP.js"></script>
+}

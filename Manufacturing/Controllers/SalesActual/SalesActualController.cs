@@ -436,8 +436,20 @@ namespace Manufacturing.Controllers
             return View();
         }
 
+        [AuthorizedAction]
+        public IActionResult DetilSalesBoards(DateTime? dateTime, string sales)
+        {
+            if (dateTime == null)
+            {
+                dateTime = DateTime.Now;
+            }
+            ViewBag.DateTime = dateTime.Value.Date;
+            ViewBag.SalesPerson = sales;
+            return View();
+        }
+
         [AuthorizedAPI]
-        public IActionResult SalesBoardBMIPerSales(DateTime? dateTime, string sales)
+        public IActionResult SalesBoardPerSales(DateTime? dateTime, string sales)
         {
             if(dateTime == null)
             {

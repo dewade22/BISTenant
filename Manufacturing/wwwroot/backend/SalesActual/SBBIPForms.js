@@ -40,16 +40,16 @@ function SBToday(date = fullDT) {
         success: function (result) {
             $('#No-Days').html(result.hasil[0].daysNo)
             $('#total-Days').html(result.hasil[0].daysMonth)
-            isiThead(result)
+            isiThead(result, date)
             isiBody(result)
             customScrolling()
         }
     })
 }
 
-function isiThead(result) {
+function isiThead(result, date) {
     for (let i = 0; i < result.sales; i++) {
-        let thead = `<th style="width:400px" colspan=3>${result.hasil[i].salesPerson}</th>`
+        let thead = `<th style="width:400px" colspan=3><a href="${baseurl}/Balimoon/SalesActual/DetilSalesBoards?dateTime=${date}&sales=${result.hasil[i].salesPerson}">${result.hasil[i].salesPerson}</a></th>`
         jQuery("#tabel-SalesBoard thead tr").append(thead)
     }
 }

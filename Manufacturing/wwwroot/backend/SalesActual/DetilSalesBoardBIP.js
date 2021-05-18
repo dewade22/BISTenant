@@ -9,10 +9,10 @@ function getSalesBoard() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
-        url: baseurl + '/BalimoonBMI/SalesActual/SalesBoardPerSales' + param,
+        url: baseurl + '/BalimoonBIP/SalesActual/SalesBoardPerSales' + param,
         success: function (result) {
             let data = result.hasil
-            let [LiA, LiB, QtA, QtB, CsA, CsB, ReA, ReB,  DLiA, DLiB,  DQtA, DQtB,  DCsA, DCsB,  DReA, DReB] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            let [LiA, LiB, QtA, QtB, CsA, CsB, ReA, ReB, DLiA, DLiB, DQtA, DQtB, DCsA, DCsB, DReA, DReB] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             for (let i = 0; i < data.length; i++) {
                 let tables = `<table id="table${data[i].itemCategory}" class="table table-valign-middle table-bordered table-hover" style="table-layout:fixed; width:100%">
                                 <thead>
@@ -27,7 +27,7 @@ function getSalesBoard() {
                                     <tr>
                                         <td>Liters</td>
                                         <td>${data[i].litersBudget.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${data[i].litersMonth.toLocaleString('en-us', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                                        <td>${data[i].litersMonth.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${data[i].litersBudget == 0 ? `0` : `${Math.round(((data[i].litersMonth / data[i].litersBudget * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
@@ -38,9 +38,9 @@ function getSalesBoard() {
                                     </tr>
                                     <tr>
                                         <td>Cases</td>
-                                        <td>${(data[i].litersBudget/8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${(data[i].litersMonth/8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round((((data[i].litersMonth/8.4) / (data[i].litersBudget/8.4) * 100) + Number.EPSILON) * 100) / 100}`}</td>
+                                        <td>${(data[i].litersBudget / 8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>${(data[i].litersMonth / 8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round((((data[i].litersMonth / 8.4) / (data[i].litersBudget / 8.4) * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
                                         <td>Revenue</td>
@@ -52,25 +52,25 @@ function getSalesBoard() {
                                         <td>Daily Liters</td>
                                         <td>${(data[i].litersBudget / data[i].daysMonth).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${data[i].litersDay.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round(((data[i].litersDay / (data[i].litersBudget/data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
+                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round(((data[i].litersDay / (data[i].litersBudget / data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
                                         <td>Daily Quantity</td>
-                                        <td>${(data[i].qtyBudget / data[i].daysMonth).toLocaleString('en-us', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                                        <td>${(data[i].qtyBudget / data[i].daysMonth).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${data[i].qtyDay}</td>
-                                        <td>${data[i].qtyBudget == 0 ? `0` : `${Math.round(((data[i].qtyDay / (data[i].qtyBudget/data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
+                                        <td>${data[i].qtyBudget == 0 ? `0` : `${Math.round(((data[i].qtyDay / (data[i].qtyBudget / data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
                                         <td>Daily Cases</td>
-                                        <td>${((data[i].litersBudget/data[i].daysMonth) / 8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>${((data[i].litersBudget / data[i].daysMonth) / 8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${(data[i].litersDay / 8.4).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round((((data[i].litersDay / 8.4) / ((data[i].litersBudget/data[i].daysMonth) / 8.4) * 100) + Number.EPSILON) * 100) / 100}`}</td>
+                                        <td>${data[i].litersBudget == 0 ? `0` : `${Math.round((((data[i].litersDay / 8.4) / ((data[i].litersBudget / data[i].daysMonth) / 8.4) * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
                                         <td>Daily Revenue</td>
-                                        <td>${(data[i].revenueBudget/data[i].daysMonth).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>${(data[i].revenueBudget / data[i].daysMonth).toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${data[i].revenueDay.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        <td>${data[i].revenueBudget == 0 ? `0` : `${Math.round(((data[i].revenueDay / (data[i].revenueBudget/data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
+                                        <td>${data[i].revenueBudget == 0 ? `0` : `${Math.round(((data[i].revenueDay / (data[i].revenueBudget / data[i].daysMonth) * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                 </tbody>
                              </table>
@@ -106,8 +106,8 @@ function getSalesBoard() {
                                 <tbody>
                                     <tr>
                                         <td>Liters</td>
-                                        <td>${LiA.toLocaleString('en-us', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
-                                        <td>${LiB.toLocaleString('en-us', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                                        <td>${LiA.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>${LiB.toLocaleString('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>${LiA == 0 ? `0` : `${Math.round(((LiB / LiA * 100) + Number.EPSILON) * 100) / 100}`}</td>
                                     </tr>
                                     <tr>
