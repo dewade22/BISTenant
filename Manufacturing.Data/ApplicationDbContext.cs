@@ -17,6 +17,7 @@ namespace Manufacturing.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext
     {
+        /*DB Model*/
         public virtual DbSet<Items> Items { get; set; }
         public virtual DbSet<ItemLedgerEntry> ItemLedgerEntry { get; set; }
         public virtual DbSet<ItemBudgetEntry> ItemBudgetEntry { get; set; }
@@ -38,12 +39,17 @@ namespace Manufacturing.Data
         public virtual DbSet<SalesInvoiceHeader> SalesInvoiceHeader { get; set; }
         public virtual DbSet<SalesCrMemoHeader> SalesCrMemoHeader { get; set; }
         public virtual DbSet<SalesCrMemoLine> SalesCrMemoLine { get; set; }
+        public virtual DbSet<ProductionBomheader> ProductionBomheader { get; set; }
+        public virtual DbSet<ProductionBomline> ProductionBomline { get; set; }
+        public virtual DbSet<ModelMaster> ModelMaster { get; set; }
+
+
+        /*Store Procedure Model*/
         public virtual DbSet<spRptSalesActualModel> SpRptSalesActualModels { get; set; }
         public virtual DbSet<spRptSalesActual_LandedCostModel> SpRptSalesActual_LandedCosts { get; set; }
         public virtual DbSet<spSalesInvoiceSummaryPivotModel> SpSalesInvoiceSummaryPivotModels { get; set; }
         public virtual DbSet<spRptInventoryValuationModel> SpRptInventoryValuationModel { get; set; }
-        public virtual DbSet<ProductionBomheader> ProductionBomheader { get; set; }
-        public virtual DbSet<ProductionBomline> ProductionBomline { get; set; }
+        
         public virtual DbSet<spRptSalesBoardModel> SpRptSalesBoardModel { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

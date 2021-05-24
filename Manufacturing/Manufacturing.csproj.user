@@ -11,7 +11,7 @@
     <WebStackScaffolding_IsReferencingScriptLibrariesSelected>False</WebStackScaffolding_IsReferencingScriptLibrariesSelected>
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>FolderProfile1</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_LayoutPageFile>~/Views/Shared/Material/_Layouts.cshtml</WebStackScaffolding_LayoutPageFile>
     <WebStackScaffolding_EnablerDialogWidth>600</WebStackScaffolding_EnablerDialogWidth>
   </PropertyGroup>

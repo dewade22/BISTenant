@@ -12,21 +12,30 @@
         <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-menu zmdi-hc-fw"></i> Dashboard Menu</a>
         <partial name="Material/_DashboardMenu" />
     </li>
+    <li class="sub-menu @Url.MakeActiveSubMenu("/HPPItem")">
+        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-menu zmdi-hc-fw"></i>HPP</a>
+        <ul>
+            <li class="@Url.MakeActiveClass("/HPPItem/MasterModel")">
+                <a asp-action="MasterModel" asp-controller="HPPItem">MasterModel</a>
+            </li>
+        </ul>
+    </li>
     <li class="sub-menu @Url.MakeActiveSubMenu("/SalesActual")">
         <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Sales Actual</a>
         <ul>
-            <li class="@Url.MakeActiveClass("/SalesActual/BMI")" id="SABMI">
-                <a asp-action="BMI" asp-controller="SalesActual">Sales Actual PT BMI</a>
-            </li>
-            <li class="@Url.MakeActiveClass("/SalesActual/BIP")" id="SABIP">
-                <a asp-action="BIP" asp-controller="SalesActual">Sales Actual PT BIP</a>
-            </li>
-            <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBMI")" id="SBBMI">
-                <a asp-action="SalesBoardBMI" asp-controller="SalesActual">Sales Board PT BMI</a>
-            </li>
-            <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBIP")" id="SBBIP">
-                <a asp-action="SalesBoardBIP" asp-controller="SalesActual">Sales Board PT BIP</a>
-            </li>
+    <!--
+    <li class="@Url.MakeActiveClass("/SalesActual/BMI")" id="SABMI">
+        <a asp-action="BMI" asp-controller="SalesActual">Sales Actual PT BMI</a>
+    </li>
+    <li class="@Url.MakeActiveClass("/SalesActual/BIP")" id="SABIP">
+        <a asp-action="BIP" asp-controller="SalesActual">Sales Actual PT BIP</a>
+    </li>
+    <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBMI")" id="SBBMI">
+        <a asp-action="SalesBoardBMI" asp-controller="SalesActual">Sales Board PT BMI</a>
+    </li>
+    <li class="@Url.MakeActiveClass("/SalesActual/SalesBoardBIP")" id="SBBIP">
+        <a asp-action="SalesBoardBIP" asp-controller="SalesActual">Sales Board PT BIP</a>
+    </li>-->
         </ul>
     </li>
     @Html.Raw(HttpContextAccessor.HttpContext.Session.GetString("menuString"))

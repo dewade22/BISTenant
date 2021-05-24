@@ -26,3 +26,18 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Release\netcoreapp3.1\M
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.dll
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.deps.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.runtimeconfig.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.runtimeconfig.dev.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Domain.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Domain.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csprojAssemblyReference.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.AssemblyInfoInputs.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.AssemblyInfo.cs
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csproj.CoreCompileInputs.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache

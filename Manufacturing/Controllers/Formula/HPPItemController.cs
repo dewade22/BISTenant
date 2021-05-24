@@ -18,6 +18,12 @@ namespace Manufacturing.Controllers
             _context = context;
         }
 
+        [AuthorizedAction]
+        public IActionResult Index()
+        {
+            Formula();
+            return View("/Views/HPPItem/Formula.cshtml");
+        }
 
         [AuthorizedAction]
         public IActionResult Formula()
@@ -126,6 +132,13 @@ namespace Manufacturing.Controllers
             ViewBag.BomId = BoMId;
             ViewBag.BomName = GetBOMName(BoMId);
             return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult MasterModel()
+        {
+            var models = _context.ModelMaster.ToList();
+            return View(models);
         }
     }
 }
