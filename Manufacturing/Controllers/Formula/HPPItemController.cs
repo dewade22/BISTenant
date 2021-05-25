@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Manufacturing.Helpers;
 using Manufacturing.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Manufacturing.Models.Hpp;
+using Manufacturing.Data.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Manufacturing.Controllers
 {
@@ -28,7 +32,7 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult Formula()
         {
-            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.Description.Contains("MMEA")).ToList();
+            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "MMEA").ToList();
             ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
             return View();
         }
@@ -137,8 +141,135 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult MasterModel()
         {
-            var models = _context.ModelMaster.ToList();
+            var models = (from items in _context.Items
+                          join model in _context.ModelMaster
+                          on items.ItemNo equals model.ProductID_SKUID
+                          where model.Active == true
+                          select new ModelMasterViewModel
+                          {
+                              itemTable = items,
+                              masterModel = model
+                          });
             return View(models);
+        }
+
+        [AuthorizedAction]
+        public IActionResult RegisterModel()
+        {
+            var ids = RegisterModelId();
+            ViewData["id"] = ids;
+            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FGInTrans").ToList();
+            ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterModel(ModelMaster model)
+        {
+            model.ModelId = RegisterModelId();
+            if (ModelState.IsValid)
+            {
+                model.CreatedAt = DateTime.Now;
+                model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                model.Active = true;
+                try
+                {
+                    var result = await _context.ModelMaster.AddAsync(model);
+                    _context.SaveChanges();
+
+                    return RedirectToAction("MasterModel", "HPPItem");
+                }catch(Exception)
+                {
+                    throw;
+                }   
+            }
+            RegisterModel();
+            return View();
+        }
+
+        [AuthorizedAction]
+        public IActionResult EditModels(string ModelId)
+        {
+            var models = new ModelMaster();
+            if(ModelId != null)
+            {
+                try
+                {
+                    List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FGInTrans").ToList();
+                    ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
+                    models = _context.ModelMaster.Where(a => a.ModelId == ModelId).FirstOrDefault();
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+            }
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditModels(ModelMaster model)
+        {
+            if (ModelState.IsValid)
+            {
+                var getModels = _context.ModelMaster.Where(a => a.ModelId == model.ModelId).SingleOrDefault();
+               if(getModels != null)
+                {
+                    getModels.LastModifiedAt = DateTime.Now;
+                    getModels.ModelName = model.ModelName;
+                    getModels.ProductID_SKUID = model.ProductID_SKUID;
+                    getModels.VersionNo = model.VersionNo;
+                    getModels.Description = model.Description;
+                    try
+                    {
+                        var result = _context.ModelMaster.Update(getModels);
+                        var save = await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        EditModels(model.ModelId);
+                        return RedirectToAction("EditModels", new { ModelId = model.ModelId });
+                    }
+                }
+                
+            }
+            return RedirectToAction("MasterModel");
+        }
+
+        public string RegisterModelId()
+        {
+            string id = "MM-00001";
+            var MaxId = _context.ModelMaster.OrderByDescending(a => a.Id).Select(a => a.ModelId).FirstOrDefault();
+            if (MaxId == null)
+            {
+                id = "MM-00001";
+            }
+            else
+            {
+                char[] trimmed = { 'M', '-' };
+                int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
+                if(currentIds+1 < 10)
+                {
+                    id = "MM-0000" + (currentIds + 1);
+                }
+                else if(currentIds+1 < 100)
+                {
+                    id = "MM-000" + (currentIds + 1);
+                }
+                else if (currentIds + 1 < 1000)
+                {
+                    id = "MM-00" + (currentIds + 1);
+                }
+                else if(currentIds + 1 < 10000)
+                {
+                    id = "MM-0" + (currentIds + 1);
+                }
+                else
+                {
+                    id = "MM-"+ (currentIds + 1);
+                }
+            }
+            return id;
         }
     }
 }

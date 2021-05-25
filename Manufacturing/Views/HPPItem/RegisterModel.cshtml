@@ -1,0 +1,83 @@
+﻿@model Manufacturing.Data.Entities.ModelMaster
+@{
+    ViewData["Title"] = "Register New Model";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+<section class="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="row">
+                    <form asp-action="RegisterModel" method="post" id="formRegister">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>Model Id<span class="text-danger">*</span></label>
+                                <input asp-for="ModelId" type="text" value="@ViewData["id"]" class="input-sm form-control fg-input" disabled required />
+                                <span asp-validation-for="ModelId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input type="text" class="input-sm form-control fg-input" asp-for="ModelName" required minlength="4" maxlength="50" />
+                                    <label class="fg-label">Model Name<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="ModelName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p class="f-500 c-black m-b-15">Product Name<span class="text-danger">*</span></p>
+                                <select asp-for="ProductID_SKUID" asp-items="@ViewBag.ListMMEA" id="selectProduct" name="selectProduct" class="chosen" required>
+                                    <option value="">Nothing Selected</option>
+                                </select>
+                                <span asp-validation-for="ProductID_SKUID" class="text-danger"></span>
+                                <br /><br />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input type="text" class="input-sm form-control fg-input" asp-for="VersionNo" required maxlength="50" />
+                                    <label class="fg-label">Version No</label>
+                                    <span asp-validation-for="VersionNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="input-sm form-control" asp-for="Description" maxlength="100" style="height:120px"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-md-offset-5 col-xs-12">
+                            <span class="btn btn-primary btn-file m-r-10">
+                                <span class="fileinput-new">Save</span>
+                                <input type="submit" value="Save" />
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript">
+        $('#formRegister').validate({
+            messages: {
+                selectProduct: {
+                    required: "Pilihan Nama Produk Wajib Dipilih",
+                },
+            },
+        })
+    </script>
+}

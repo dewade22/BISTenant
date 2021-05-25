@@ -1,0 +1,78 @@
+﻿@model Manufacturing.Data.Entities.ModelMaster
+@{
+    ViewData["Title"] = "Edit Model";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+<section class="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="row">
+                    @using (Html.BeginForm("EditModels", "HPPItem", FormMethod.Post, new { id = "formEdit" }))
+                    {
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <br />
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    @Html.TextBoxFor(m => m.ModelId, new { @class = "input-sm form-control fg-input", @readonly = "readonly", required = "required" })
+                                    <label class="fg-label">Model Id<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="ModelId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    @Html.TextBoxFor(m => m.ModelName, new { @class = "input-sm form-control fg-input", required = "required" })
+                                    <label class="fg-label">Model Name<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="ModelName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p class="f-500 c-black m-b-15">Product Name<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(m=>m.ProductID_SKUID, (IEnumerable<SelectListItem>)ViewBag.ListMMEA, null, new {@class= "chosen"})
+                                <span asp-validation-for="ProductID_SKUID" class="text-danger"></span>
+                                <br /><br />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    @Html.TextBoxFor(m => m.VersionNo, new { @class = "input-sm form-control fg-input", required = "required" })
+                                    <label class="fg-label">Version No<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="VersionNo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                @Html.TextAreaFor(m => m.Description, new { @class = "input-sm form-control fg-input", @style = "height:120px", required = "required" })
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-md-offset-5 col-xs-12">
+                            <span class="btn btn-primary btn-file m-r-10">
+                                <span class="fileinput-new">Edit</span>
+                                <input type="submit" value="Edit" />
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript">
+        $('#formEdit').validate()
+    </script>
+}
