@@ -57,15 +57,53 @@
 </section>
 
 @section Scripts{
-    <script src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
-    <script>
-        $('#table-masterdata').bootgrid({
-            caseSensitive: false,
-            formatters: {
-                "commands": function (column, row) {
-                    return "<a href=\"EditModels?ModelId=" + row.ModelId +"\"><button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\"><span class=\"zmdi zmdi-edit\"></span></button></a>"
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#table-masterdata').bootgrid({
+                caseSensitive: false,
+                formatters: {
+                    "commands": function (column, row) {
+                        return "<a href=\"EditModels?ModelId=" + row.ModelId + "\"><button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\"><span class=\"zmdi zmdi-edit\"></span></button></a>" +
+                            "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'"+row.ModelId+"\',\'"+row.ModelName+"\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
+                    }
                 }
-            }
-        });
+            })
+        })
+
+        function PushDelete(id, name) {
+            Swal.fire({
+                title: 'Hapus?',
+                text: "Anda Akan Menghapus " + name + "!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya!',
+                cancelButtonText: 'Kembali'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "DeleteModel?id=" + id,
+                        success: function (result) {
+                            if (result == true) {
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Record Telah Dihapus',
+                                    'success'
+                                ).then((result) => {
+                                    location.reload()
+                                })                                
+                            }
+                            else {
+                                Swal.fire('Terjadi Masalah Saat Menghapus')
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        
     </script>
 }

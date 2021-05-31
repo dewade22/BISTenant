@@ -2,26 +2,25 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Manufacturing.Data.Entities
-{ 
-    public partial class ModelMaster
+{
+    public partial class ModelDetailMaterial
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string ModelId { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public string ModelName { get; set; }
-        [StringLength(200)]
-        public string Description { get; set; }
+        public string ModelDetailNo { get; set; }
         [Required]
-        public string ProductID_SKUID { get; set; }
-        [StringLength(50)]
-        public string VersionNo { get; set; }
-        public Boolean Active { get; set; } = true;
-        [DataType(DataType.DateTime)]
+        public string MaterialID { get; set; }
+        [Required]
+        public decimal QtyMatID { get; set; }
+        [Required]
         public DateTime CreatedAt { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string CreatedBy { get; set; }
-        [DataType(DataType.DateTime)]
         public DateTime? LastModifiedAt { get; set; }
         public string LastModifiedBy { get; set; }
     }

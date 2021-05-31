@@ -171,7 +171,6 @@ namespace Manufacturing.Controllers
             {
                 model.CreatedAt = DateTime.Now;
                 model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
-                model.Active = true;
                 try
                 {
                     var result = await _context.ModelMaster.AddAsync(model);
@@ -236,6 +235,30 @@ namespace Manufacturing.Controllers
             return RedirectToAction("MasterModel");
         }
 
+        public Boolean DeleteModel(string id)
+        {
+            if(id == null)
+            {
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    var data = _context.ModelMaster.Where(a => a.ModelId == id).SingleOrDefault();
+                    data.Active = false;
+                    var result = _context.ModelMaster.Update(data);
+                    var save = _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    //throw;
+                    return false;
+                }
+            }            
+        }
+
         public string RegisterModelId()
         {
             string id = "MM-00001";
@@ -270,6 +293,12 @@ namespace Manufacturing.Controllers
                 }
             }
             return id;
+        }
+
+        [AuthorizedAction]
+        public IActionResult DetailMaterial()
+        {
+            return View();
         }
     }
 }

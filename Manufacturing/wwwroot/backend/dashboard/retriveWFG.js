@@ -8,10 +8,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep
 var month = monthNames[dates.getMonth()];
 var year = dates.getFullYear();
 $("#stokPer").html('Stock on '+month + " - " + year);
-//let tenant = $('#tenantActive').val().trim();
-//let baseurl = window.location.origin;
-//let alamat = baseurl + '/' + tenant + '/Dashboard';
-//Get Spirit
+
 (function Spirit() {
     $.ajax({
         type: 'GET',
