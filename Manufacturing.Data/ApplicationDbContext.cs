@@ -42,6 +42,7 @@ namespace Manufacturing.Data
         public virtual DbSet<ProductionBomheader> ProductionBomheader { get; set; }
         public virtual DbSet<ProductionBomline> ProductionBomline { get; set; }
         public virtual DbSet<ModelMaster> ModelMaster { get; set; }
+        public virtual DbSet<ModelDetailMaterial>ModelDetailMaterial { get; set; }
 
 
         /*Store Procedure Model*/

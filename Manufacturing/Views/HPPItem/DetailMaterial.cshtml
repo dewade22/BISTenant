@@ -1,7 +1,14 @@
-﻿@{
+﻿@model IEnumerable<Manufacturing.Models.Hpp.ModelMasterViewModel>
+
+@{
     ViewData["Title"] = "Detail Material";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
+
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+}
+
 <section id="content">
     <div class="container">
         <div class="c-header">
@@ -13,9 +20,51 @@
             </div>
             <div class="card-body card-padding">
                 <div class="row">
-                    <h2>Model Belum Jadi</h2>
+                    <h2>Pilih Model Untuk Proses Detail Material</h2>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <table id="tabel-MasterModel" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="ModelId" data-visible="false">Model Id</th>
+                                    <th data-column-id="ModelName">Model Name</th>
+                                    <th data-column-id="Description">Description</th>
+                                    <th data-column-id="ProductName">Product Name</th>
+                                    <th data-column-id="VersionNo">Version No</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.masterModel.ModelId</td>
+                                        <td>@item.masterModel.ModelName</td>
+                                        <td>@item.masterModel.Description</td>
+                                        <td>@item.itemTable.Description</td>
+                                        <td>@item.masterModel.VersionNo</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#tabel-MasterModel').bootgrid({
+                caseSensitive: false,
+                formatters: {
+                    "commands": function (column, row) {
+                        return "<a href=\"MasterDetail?ModelId=" + row.ModelId + "\"><button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\"><span class=\"zmdi zmdi-eye\"></span></button></a>"
+                    }
+                }
+            })
+        })
+    </script>
+}

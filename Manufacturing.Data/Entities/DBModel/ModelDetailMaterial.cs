@@ -13,7 +13,7 @@ namespace Manufacturing.Data.Entities
         [StringLength(50, MinimumLength = 3)]
         public string ModelDetailNo { get; set; }
         [Required]
-        public string MaterialID { get; set; }
+        public string MatID { get; set; }
         [Required]
         public decimal QtyMatID { get; set; }
         [Required]

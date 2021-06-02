@@ -1,0 +1,205 @@
+﻿@model IEnumerable<Manufacturing.Models.Hpp.ModelMasterDetailMaterialVM>
+
+@{
+    ViewData["Title"] = "Detail Material";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <button onclick="AddNewMats('@ViewBag.modelId', '@ViewBag.ModelDetNo')" class="btn btn-primary">Add New @ViewData["Title"]</button>
+                    <br /><br />
+                    <span id="errormsg" class="text-danger">@ViewBag.ErrorMessage</span>
+                    <div class="table-responsive">
+                        <table id="table-MaterialDetail" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Ids" data-visible="false">Ids</th>
+                                    <th data-column-id="ModelId" data-visible="false">Model Id</th>
+                                    <th data-column-id="ModelDetailNo" data-visible="false">Model Detail No</th>
+                                    <th data-column-id="Description">Material</th>
+                                    <th data-column-id="QtyMatID">Quantity</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.detailMaterial.Id</td>
+                                        <td>@item.masterModel.ModelId</td>
+                                        <td>@item.detailMaterial.ModelDetailNo</td>
+                                        <td>@item.Items.Description</td>
+                                        <td>@item.detailMaterial.QtyMatID</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Modal-->
+                    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formAdd">
+                                        <fieldset id="submitAdd">
+                                            <input type="hidden" class="form-control" name="ModelId" id="ModelIdAdd" />
+                                            <input type="hidden" class="form-control" name="ModelDetailNo" id="ModelDetailNoAdd" />
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <p class="f-500 c-black m-b-15">Materials</p>
+                                                    <select asp-items="@ViewBag.listMaterial" id="selectMats" name="MatID" class="chosen" required>
+                                                        <option value="">Choose Mats</option>
+                                                    </select>
+                                                    <span class="text-danger" id="errorselect"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div id="qtytogle" class="fg-line">
+                                                    <input type="number" class="form-control" id="AddQty" name="QtyMatID" required />
+                                                    <label class="fg-label">Quantity</label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript">
+        let baseUrl = localStorage.getItem('thisAddress')
+        $(function () {
+            $('#table-MaterialDetail').bootgrid({
+                caseSensitive: false,
+                formatters: {
+                    "commands": function (column, row) {
+                        return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"PushUpdate(\'" + row.Ids + "\',\'" + row.Description+"\')\"><span class=\"zmdi zmdi-edit\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.Ids + "\',\'" + row.Description + "\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
+                    }
+                }
+            })
+            //validasi
+            $('#formAdd').validate({
+                onkeyup: function (element) { $(element).valid() },
+                rules: {
+                    MatID: {
+                        required: true
+                    },
+                    QtyMatID: {
+                        required: true
+                    }
+
+                }
+            })
+
+            $('#AddNew').click(function () {
+                if ($('#formAdd').valid()) {
+                    //Jika form valid
+                    if ($('#selectMats').val() != "") {
+                        let data = $('#submitAdd').serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: baseUrl + '/HPPItem/MasterDetail',
+                            data: data,
+                            success: function (result) {
+                                if (result == 'sukses') {
+                                    Swal.fire(
+                                        'Sukses!',
+                                        'Data berhasil ditambahkan',
+                                        'success'
+                                    ).then((result) => {
+                                        location.reload()
+                                    })
+                                }
+                                else {
+                                    Swal.fire(
+                                        'Error!',
+                                        'Gagal menambahkan data',
+                                        'error'
+                                    )
+                                }
+                            }
+                        })
+                    } else {
+                        $('#errorselect').html('Please Choose The Material')
+                    }                    
+                }
+            })
+
+            $('#modalAdd').on('hidden.bs.modal', function () {
+                $('#selectMats').val("")
+                $('#selectMats').trigger('chosen:updated')
+                $('#AddQty').val("")
+
+            })
+        })
+        function AddNewMats(id, detNo) {
+            $('#modalAdd').modal()
+            $('#ModelIdAdd').val(id)
+            $('#ModelDetailNoAdd').val(detNo)
+            $('#updateform').hide()
+            $('.modal-title').html('Add New Material')
+        }
+
+        function PushUpdate(ids, description) {
+            $('#modalAdd').modal()
+            $('#AddNew').hide()
+            $('.modal-title').html(`Update Material - ${description}`)
+            $.ajax({
+                type: 'GET',
+                url: baseUrl + '/HPPItem/MasterDetailEdit?id=' + ids,
+                success: function (result) {
+                    if (result == false) {
+                        Swal.fire(
+                            'Error!',
+                            'Gagal menemukan data' + description,
+                            'error'
+                        )
+                    } else {
+                        $('#ModelIdAdd').val(result.id)
+                        $('#ModelDetailNoAdd').val(result.modelDetailNo)
+                        $('#selectMats').val(result.matID)
+                        $('#selectMats').trigger('chosen:updated')
+                        $('#AddQty').val(result.qtyMatID)
+                        $('#qtytogle').addClass('fg-toggled')
+                    }
+                }
+            })
+        }
+    </script>
+}

@@ -18,7 +18,7 @@
             <li class="@Url.MakeActiveClass("/HPPItem/MasterModel") @Url.MakeActiveClass("/HPPItem/RegisterModel") @Url.MakeActiveClass("/HPPItem/EditModels")">
                 <a asp-action="MasterModel" asp-controller="HPPItem">MasterModel</a>
             </li>
-            <li>
+            <li class="@Url.MakeActiveClass("/HPPItem/MasterDetail") @Url.MakeActiveClass("/HPPItem/DetailMaterial")">
                 <a asp-action="DetailMaterial" asp-controller="HPPItem">Detail Material</a>
             </li>
         </ul>

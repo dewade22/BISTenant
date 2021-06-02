@@ -10,6 +10,7 @@ using Manufacturing.Models.Hpp;
 using Manufacturing.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 
 namespace Manufacturing.Controllers
 {
@@ -32,7 +33,7 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult Formula()
         {
-            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "MMEA").ToList();
+            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.Blocked == 0 && a.InventoryPostingGroup == "MMEA").ToList();
             ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
             return View();
         }
@@ -215,6 +216,7 @@ namespace Manufacturing.Controllers
                if(getModels != null)
                 {
                     getModels.LastModifiedAt = DateTime.Now;
+                    getModels.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
                     getModels.ModelName = model.ModelName;
                     getModels.ProductID_SKUID = model.ProductID_SKUID;
                     getModels.VersionNo = model.VersionNo;
@@ -259,6 +261,141 @@ namespace Manufacturing.Controllers
             }            
         }
 
+        [AuthorizedAction]
+        public IActionResult DetailMaterial()
+        {
+            var models = (from items in _context.Items
+                          join model in _context.ModelMaster
+                          on items.ItemNo equals model.ProductID_SKUID
+                          where model.Active == true
+                          select new ModelMasterViewModel
+                          {
+                              itemTable = items,
+                              masterModel = model
+                          });
+            return View(models);
+        }
+
+        [AuthorizedAction]
+        public IActionResult MasterDetail(string ModelId)
+        {
+            if(ModelId == null)
+            {
+                ViewBag.ErrorMessage = "Model ID Null";
+                return View();
+            }
+            else
+            {
+                //Cek ID Exist
+                var cek = _context.ModelMaster.Where(a => a.ModelId == ModelId);
+                if(cek == null)
+                {
+                    ViewBag.ErrorMessage = "Model ID Not found";
+                    return View();
+                }
+                else
+                {
+                    var models = (from master in _context.ModelMaster
+                                  join detail in _context.ModelDetailMaterial
+                                  on master.ModelId equals detail.ModelId
+                                  join item in _context.Items
+                                  on detail.MatID equals item.ItemNo
+                                  select new ModelMasterDetailMaterialVM
+                                  {
+                                      masterModel = master,
+                                      detailMaterial = detail,
+                                      Items = item
+                                  }).ToList();
+
+                    //select row mats
+                    List<Manufacturing.Data.Entities.Items> Materials = _context.Items.Where(a => a.Blocked == 0 && a.RowStatus ==0).OrderByDescending(a=>a.ItemId).ToList();
+                    ViewBag.listMaterial = new SelectList(Materials, "ItemNo", "Description");
+                    ViewBag.modelId = ModelId;
+                    var detNo = models.Select(a => a.detailMaterial.ModelDetailNo).SingleOrDefault();
+                    if(detNo == null)
+                    {
+                        ViewBag.ModelDetNo = "0";
+                    }
+                    else
+                    {
+                        ViewBag.ModelDetNo = detNo.ToString();
+                    }
+                    return View(models);
+                }                
+            }
+        }
+
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult MasterDetail(ModelDetailMaterial request)
+        {
+            var result = "Terjadi Masalah saat penambahan";
+            request.CreatedAt = DateTime.Now;
+            request.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+            if (request.ModelDetailNo == "0")
+            {
+                request.ModelDetailNo = MasterDetailID();
+            }
+            try
+            {
+                var insert = _context.ModelDetailMaterial.Add(request);
+                _context.SaveChanges();
+                result = "sukses";
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult MasterDetailEdit(int? id)
+        {
+            //string result = null;
+            
+            if(id != null)
+            {
+                var data = _context.ModelDetailMaterial.Where(a => a.Id == id).SingleOrDefault();
+                return Json(data);
+            }
+            return Json(false);
+        }
+
+
+        /*Auto Number ID*/
+        public string MasterDetailID()
+        {
+            string ID = "MAT-00001";
+            var MaxID = _context.ModelDetailMaterial.OrderByDescending(a => a.Id).Select(a => a.ModelDetailNo).FirstOrDefault();
+            if(MaxID != null)
+            {
+                char[] trimmed = { 'M', 'A', 'T', '-' };
+                int currentIds = Convert.ToInt32(MaxID.Trim(trimmed));
+                if (currentIds + 1 < 10)
+                {
+                    ID = "MAT-0000" + (currentIds + 1);
+                }
+                else if (currentIds + 1 < 100)
+                {
+                    ID = "MAT-000" + (currentIds + 1);
+                }
+                else if (currentIds + 1 < 1000)
+                {
+                    ID = "MAT-00" + (currentIds + 1);
+                }
+                else if (currentIds + 1 < 10000)
+                {
+                    ID = "MAT-0" + (currentIds + 1);
+                }
+                else
+                {
+                    ID = "MAT-" + (currentIds + 1);
+                }
+            }
+            return (ID);
+        }
+
         public string RegisterModelId()
         {
             string id = "MM-00001";
@@ -271,11 +408,11 @@ namespace Manufacturing.Controllers
             {
                 char[] trimmed = { 'M', '-' };
                 int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
-                if(currentIds+1 < 10)
+                if (currentIds + 1 < 10)
                 {
                     id = "MM-0000" + (currentIds + 1);
                 }
-                else if(currentIds+1 < 100)
+                else if (currentIds + 1 < 100)
                 {
                     id = "MM-000" + (currentIds + 1);
                 }
@@ -283,22 +420,16 @@ namespace Manufacturing.Controllers
                 {
                     id = "MM-00" + (currentIds + 1);
                 }
-                else if(currentIds + 1 < 10000)
+                else if (currentIds + 1 < 10000)
                 {
                     id = "MM-0" + (currentIds + 1);
                 }
                 else
                 {
-                    id = "MM-"+ (currentIds + 1);
+                    id = "MM-" + (currentIds + 1);
                 }
             }
             return id;
-        }
-
-        [AuthorizedAction]
-        public IActionResult DetailMaterial()
-        {
-            return View();
         }
     }
 }
