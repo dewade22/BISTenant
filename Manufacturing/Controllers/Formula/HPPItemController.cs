@@ -300,6 +300,7 @@ namespace Manufacturing.Controllers
                                   on master.ModelId equals detail.ModelId
                                   join item in _context.Items
                                   on detail.MatID equals item.ItemNo
+                                  where detail.ModelId == ModelId
                                   select new ModelMasterDetailMaterialVM
                                   {
                                       masterModel = master,
@@ -311,7 +312,7 @@ namespace Manufacturing.Controllers
                     List<Manufacturing.Data.Entities.Items> Materials = _context.Items.Where(a => a.Blocked == 0 && a.RowStatus ==0).OrderByDescending(a=>a.ItemId).ToList();
                     ViewBag.listMaterial = new SelectList(Materials, "ItemNo", "Description");
                     ViewBag.modelId = ModelId;
-                    var detNo = models.Select(a => a.detailMaterial.ModelDetailNo).SingleOrDefault();
+                    var detNo = models.Select(a => a.detailMaterial.ModelDetailNo).FirstOrDefault();
                     if(detNo == null)
                     {
                         ViewBag.ModelDetNo = "0";
@@ -349,6 +350,7 @@ namespace Manufacturing.Controllers
             return Json(result);
         }
 
+        [AuthorizedAPI]
         [HttpGet]
         public JsonResult MasterDetailEdit(int? id)
         {
