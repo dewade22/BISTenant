@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Manufacturing.Models.Hpp.MachineViewModel>
+@{
+    ViewData["Title"] = "Machine Master Forms";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <button onclick="AddNewMachine()" class="btn btn-primary">Add New Machine</button>
+                    <br /><br />
+                    <span id="errormsg" class="text-danger">@ViewBag.ErrorMessage</span>
+                    <div class="table-responsive">
+                        <table id="tabelMachine" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false">Id</th>
+                                    <th data-column-id="MachineNo">Machine No</th>
+                                    <th data-column-id="MachineName">Machine Name</th>
+                                    <th data-column-id="MachineType">Machine Type</th>
+                                    <th data-column-id="MachinePrice">Machine Price</th>
+                                    <th data-column-id="PowerConsumption">Power Consumption</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.MachineMaster.Id</td>
+                                        <td>@item.MachineMaster.MachineNo</td>
+                                        <td>@item.MachineMaster.MachineName</td>
+                                        <td>@item.MachineType.MachineTypeName</td>
+                                        <td>@item.MachineMaster.MachinePrice</td>
+                                        <td>@item.MachineMaster.PowerConsumption</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Modal-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInput">
+                                        <fieldset id="submitForm">
+                                            <input type="hidden" id="MachineNo" value="MachineNo" />
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="text" class="form-control" id="MachineName" name="MachineName" />
+                                                    <label class="fg-label">Machine Name<span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <p class="f-500 c-black m-b-15">Machine Type <span class="text-danger"> *</span></p>
+                                                    <select asp-items="@ViewBag.ListType" id="MachineType" name="MachineType" class="chosen" required>
+                                                        <option value="">Choose Type</option>
+                                                    </select>
+                                                    <span class="text-danger" id="errorselect"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="MachinePrice" name="MachinePrice" required />
+                                                    <label class="fg-label">Machine Price <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="MachineSetupPrice" name="MachineSetupPrice" required />
+                                                    <label class="fg-label">Machine Setup Price <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="MachineMaintenancePrice" name="MachineMaintenancePrice" required />
+                                                    <label class="fg-label">Machine Maintenance Price <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="MaximumAgeUse" name="MaximumAgeUse" required />
+                                                    <label class="fg-label">Maximum Age Use <span class="text-bold">(Year)</span> <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="SalvageValue" name="SalvageValue" required />
+                                                    <label class="fg-label">Salvage Value <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" id="PowerConsumption" name="PowerConsumption" required />
+                                                    <label class="fg-label">Power Consumption <span class="text-bold">(KWh)</span> <span class="text-danger"> *</span></label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/MesinMaster.js"></script>
+}

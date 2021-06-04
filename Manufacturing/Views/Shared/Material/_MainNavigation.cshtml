@@ -16,10 +16,16 @@
         <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-book zmdi-hc-fw"></i>HPP</a>
         <ul>
             <li class="@Url.MakeActiveClass("/HPPItem/MasterModel") @Url.MakeActiveClass("/HPPItem/RegisterModel") @Url.MakeActiveClass("/HPPItem/EditModels")">
-                <a asp-action="MasterModel" asp-controller="HPPItem">MasterModel</a>
+                <a asp-action="MasterModel" asp-controller="HPPItem">Master Model</a>
             </li>
             <li class="@Url.MakeActiveClass("/HPPItem/MasterDetail") @Url.MakeActiveClass("/HPPItem/DetailMaterial")">
                 <a asp-action="DetailMaterial" asp-controller="HPPItem">Detail Material</a>
+            </li>
+            <li class="@Url.MakeActiveClass("/HPPItem/FOHMaster")">
+                <a asp-action="FOHMaster" asp-controller="HPPItem">FOH Detail</a>
+            </li>
+            <li class="@Url.MakeActiveClass("/HPPItem/MesinMaster")">
+                <a asp-action="MesinMaster" asp-controller="HPPItem">Machine Master</a>
             </li>
         </ul>
     </li>

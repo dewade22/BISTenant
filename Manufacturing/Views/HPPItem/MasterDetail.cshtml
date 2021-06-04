@@ -61,6 +61,7 @@
                                 <div class="modal-body">
                                     <form id="formAdd">
                                         <fieldset id="submitAdd">
+                                            <input type="hidden" class="form-control" name="Id" id="Id" />
                                             <input type="hidden" class="form-control" name="ModelId" id="ModelIdAdd" />
                                             <input type="hidden" class="form-control" name="ModelDetailNo" id="ModelDetailNoAdd" />
                                             <div class="form-group fg-float">
@@ -75,7 +76,7 @@
                                             <div class="form-group fg-float">
                                                 <div id="qtytogle" class="fg-line">
                                                     <input type="number" class="form-control" id="AddQty" name="QtyMatID" required />
-                                                    <label class="fg-label">Quantity</label>
+                                                    <label class="fg-label">Quantity <span id="satuanQty" class="text-danger"></span></label>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -167,17 +168,68 @@
                 $('#AddQty').val("")
 
             })
+
+            $('#updateform').click(function () {
+                if ($('#formAdd').valid()) {
+                    //Jika form valid
+                    if ($('#selectMats').val() != "") {
+                        Swal.fire({
+                            title: 'Update?',
+                            text: "Anda Akan Melakukan Update!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya!',
+                            cancelButtonText: 'Kembali'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                let data = $('#submitAdd').serialize()
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: baseUrl + '/HPPItem/MasterDetailEdit',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 'sukses') {
+                                            Swal.fire(
+                                                'Sukses!',
+                                                'Data berhasil dirubah',
+                                                'success'
+                                            ).then((result) => {
+                                                location.reload()
+                                            })
+                                        } else {
+                                            Swal.fire(
+                                                'Error!',
+                                                 result,
+                                                'error'
+                                            )
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    else {
+                        $('#errorselect').html('Please Choose The Material')
+                    }
+                }
+            })
+
+           
         })
         function AddNewMats(id, detNo) {
             $('#modalAdd').modal()
             $('#ModelIdAdd').val(id)
             $('#ModelDetailNoAdd').val(detNo)
             $('#updateform').hide()
+            $('#AddNew').show()
             $('.modal-title').html('Add New Material')
         }
 
         function PushUpdate(ids, description) {
             $('#modalAdd').modal()
+            $('#updateform').show()
             $('#AddNew').hide()
             $('.modal-title').html(`Update Material - ${description}`)
             $.ajax({
@@ -191,7 +243,8 @@
                             'error'
                         )
                     } else {
-                        $('#ModelIdAdd').val(result.id)
+                        $('#Id').val(result.id)
+                        $('#ModelIdAdd').val(result.ModelId)
                         $('#ModelDetailNoAdd').val(result.modelDetailNo)
                         $('#selectMats').val(result.matID)
                         $('#selectMats').trigger('chosen:updated')
@@ -201,5 +254,56 @@
                 }
             })
         }
+
+        function PushDelete(id, description) {
+            Swal.fire({
+                title: 'Hapus?',
+                text: "Anda Akan Menghapus " + description + "!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya!',
+                cancelButtonText: 'Kembali'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: "DeleteMaterial?id=" + id,
+                        success: function (result) {
+                            if (result != false) {
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Record Telah Dihapus',
+                                    'success'
+                                ).then((result) => {
+                                    location.reload()
+                                })           
+                            }
+                            else {
+                                Swal.fire('Error!', 'Terjadi Masalah Saat Menghapus', 'error')
+                            }
+                        }
+                    })
+                }
+            })
+        }
+
+        $('#selectMats').change(function () {
+            if ($('#selectMats').val() != null || $('#selectMats').val() != '') {
+                $.ajax({
+                    type: 'GET',
+                    url: baseUrl + '/HPPItem/GetUnitItem',
+                    data: {
+                        ItemNo : $('#selectMats').val()
+                    },
+                    success: function (result) {
+                        if (result != false) {
+                            $('#satuanQty').html(`(${result})`)
+                        }
+                    }
+                })
+            }
+        })
     </script>
 }

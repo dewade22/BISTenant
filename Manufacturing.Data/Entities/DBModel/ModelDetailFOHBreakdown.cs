@@ -3,26 +3,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Manufacturing.Data.Entities
 {
-    public partial class ModelDetailMaterial
+    public partial class ModelDetailFOHBreakdown
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public string ModelId { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string ModelDetailNo { get; set; }
+        public string ModelDetailFOHNo { get; set; }
         [Required]
-        public string MatID { get; set; }
+        public string FOHType { get; set; }
         [Required]
-        public Boolean Active { get; set; } = true;
-        [Required]
-        public decimal QtyMatID { get; set; }
+        public int SubProcessSize { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string CreatedBy { get; set; }
+        [Required]
+        public Boolean Active { get; set; } = true;
         public DateTime? LastModifiedAt { get; set; }
         public string LastModifiedBy { get; set; }
     }

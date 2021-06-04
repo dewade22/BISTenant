@@ -300,7 +300,7 @@ namespace Manufacturing.Controllers
                                   on master.ModelId equals detail.ModelId
                                   join item in _context.Items
                                   on detail.MatID equals item.ItemNo
-                                  where detail.ModelId == ModelId
+                                  where detail.ModelId == ModelId && detail.Active == true
                                   select new ModelMasterDetailMaterialVM
                                   {
                                       masterModel = master,
@@ -363,6 +363,138 @@ namespace Manufacturing.Controllers
             }
             return Json(false);
         }
+
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult MasterDetailEdit(ModelDetailMaterial request)
+        {
+            var result = "";
+            if(request == null)
+            {
+                result = "Data Baru tidak berhasil didapatkan";
+            }
+            else
+            {
+                var currentData = _context.ModelDetailMaterial.Where(a => a.Id == request.Id).SingleOrDefault();
+                if(currentData == null)
+                {
+                    result = "Data dengan Id "+request.Id+" Tidak ditemukan pada sistem";
+                }
+                else
+                {
+                    currentData.LastModifiedAt = DateTime.Now;
+                    currentData.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    currentData.MatID = request.MatID;
+                    currentData.QtyMatID = request.QtyMatID;
+                    try
+                    {
+                        _context.ModelDetailMaterial.Update(currentData);
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }
+                    catch(Exception ex)
+                    {
+                        result = "Gagal Saat Menambahkan Data";
+                        throw;
+                    }                    
+                }                
+            }
+            return Json(result);
+        }
+
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult GetUnitItem(string ItemNo)
+        {
+            if(ItemNo != "" || ItemNo != null)
+            {
+                var data = _context.Items.Where(a => a.ItemNo == ItemNo).Select(a=>a.BaseUnitofMeasure).FirstOrDefault();
+                return Json(data);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+
+        [AuthorizedAPI]
+        [HttpDelete]
+        public JsonResult DeleteMaterial(int? id)
+        {
+            if(id != null)
+            {
+                var current = _context.ModelDetailMaterial.Where(a => a.Id == id).SingleOrDefault();
+                if(current != null)
+                {
+                    current.LastModifiedAt = DateTime.Now;
+                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    current.Active = false;
+                    try
+                    {
+                        _context.ModelDetailMaterial.Update(current);
+                        _context.SaveChanges();
+                        return Json(true);
+                    }
+                    catch(Exception ex)
+                    {
+                        return Json(false);
+                        throw;
+                    }
+                }
+                
+            }
+            return Json(false);
+        }
+
+        /*Model Detail FOH Breakdown*/
+
+        [AuthorizedAction]
+        public IActionResult FOHMaster()
+        {
+            var models = (from items in _context.Items
+                          join model in _context.ModelMaster
+                          on items.ItemNo equals model.ProductID_SKUID
+                          where model.Active == true
+                          select new ModelMasterViewModel
+                          {
+                              itemTable = items,
+                              masterModel = model
+                          });
+            return View(models);
+        }
+
+
+
+        /*Untuk Penambahan Mesin*/
+        [AuthorizedAction]
+        public IActionResult MesinMaster()
+        {
+            var model = (from machine in _context.ModelMachineMaster
+                         join type in _context.ModelMachineType
+                         on machine.MachineType equals type.MachineTypeNo
+                         where machine.Active == true
+                         select new MachineViewModel
+                         {
+                             MachineMaster = machine,
+                             MachineType = type
+                         }).ToList();
+
+            List<Manufacturing.Data.Entities.ModelMachineType> MachineType = _context.ModelMachineType.Where(a => a.Active == true).OrderByDescending(a => a.Id).ToList();
+            ViewBag.ListType = new SelectList(MachineType, "MachineTypeNo", "MachineTypeName");
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         /*Auto Number ID*/
