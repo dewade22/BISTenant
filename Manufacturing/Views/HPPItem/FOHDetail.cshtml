@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Manufacturing.Models.Hpp.MachineViewModel>
+@{
+    ViewData["Title"] = "FOH Detail";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"] - @ViewBag.model</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <button onclick="AddMachine()" class="btn btn-primary">Add Process</button>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <table id="tabelFOH" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="ModelDetailFOHNo" data-visible="false">FOH No</th>
+                                    <th data-column-id="FOHType">FOH Type</th>
+                                    <th data-column-id="SubProcessSize">Size</th>
+                                    <th data-column-id="SubProcessName">Process Name</th>
+                                    <th data-column-id="Machine">Machine</th>
+                                    <th data-column-id="Duration">Duration</th>
+                                    <th data-column-id="Quantity">Quantity</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ModelDetailFOHBreakdown.ModelDetailFOHNo</td>
+                                        <td>@item.ModelDetailFOHBreakdown.FOHType</td>
+                                        <td>@item.ModelDetailFOHBreakdown.SubProcessSize</td>
+                                        <td>@item.ModelSubProcess.SubProcessName</td>
+                                        <td>@item.MachineMaster.MachineName</td>
+                                        <td>@item.ModelDetailFOHBreakdown.SPDuration</td>
+                                        <td>@item.ModelDetailFOHBreakdown.SPQuantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/FOHDetail.js"></script>
+}

@@ -13,7 +13,13 @@ namespace Manufacturing.Data.Entities
         [Required]
         public string FOHType { get; set; }
         [Required]
+        public string SPID { get; set; }
+        [Required]
         public int SubProcessSize { get; set; }
+        public string SPMachineID { get; set; }
+        public Decimal? SPSpeed { get; set; }
+        public Decimal? SPDuration { get; set; }
+        public Decimal? SPQuantity { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
         [Required]

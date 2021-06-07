@@ -32,8 +32,8 @@
                                     <th data-column-id="MachineNo">Machine No</th>
                                     <th data-column-id="MachineName">Machine Name</th>
                                     <th data-column-id="MachineType">Machine Type</th>
-                                    <th data-column-id="MachinePrice">Machine Price</th>
-                                    <th data-column-id="PowerConsumption">Power Consumption</th>
+                                    <th data-column-id="MachinePrice" data-formatter="MachinePrice">Machine Price</th>
+                                    <th data-column-id="PowerConsumption" data-formatter="PowerConsumption">Power Consumption</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
                                 </tr>
                             </thead>
@@ -62,56 +62,63 @@
                                 <div class="modal-body">
                                     <form id="formInput">
                                         <fieldset id="submitForm">
-                                            <input type="hidden" id="MachineNo" value="MachineNo" />
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="text" class="form-control" id="MachineName" name="MachineName" />
-                                                    <label class="fg-label">Machine Name<span class="text-danger"> *</span></label>
+                                            <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12">
+                                                <input type="hidden" id="Id" name="Id" />
+                                                <input type="hidden" id="MachineNo" name="MachineNo" />
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="text" class="form-control" id="MachineName" name="MachineName" required />
+                                                        <label class="fg-label">Machine Name<span class="text-danger"> *</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <p class="f-500 c-black m-b-15">Machine Type <span class="text-danger"> *</span></p>
+                                                        <select asp-items="@ViewBag.ListType" id="MachineType" name="MachineType" class="chosen" required>
+                                                            <option value="">Choose Type</option>
+                                                        </select>
+                                                        <span class="text-danger" id="errorselect"></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <p class="f-500 c-black m-b-15">Machine Type <span class="text-danger"> *</span></p>
-                                                    <select asp-items="@ViewBag.ListType" id="MachineType" name="MachineType" class="chosen" required>
-                                                        <option value="">Choose Type</option>
-                                                    </select>
-                                                    <span class="text-danger" id="errorselect"></span>
+                                            <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="MachinePrice" name="MachinePrice" required />
+                                                        <label class="fg-label">Machine Price <span class="text-danger"> *</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="MachineSetupPrice" name="MachineSetupPrice" required />
+                                                        <label class="fg-label">Machine Setup Price <span class="text-danger"> *</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="MachineMaintenancePrice" name="MachineMaintenancePrice" required />
+                                                        <label class="fg-label">Machine Maintenance Price <span class="text-danger"> *</span></label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="MachinePrice" name="MachinePrice" required />
-                                                    <label class="fg-label">Machine Price <span class="text-danger"> *</span></label>
+                                            <div class="col-xl-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="MaximumAgeUse" name="MaximumAgeUse" required />
+                                                        <label class="fg-label">Maximum Age Use <span class="text-bold">(Year)</span> <span class="text-danger"> *</span></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="MachineSetupPrice" name="MachineSetupPrice" required />
-                                                    <label class="fg-label">Machine Setup Price <span class="text-danger"> *</span></label>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="SalvageValue" name="SalvageValue" required />
+                                                        <label class="fg-label">Salvage Value <span class="text-danger"> *</span></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="MachineMaintenancePrice" name="MachineMaintenancePrice" required />
-                                                    <label class="fg-label">Machine Maintenance Price <span class="text-danger"> *</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="MaximumAgeUse" name="MaximumAgeUse" required />
-                                                    <label class="fg-label">Maximum Age Use <span class="text-bold">(Year)</span> <span class="text-danger"> *</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="SalvageValue" name="SalvageValue" required />
-                                                    <label class="fg-label">Salvage Value <span class="text-danger"> *</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" id="PowerConsumption" name="PowerConsumption" required />
-                                                    <label class="fg-label">Power Consumption <span class="text-bold">(KWh)</span> <span class="text-danger"> *</span></label>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="PowerConsumption" name="PowerConsumption" required />
+                                                        <label class="fg-label">Power Consumption <span class="text-bold">(KWh)</span> <span class="text-danger"> *</span></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </fieldset>

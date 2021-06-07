@@ -345,6 +345,7 @@ namespace Manufacturing.Controllers
             }
             catch (Exception e)
             {
+                result = "Terjadi Kesalahan Saat Mencoba Menambahkan Data";
                 throw;
             }
             return Json(result);
@@ -394,7 +395,7 @@ namespace Manufacturing.Controllers
                     }
                     catch(Exception ex)
                     {
-                        result = "Gagal Saat Menambahkan Data";
+                        result = "Gagal Saat Melakukan Perubahan Data";
                         throw;
                     }                    
                 }                
@@ -418,7 +419,7 @@ namespace Manufacturing.Controllers
         }
 
         [AuthorizedAPI]
-        [HttpDelete]
+        [HttpPut]
         public JsonResult DeleteMaterial(int? id)
         {
             if(id != null)
@@ -463,6 +464,35 @@ namespace Manufacturing.Controllers
             return View(models);
         }
 
+        [AuthorizedAction]
+        public IActionResult FOHDetail(string ModelId)
+        {
+            if(ModelId == null || ModelId == "")
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.model = ModelId;
+                var data = (from FOHBreakdown in _context.ModelDetailFOHBreakdown
+                            join subProcess in _context.ModelSubProcess on FOHBreakdown.SPID equals subProcess.SubProcessId
+                            join machine in _context.ModelMachineMaster on FOHBreakdown.SPMachineID equals machine.MachineNo into FM
+                            from FOHMachine in FM.DefaultIfEmpty()
+                            select new MachineViewModel
+                            {
+                                ModelDetailFOHBreakdown = FOHBreakdown,
+                                ModelSubProcess = subProcess,
+                                MachineMaster = FOHMachine
+                            }).ToList();
+                List<Manufacturing.Data.Entities.ModelMachineMaster> ListMachine = _context.ModelMachineMaster.Where(a => a.Active == true).OrderByDescending(a => a.MachineNo).ToList();
+                ViewBag.ListMachine = new SelectList(ListMachine, "MachineNo", "MachineName");
+                List<Manufacturing.Data.Entities.ModelSubProcess> SubProcess = _context.ModelSubProcess.Where(a => a.Active == true).OrderBy(a=>a.Id).ToList();
+                ViewBag.listSupP = new SelectList(SubProcess, "SubProcessId", "SubProcessName");
+                
+                return View(data);
+            }
+        }
+
 
 
         /*Untuk Penambahan Mesin*/
@@ -477,14 +507,128 @@ namespace Manufacturing.Controllers
                          {
                              MachineMaster = machine,
                              MachineType = type
-                         }).ToList();
+                         }).OrderByDescending(a=>a.MachineMaster.Id).ToList();
 
             List<Manufacturing.Data.Entities.ModelMachineType> MachineType = _context.ModelMachineType.Where(a => a.Active == true).OrderByDescending(a => a.Id).ToList();
             ViewBag.ListType = new SelectList(MachineType, "MachineTypeNo", "MachineTypeName");
             return View(model);
         }
 
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult MesinMaster(ModelMachineMaster model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Server Tidak dapat menerima inputan";
+            }
+            else
+            {
+                var MesinMasterId = MachineMasterId();
+                model.MachineNo = MesinMasterId;
+                model.CreatedAt = DateTime.Now;
+                model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                try
+                {
+                    var insert = _context.ModelMachineMaster.Add(model);
+                    _context.SaveChanges();
+                    result = "sukses";
+                }
+                catch(Exception ex)
+                {
+                    result = "Terjadi Kesalahan Saat Menyimpan Data, " + ex;
+                }
+            }
+            return Json(result);
+        }
 
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult MesinMasters(string MachineNo)
+        {
+            if(MachineNo == null || MachineNo == "")
+            {
+                return Json(false);
+            }
+            else
+            {
+                var data = _context.ModelMachineMaster.Where(a => a.MachineNo == MachineNo).SingleOrDefault();
+                return Json(data);
+            }
+        }
+
+        [AuthorizedAPI]
+        [HttpPatch]
+        public async Task<JsonResult> MesinMasters(ModelMachineMaster model)
+        {
+            var result = "Terjadi Kesalahan";
+            if(model == null)
+            {
+                result = "Data Baru tidak berhasil didapatkan";
+            }
+            else
+            {
+                var currentData = _context.ModelMachineMaster.Where(a => a.MachineNo == model.MachineNo).SingleOrDefault();
+                if(currentData == null)
+                {
+                    result = "Mesin Dengan Nomor " + model.MachineNo + " Tidak Ditemukan";
+                }
+                else
+                {
+
+                    currentData.MachineName = model.MachineName;
+                    currentData.MachineType = model.MachineType;
+                    currentData.MachinePrice = model.MachinePrice;
+                    currentData.MachineSetupPrice = model.MachineSetupPrice;
+                    currentData.MachineMaintenancePrice = model.MachineMaintenancePrice;
+                    currentData.MaximumAgeUse = model.MaximumAgeUse;
+                    currentData.SalvageValue = model.SalvageValue;
+                    currentData.PowerConsumption = model.PowerConsumption;
+                    currentData.LastModifiedAt = DateTime.Now;
+                    currentData.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+
+                    try
+                    {
+                        _context.Update(currentData);
+                        await _context.SaveChangesAsync();
+                        result = "sukses";
+                    }
+                    catch (Exception ex)
+                    {
+                        result = "Gagal saat melakukan perubahan data";
+                        throw;
+                    }
+                    
+                }
+            }
+            return Json(result);
+        }
+
+        [AuthorizedAPI]
+        [HttpPatch]
+        public JsonResult MesinMaster(string MachineNo)
+        {
+            if(MachineNo == "" || MachineNo == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                var data = _context.ModelMachineMaster.Where(a => a.MachineNo == MachineNo).SingleOrDefault();
+                if(data == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    data.Active = false;
+                    _context.ModelMachineMaster.Update(data);
+                    _context.SaveChanges();
+                    return Json(true);
+                }
+            }
+        }
 
 
 
@@ -564,6 +708,37 @@ namespace Manufacturing.Controllers
                 }
             }
             return id;
+        }
+
+        public string MachineMasterId()
+        {
+            string Id = "MCH-00001";
+            var MaxId = _context.ModelMachineMaster.OrderByDescending(a => a.Id).Select(a => a.MachineNo).FirstOrDefault();
+            if(MaxId != null)
+            {
+                char[] trimmed = { 'M', 'C', 'H', '-' };
+                int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
+                if(currentIds < 10)
+                {
+                    Id = "MCH-0000"+(currentIds +1);
+                }
+                else if(currentIds < 100){
+                    Id = "MCH-000" + (currentIds + 1);
+                }
+                else if(currentIds < 1000)
+                {
+                    Id = "MCH-00" + (currentIds + 1);
+                }
+                else if (currentIds < 10000)
+                {
+                    Id = "MCH-0" + (currentIds + 1);
+                }
+                else
+                {
+                    Id = "MCH-" + (currentIds + 1);
+                }
+            }
+            return Id;
         }
     }
 }

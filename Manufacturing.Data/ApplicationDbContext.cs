@@ -45,6 +45,8 @@ namespace Manufacturing.Data
         public virtual DbSet<ModelDetailMaterial>ModelDetailMaterial { get; set; }
         public virtual DbSet<ModelMachineType>ModelMachineType { get; set; }
         public virtual DbSet<ModelMachineMaster>ModelMachineMaster { get; set; }
+        public virtual DbSet<ModelDetailFOHBreakdown> ModelDetailFOHBreakdown { get; set; }
+        public virtual DbSet<ModelSubProcess>ModelSubProcess { get; set; }
 
 
         /*Store Procedure Model*/

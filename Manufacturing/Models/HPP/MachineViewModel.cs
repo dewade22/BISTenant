@@ -12,5 +12,9 @@ namespace Manufacturing.Models.Hpp
         public Manufacturing.Data.Entities.ModelMachineType MachineType { get; set; }
         [BindProperty]
         public Manufacturing.Data.Entities.ModelMachineMaster MachineMaster { get; set; }
+        [BindProperty]
+        public Manufacturing.Data.Entities.ModelSubProcess ModelSubProcess { get; set; }
+        [BindProperty]
+        public Manufacturing.Data.Entities.ModelDetailFOHBreakdown ModelDetailFOHBreakdown { get; set; }
     }
 }

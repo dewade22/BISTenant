@@ -268,7 +268,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        type: 'DELETE',
+                        type: 'PUT',
                         url: "DeleteMaterial?id=" + id,
                         success: function (result) {
                             if (result != false) {
