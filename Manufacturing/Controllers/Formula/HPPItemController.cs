@@ -478,6 +478,7 @@ namespace Manufacturing.Controllers
                             join subProcess in _context.ModelSubProcess on FOHBreakdown.SPID equals subProcess.SubProcessId
                             join machine in _context.ModelMachineMaster on FOHBreakdown.SPMachineID equals machine.MachineNo into FM
                             from FOHMachine in FM.DefaultIfEmpty()
+                            where (FOHBreakdown.Active == true && FOHBreakdown.ModelId == ModelId)
                             select new MachineViewModel
                             {
                                 ModelDetailFOHBreakdown = FOHBreakdown,
@@ -487,13 +488,123 @@ namespace Manufacturing.Controllers
                 List<Manufacturing.Data.Entities.ModelMachineMaster> ListMachine = _context.ModelMachineMaster.Where(a => a.Active == true).OrderByDescending(a => a.MachineNo).ToList();
                 ViewBag.ListMachine = new SelectList(ListMachine, "MachineNo", "MachineName");
                 List<Manufacturing.Data.Entities.ModelSubProcess> SubProcess = _context.ModelSubProcess.Where(a => a.Active == true).OrderBy(a=>a.Id).ToList();
-                ViewBag.listSupP = new SelectList(SubProcess, "SubProcessId", "SubProcessName");
+                ViewBag.listSubP = new SelectList(SubProcess, "SubProcessId", "SubProcessName");
                 
                 return View(data);
             }
         }
 
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult FOHDetail(ModelDetailFOHBreakdown model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Server Tidak dapat menerima inputan";
+            }
+            else
+            {
+                model.ModelDetailFOHNo = GenerateFOHNo();
+                model.CreatedAt = DateTime.Now;
+                model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                try
+                {
+                    _context.ModelDetailFOHBreakdown.Add(model);
+                    _context.SaveChanges();
+                    result = "sukses";
+                }
+                catch(Exception ex)
+                {
+                    result = "Terjadi Kesalahan saat menambahkan data "+ex;
+                }
+            }
+            return Json(result);
 
+        }
+
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult FOHDetails(ModelDetailFOHBreakdown model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Data Baru tidak berhasil didapatkan";
+            }
+            else
+            {
+                var currentData = _context.ModelDetailFOHBreakdown.SingleOrDefault(a => a.ModelDetailFOHNo == model.ModelDetailFOHNo);
+                if(currentData == null)
+                {
+                    result = "FOH dengan nomor "+model.ModelDetailFOHNo+" tidak ditemukan!";
+                }
+                else
+                {
+                    currentData.LastModifiedAt = DateTime.Now;
+                    currentData.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    currentData.OperationName = model.OperationName;
+                    currentData.SPDuration = model.SPDuration;
+                    currentData.SPID = model.SPID;
+                    currentData.SPMachineID = model.SPMachineID;
+                    currentData.SPQuantity = model.SPQuantity;
+                    currentData.SPSpeed = model.SPSpeed;
+                    try
+                    {
+                        _context.ModelDetailFOHBreakdown.Update(currentData);
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }
+                    catch(Exception ex)
+                    {
+                        result = "FOH gagal diubah dengan pesan kesalahan "+ex;
+                    }
+                }
+            }
+            return Json(result);
+        }
+
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult FOHDetails(string ModelId)
+        {
+            if (ModelId == null || ModelId == "")
+            {
+                return Json(false);
+            }
+            else
+            {
+                var data = _context.ModelDetailFOHBreakdown.Where(a => a.ModelDetailFOHNo == ModelId).SingleOrDefault();
+                return Json(data);
+            }
+        }
+
+
+        //Get Machine Spped DETAIL FOH B
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult MachineSpeed(string machine)
+        {
+            if(machine != "")
+            {
+                var data = _context.ModelMachineMaster.Where(a => a.MachineNo == machine).Select(a => a.MachineSpeed);
+                return Json(data);
+            }
+            return Json(false);
+        }
+
+        //Get Sub Process Size
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult ProcessSize(string ModelId)
+        {
+            if(ModelId != "" || ModelId != null)
+            {
+                var data = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == ModelId).Select(a => a.SubProcessSize).FirstOrDefault();
+                return Json(data);
+            }
+            return Json(false);
+        }
 
         /*Untuk Penambahan Mesin*/
         [AuthorizedAction]
@@ -585,6 +696,7 @@ namespace Manufacturing.Controllers
                     currentData.MaximumAgeUse = model.MaximumAgeUse;
                     currentData.SalvageValue = model.SalvageValue;
                     currentData.PowerConsumption = model.PowerConsumption;
+                    currentData.MachineSpeed = model.MachineSpeed;
                     currentData.LastModifiedAt = DateTime.Now;
                     currentData.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
 
@@ -736,6 +848,38 @@ namespace Manufacturing.Controllers
                 else
                 {
                     Id = "MCH-" + (currentIds + 1);
+                }
+            }
+            return Id;
+        }
+
+        public string GenerateFOHNo()
+        {
+            string Id = "FOHB-00001";
+            var MaxId = _context.ModelDetailFOHBreakdown.OrderByDescending(a => a.Id).Select(a => a.ModelDetailFOHNo).FirstOrDefault();
+            if (MaxId != null)
+            {
+                char[] trimmed = { 'F', 'O', 'H', 'B', '-' };
+                int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
+                if (currentIds < 10)
+                {
+                    Id = "FOHB-0000" + (currentIds + 1);
+                }
+                else if (currentIds < 100)
+                {
+                    Id = "FOHB-000" + (currentIds + 1);
+                }
+                else if (currentIds < 1000)
+                {
+                    Id = "FOHB-00" + (currentIds + 1);
+                }
+                else if (currentIds < 10000)
+                {
+                    Id = "FOHB-0" + (currentIds + 1);
+                }
+                else
+                {
+                    Id = "FOHB-" + (currentIds + 1);
                 }
             }
             return Id;

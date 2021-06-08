@@ -47,6 +47,7 @@ $(function () {
         }
     })
 
+
     //Jika Button Add di klik
     $('#AddNew').click(function () {
         if ($('#formInput').valid()) {

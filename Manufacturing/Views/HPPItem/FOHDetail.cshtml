@@ -19,7 +19,7 @@
             </div>
             <div class="card-body card-padding">
                 <div class="row">
-                    <button onclick="AddMachine()" class="btn btn-primary">Add Process</button>
+                    <button onclick="AddFOH()" class="btn btn-primary">Add Process</button>
                     <br /><br />
                     <div class="table-responsive">
                         <table id="tabelFOH" class="table table-condensed table-hover table-striped">
@@ -29,7 +29,8 @@
                                     <th data-column-id="FOHType">FOH Type</th>
                                     <th data-column-id="SubProcessSize">Size</th>
                                     <th data-column-id="SubProcessName">Process Name</th>
-                                    <th data-column-id="Machine">Machine</th>
+                                    <th data-column-id="OperationName">Operation Name</th>
+                                    <th data-column-id="Machine" data-formatter="machine">Machine</th>
                                     <th data-column-id="Duration">Duration</th>
                                     <th data-column-id="Quantity">Quantity</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
@@ -43,7 +44,14 @@
                                         <td>@item.ModelDetailFOHBreakdown.FOHType</td>
                                         <td>@item.ModelDetailFOHBreakdown.SubProcessSize</td>
                                         <td>@item.ModelSubProcess.SubProcessName</td>
-                                        <td>@item.MachineMaster.MachineName</td>
+                                        <td>@item.ModelDetailFOHBreakdown.OperationName</td>
+                                        @if(item.MachineMaster?.MachineName == null)
+                                         {
+                                            <td>-</td>
+                                         }
+                                        else {
+                                            <td>@item.MachineMaster.MachineName</td>
+                                        }
                                         <td>@item.ModelDetailFOHBreakdown.SPDuration</td>
                                         <td>@item.ModelDetailFOHBreakdown.SPQuantity</td>
                                     </tr>
@@ -51,6 +59,108 @@
                             </tbody>
                         </table>
                     </div>
+                    <!--Modal Start-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInput">
+                                        <fieldset id="submitForm">
+                                            <!--Model Id dan Detail FOH No-->
+                                            <input type="hidden" id="ModelId" name="ModelId" value="@ViewBag.model" />
+                                            <input type="hidden" id="ModelDetailFOHNo" name="ModelDetailFOHNo" />
+                                            <!--Input FOH dan SubProcess-->
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <p class="f-500 c-black m-b-15">FOH Type <span class="text-danger"> *</span></p>
+                                                        <select id="FOHType" name="FOHType" class="chosen" required>
+                                                            <option value="">Choose FOH</option>
+                                                            <option value="Gas">Gas</option>
+                                                            <option value="Fuel">Fuel</option>
+                                                            <option value="Water">Water</option>
+                                                            <option value="electricity">Machine - Electricity</option>
+                                                        </select>
+                                                        <span class="text-danger" id="error-fohtype"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <p class="f-500 c-black m-b-15">Process Name <span class="text-danger"> *</span></p>
+                                                        <select asp-items="@ViewBag.listSubP" id="SPID" name="SPID" class="chosen" required>
+                                                            <option value="">Choose Sub Process</option>
+                                                        </select>
+                                                        <span class="text-danger" id="errorsubprocess"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="text" class="form-control" id="OperationName" name="OperationName" required />
+                                                        <label class="fg-label">Operation Name <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <!--Sub Process Size-->
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line SubProcessSize">
+                                                        <input type="number" class="form-control" id="SubProcessSize" name="SubProcessSize" required />
+                                                        <label class="fg-label">Process Size <span class="text-bold">(Liters)</span><span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <!--Machine-->
+                                                <div class="form-group fg-float" id="text-machine">
+                                                    <div class="fg-line">
+                                                        <p class="f-500 c-black m-b-15">Machine <span class="text-danger">*</span></p>
+                                                        <select asp-items="@ViewBag.ListMachine" id="SPMachineID" name="SPMachineID" class="chosen">
+                                                            <option value="">Choose Machine</option>
+                                                        </select>
+                                                        <span class="text-danger" id="errormachine"></span>
+                                                    </div>
+                                                </div>
+                                                <!--Speed-->
+                                                <div class="form-group fg-float" id="text-speed">
+                                                    <div class="fg-line text-speed">
+                                                        <input type="number" class="form-control" id="SPSpeed" name="SPSpeed" readonly/>
+                                                        <label class="fg-label">Process Speed (L/h)<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <!--Quantity-->
+                                                <div class="form-group fg-float" id="text-quantity">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="SPQuantity" name="SPQuantity" required/>
+                                                        <label class="fg-label">Quantity <span id="text-satuan"></span><span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <!--Duration-->
+                                                <div class="form-group fg-float" id="text-duration">
+                                                    <div class="fg-line" id="duration">
+                                                        <input type="number" class="form-control" id="SPDuration" name="SPDuration" readonly />
+                                                        <label class="fg-label">Duration (Hour)<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal End-->
                 </div>
             </div>
         </div>

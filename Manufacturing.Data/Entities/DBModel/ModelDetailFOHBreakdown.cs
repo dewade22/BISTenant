@@ -16,6 +16,7 @@ namespace Manufacturing.Data.Entities
         public string SPID { get; set; }
         [Required]
         public int SubProcessSize { get; set; }
+        public string OperationName { get; set; }
         public string SPMachineID { get; set; }
         public Decimal? SPSpeed { get; set; }
         public Decimal? SPDuration { get; set; }
