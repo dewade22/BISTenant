@@ -12,7 +12,7 @@ $(function () {
                 return `Rp. ${parseFloat(row.MachinePrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 5 })}`
             },
             "PowerConsumption": function (column, row) {
-                return `${row.PowerConsumption} KWh`
+                return `${(parseFloat(row.PowerConsumption)).toFixed(3)} KWh`
             }
         }
     })
@@ -174,6 +174,7 @@ function PushUpdate(MachineNo, MachineName) {
                 $('#MachineMaintenancePrice').val(result.machineMaintenancePrice)
                 $('#MaximumAgeUse').val(result.maximumAgeUse)
                 $('#SalvageValue').val(result.salvageValue)
+                $('#MachineSpeed').val(result.machineSpeed)
                 $('#PowerConsumption').val(result.powerConsumption)
                 $('#MachineType').trigger('chosen:updated')
                 //Togle input form

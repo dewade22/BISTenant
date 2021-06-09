@@ -16,8 +16,7 @@ namespace Manufacturing.Data.Entities
         public string MachineType { get; set; }
         [Required]
         public decimal MachinePrice { get; set; } = 0;
-        [Required]
-        public decimal MachineSpeed { get; set; }
+        public decimal MachineSpeed { get; set; } = 0;
         [Required]
         public decimal MachineSetupPrice { get; set; } = 0;
         [Required]

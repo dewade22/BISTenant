@@ -6,7 +6,7 @@ $(function () {
         formatters: {
             "commands": function (column, row) {
                 return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"PushUpdate(\'" + row.ModelDetailFOHNo + "\',\'" + row.OperationName + "\',\'" + row.SubProcessName+"\')\"><span class=\"zmdi zmdi-edit\"></span></button>" +
-                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.ModelDetailFOHNo + "\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
+                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.ModelDetailFOHNo + "\',\'" + row.OperationName + "\',\'" + row.SubProcessName +"\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
             },
             "machine": function (column, row) {
                 return `${row.Machine == null ? `-` : row.Machine}`
@@ -174,7 +174,7 @@ $(function () {
                                 if (result == 'sukses') {
                                     Swal.fire(
                                         'Sukses!',
-                                        'Data berhasil ditambahkan',
+                                        'Data berhasil diubah',
                                         'success'
                                     ).then((result) => {
                                         location.reload()
@@ -200,7 +200,7 @@ $(function () {
                             if (result == 'sukses') {
                                 Swal.fire(
                                     'Sukses!',
-                                    'Data berhasil ditambahkan',
+                                    'Data berhasil diubah',
                                     'success'
                                 ).then((result) => {
                                     location.reload()
@@ -292,6 +292,42 @@ function PushUpdate(Id, Name, Process) {
                     'error'
                 )
             }
+        }
+    })
+}
+function PushDelete(Id, Name, Process) {
+    Swal.fire({
+        title: 'Hapus?',
+        text: "Anda Akan Menghapus " + Name + " Pada Proses "+Process+"!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Kembali'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PATCH',
+                url: baseUrl + '/HPPItem/FOHDetaill?FOHNo=' + Id,
+                success: function (result) {
+                    if (result == 'sukses') {
+                        Swal.fire(
+                            'Sukses!',
+                            'FOH ' + Name + ' pada proses '+Process+' berhasil dihapus',
+                            'success'
+                        ).then((result) => {
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            ''+result+'',
+                            'error'
+                        )
+                    }
+                }
+            })
         }
     })
 }

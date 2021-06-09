@@ -579,6 +579,42 @@ namespace Manufacturing.Controllers
             }
         }
 
+        [AuthorizedAPI]
+        [HttpPatch]
+        public JsonResult FOHDetaill(string FOHNo)
+        {
+            var result = "";
+            if(FOHNo =="" || FOHNo == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                var hapus = _context.ModelDetailFOHBreakdown.Where(a => a.ModelDetailFOHNo == FOHNo).SingleOrDefault();
+                if(hapus == null)
+                {
+                    result = "FOH dengan nomor " + FOHNo + " tidak dapat ditemukan";
+                }
+                else
+                {
+                    hapus.Active = false;
+                    hapus.LastModifiedAt = DateTime.Now;
+                    hapus.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelDetailFOHBreakdown.Update(hapus);
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }catch(Exception ex)
+                    {
+                        result = "Terjadi kesalahan saat menghapus data";
+                        throw;
+                    }
+                }
+            }
+            return Json(result);
+        }
+
 
         //Get Machine Spped DETAIL FOH B
         [AuthorizedAPI]
@@ -750,7 +786,43 @@ namespace Manufacturing.Controllers
 
 
 
+        /*Rate */
+        [AuthorizedAction]
+        public IActionResult RateLabour()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Labour").ToList();
+            return View(data);
+        }
 
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult RateLabour(ModelRateMaster model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                model.RateNo = GenerateRateNo();
+                model.RateType = "Labour";
+                model.CreatedAt = DateTime.Now;
+                model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                try
+                {
+                    _context.ModelRateMaster.Add(model);
+                    _context.SaveChanges();
+                    result = "sukses";
+                }
+                catch(Exception ex)
+                {
+                    result = "Gagal saat menyimpan data "+ex;
+                }
+            }
+            return Json(result);
+        }
 
 
         /*Auto Number ID*/
@@ -880,6 +952,38 @@ namespace Manufacturing.Controllers
                 else
                 {
                     Id = "FOHB-" + (currentIds + 1);
+                }
+            }
+            return Id;
+        }
+
+        public string GenerateRateNo()
+        {
+            string Id = "RT-00001";
+            var MaxId = _context.ModelRateMaster.OrderByDescending(a => a.Id).Select(a => a.RateNo).FirstOrDefault();
+            if (MaxId != null)
+            {
+                char[] trimmed = { 'R', 'T', '-' };
+                int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
+                if (currentIds < 10)
+                {
+                    Id = "RT-0000" + (currentIds + 1);
+                }
+                else if (currentIds < 100)
+                {
+                    Id = "RT-000" + (currentIds + 1);
+                }
+                else if (currentIds < 1000)
+                {
+                    Id = "RT-00" + (currentIds + 1);
+                }
+                else if (currentIds < 10000)
+                {
+                    Id = "RT-0" + (currentIds + 1);
+                }
+                else
+                {
+                    Id = "RT-" + (currentIds + 1);
                 }
             }
             return Id;
