@@ -3,10 +3,19 @@ $(function () {
     $('#TablesData').bootgrid({
         caseSensitive: false,
         formatters: {
-            "commands": function (column, row) {
-                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"PushUpdate(\'" + row.ModelDetailFOHNo + "\',\'" + row.OperationName + "\',\'" + row.SubProcessName + "\')\"><span class=\"zmdi zmdi-edit\"></span></button>" +
-                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.ModelDetailFOHNo + "\',\'" + row.OperationName + "\',\'" + row.SubProcessName + "\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
+            'commands': function (column, row) {
+                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"PushUpdate(\'" + row.RateNo + "\',\'" + row.RateName + "\')\"><span class=\"zmdi zmdi-edit\"></span></button>" +
+                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.RateNo + "\',\'" + row.RateName + "\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
             },
+            'ratesRegular': function (column, row) {
+                return `Rp. ${parseFloat(row.RegularRate).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`
+            },
+            'ratesLembur': function (column, row) {
+                return `Rp. ${parseFloat(row.LemburRate).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`
+            },
+            'ratesWeekend': function (column, row) {
+                return `Rp. ${parseFloat(row.WeekendRate).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`
+            }
         }
     })
 
@@ -32,7 +41,7 @@ $(function () {
             else {
                 $.ajax({
                     type: 'POST',
-                    url: baseUrl + '/HPPItem/RateLabour',
+                    url: baseUrl + '/HPPItem/RatePOST',
                     data: $('#formInput').serialize(),
                     success: function (result) {
                         if (result == 'sukses') {
@@ -58,6 +67,39 @@ $(function () {
             }
         }
     })
+
+    //Simpan form Update
+    $('#updateform').click(function(){
+        if ($('#formInput').valid()) {
+            if ($('#Unit').val() == '' || $('#Unit').val() == null) {
+                $('#errorselect').html('Tipe Rate Wajib Diisi')
+            }
+            else {
+                $.ajax({
+                    type: 'PUT',
+                    url: baseUrl + '/HPPItem/RateLabours',
+                    data: $('#formInput').serialize(),
+                    success: function (result) {
+                        if (result == 'sukses') {
+                            Swal.fire(
+                                'Sukses!',
+                                'Data berhasil diubah',
+                                'success'
+                            ).then((result) => {
+                                location.reload()
+                            })
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                '' + result,
+                                'error'
+                            )
+                        }
+                    }
+                })
+            }
+        }
+    })
 })
 
 function Add() {
@@ -66,4 +108,62 @@ function Add() {
     $('#AddNew').show()
     $('.fg-line').removeClass('fg-toggled')
     $('.modal-title').html('Add New Labour Rates')  
+}
+function PushUpdate(No, Name) {
+    $('#modalForm').modal()
+    $('#updateform').show()
+    $('#AddNew').hide()
+    $('.modal-title').html(`Edit - ${Name} Rates`)
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPItem/SingleRates?No=' + No,
+        success: function (result) {
+            if (result != false) {
+                $('#RateNo').val(result.rateNo)
+                $('#RateName').val(result.rateName)
+                $('#RegularRate').val(result.regularRate)
+                $('#LemburRate').val(result.lemburRate)
+                $('#WeekendRate').val(result.weekendRate)
+                $('#Unit').val(result.unit)
+                $('#Unit').trigger('chosen:updated')
+                $('.fg-line').addClass('fg-toggled')
+            }
+        }
+    })
+}
+function PushDelete(No, Name) {
+    Swal.fire({
+        title: 'Warning!',
+        text: 'Hapus Rate untuk '+Name,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Kembali'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PUT',
+                url: baseUrl + '/HPPItem/HideRates?No=' + No,
+                success: function (result) {
+                    if (result == 'sukses') {
+                        Swal.fire(
+                            'Sukses',
+                            'Rate ' + Name + ' Telah dihapus',
+                            'success'
+                        ).then((result) => {
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            ''+result,
+                            'error'
+                        )
+                    }
+                }
+            })
+        }
+    })
 }

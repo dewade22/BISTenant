@@ -1,6 +1,6 @@
 ﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
 @{
-    ViewData["Title"] = "Labour Rate";
+    ViewData["Title"] = "Tank Rate";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
     <link rel="stylesheet" href="~/css/app.css" />
 }
+
 <section id="content">
     <div class="container">
         <div class="c-header">
@@ -15,7 +16,6 @@
         </div>
         <div class="card">
             <div class="card-header">
-
             </div>
             <div class="card-body card-padding">
                 <div class="row">
@@ -26,11 +26,13 @@
                             <thead>
                                 <tr>
                                     <th data-column-id="RateNo" data-visible="false">Rate No</th>
-                                    <th data-column-id="RateName">Name</th>                                 
-                                    <th data-column-id="RegularRate" data-formatter="ratesRegular">Regular Rate</th>                                
-                                    <th data-column-id="LemburRate" data-formatter="ratesLembur">Lembur Rate</th>                               
-                                    <th data-column-id="WeekendRate" data-formatter="ratesWeekend">WeekendRate</th>                               
-                                    <th data-column-id="Unit">Rate Per</th>                               
+                                    <th data-column-id="RateName" >Name</th>
+                                    <th data-column-id="Price" data-formatter="Price" >Price</th>
+                                    <th data-column-id="SetupCost" data-formatter="SetupCost" >Setup Cost</th>
+                                    <th data-column-id="MaintenanceCost" data-formatter="MaintenanceCost" >Avg. Maintenance</th>
+                                    <th data-column-id="Salvage" data-formatter="Salvage" >Salvage Value</th>
+                                    <th data-column-id="AgeUsed" data-formatter="Age">Age Used</th>
+                                    <th data-column-id="Capacity" data-formatter="Capacity">Capacity</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
                                 </tr>
                             </thead>
@@ -40,12 +42,14 @@
                                     <tr>
                                         <td>@item.RateNo</td>
                                         <td>@item.RateName</td>
-                                        <td>@item.RegularRate</td>
-                                        <td>@item.LemburRate</td>
-                                        <td>@item.WeekendRate</td>
-                                        <td>@item.Unit</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.SetupPrice</td>
+                                        <td>@item.MaintenancePrice</td>
+                                        <td>@item.SalvageValue</td>
+                                        <td>@item.AgeUsedMonth</td>
+                                        <td>@item.Capacity</td>
                                     </tr>
-                                }
+                                 }
                             </tbody>
                         </table>
                     </div>
@@ -59,8 +63,8 @@
                                 <div class="modal-body">
                                     <form id="formInput">
                                         <fieldset id="submitForm">
-                                            <input type="hidden" id="RateNo" name="RateNo" />
-                                            <input type="hidden" id="RateType" name="RateType" value="Labour" />
+                                        <input type="hidden" id="RateNo" name="RateNo" />
+                                        <input type="hidden" id="RateType" name="RateType" value="Tangki" />
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                                                 <div class="form-group fg-float">
                                                     <div class="fg-line">
@@ -71,37 +75,46 @@
                                                 </div>
                                                 <div class="form-group fg-float">
                                                     <div class="fg-line">
-                                                        <input type="number" class="form-control" name="RegularRate" id="RegularRate" required />
-                                                        <label class="fg-label">Regular Rate<span class="text-danger">*</span></label>
-                                                        <span asp-validation-for="rateMaster.RegularRate" class="text-danger"></span>
+                                                        <input type="number" class="form-control" name="Price" id="Price" required />
+                                                        <label class="fg-label">Price<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.Price" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group fg-float">
-                                                    <div class="fg-line">
-                                                        <input type="number" class="form-control" name="LemburRate" id="LemburRate" required />
-                                                        <label class="fg-label">Lembur Rate<span class="text-danger">*</span></label>
-                                                        <span asp-validation-for="rateMaster.LemburRate" class="text-danger"></span>
+                                                    <div class="fg-line cost-line">
+                                                        <input type="number" class="form-control" name="SetupPrice" id="SetupPrice" value="0" required />
+                                                        <label class="fg-label">Setup Cost<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.SetupPrice" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line cost-line">
+                                                        <input type="number" class="form-control" name="MaintenancePrice" id="MaintenancePrice" value="0" required />
+                                                        <label class="fg-label">Avg. Maintenance Cost<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.MaintenancePrice" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-xs-12">
                                                 <div class="form-group fg-float">
-                                                    <div class="fg-line">
-                                                        <input type="number" class="form-control" name="WeekendRate" id="WeekendRate" required />
-                                                        <label class="fg-label">Weekend Rate<span class="text-danger">*</span></label>
-                                                        <span asp-validation-for="rateMaster.WeekendRate" class="text-danger"></span>
+                                                    <div class="fg-line cost-line">
+                                                        <input type="number" class="form-control" name="SalvageValue" id="SalvageValue" value="0" required />
+                                                        <label class="fg-label">Salvage Value<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.SalvageValue" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group fg-float">
-                                                    <p class="f-500 c-black m-b-15">Rate Per<span class="text-danger">*</span></p>
                                                     <div class="fg-line">
-                                                        <select asp-for="rateMaster.Unit" name="Unit" class="chosen" id="Unit">
-                                                            <option value="">Choose One</option>
-                                                            <option value="Hour">Hour</option>
-                                                            <option value="Unit">Unit</option>
-                                                        </select>
-                                                        <label id="errorselect" class="text-danger"></label>
-                                                        <span asp-validation-for="rateMaster.Unit" class="text-danger"></span>
+                                                        <input type="number" class="form-control" name="AgeUsedMonth" id="AgeUsedMonth" required />
+                                                        <label class="fg-label">Maximum Age Used (Month)<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.AgeUsedMonth" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" name="Capacity" id="Capacity" required />
+                                                        <label class="fg-label">Capacity (Liters)<span class="text-danger">*</span></label>
+                                                        <span asp-validation-for="rateMaster.Capacity" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,18 +129,17 @@
                             </div>
                         </div>
                     </div>
-                    <!--Modal End-->
+                <!--Modal End-->
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-
 @section Scripts{
     <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
-    <script type="text/javascript" src="~/backend/HPP/RateLabour.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/Tangki.js"></script>
 }

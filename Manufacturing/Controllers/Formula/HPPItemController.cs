@@ -787,27 +787,18 @@ namespace Manufacturing.Controllers
 
 
         /*Rate */
-        [AuthorizedAction]
-        public IActionResult RateLabour()
-        {
-            var data = new ModelRateViewModel();
-            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Labour").ToList();
-            return View(data);
-        }
-
         [AuthorizedAPI]
         [HttpPost]
-        public JsonResult RateLabour(ModelRateMaster model)
+        public JsonResult RatePOST(ModelRateMaster model)
         {
             var result = "";
-            if(model == null)
+            if (model == null)
             {
                 result = "Gagal Mendapatkan Data";
             }
             else
             {
                 model.RateNo = GenerateRateNo();
-                model.RateType = "Labour";
                 model.CreatedAt = DateTime.Now;
                 model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
                 try
@@ -816,9 +807,186 @@ namespace Manufacturing.Controllers
                     _context.SaveChanges();
                     result = "sukses";
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    result = "Gagal saat menyimpan data "+ex;
+                    result = "Gagal saat menyimpan data " + ex;
+                }
+            }
+            return Json(result);
+        }
+
+        /*Labour*/
+        [AuthorizedAction]
+        public IActionResult RateLabour()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
+            return View(data);
+        }
+
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult RateLabours(ModelRateMaster model)
+        {
+            var result = "";
+            if (model == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
+                if(current == null)
+                {
+                    result = "Rates dengan No "+model.RateNo+" Tidak ditemukan !!";
+                }
+                else
+                {
+                    current.RateName = model.RateName;
+                    current.RegularRate = model.RegularRate;
+                    current.LemburRate = model.LemburRate;
+                    current.WeekendRate = model.WeekendRate;
+                    current.Unit = model.Unit;
+                    current.LastModifiedAt = DateTime.Now;
+                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelRateMaster.Update(current)
+                            .Property(a => a.Id).IsModified = false;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }catch(Exception ex)
+                    {
+                        result = "Gagal memperbarui data dengan error " + ex;
+                        throw;
+                    }
+                }
+            }
+            return Json(result);
+        }
+
+        /*Utility*/
+        [AuthorizedAction]
+        public IActionResult RateUtility()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Utility" && a.Active == true).ToList();
+            return View(data);
+        }
+
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult RateUtilities(ModelRateMaster model)
+        {
+            var result = "";
+            if (model == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
+                if (current == null)
+                {
+                    result = "Rates dengan No " + model.RateNo + " Tidak ditemukan !!";
+                }
+                else
+                {
+                    current.RateName = model.RateName;
+                    current.RegularRate = model.RegularRate;
+                    current.SetupPrice = model.SetupPrice;
+                    current.PeakHourRate = model.PeakHourRate;
+                    current.LastModifiedAt = DateTime.Now;
+                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelRateMaster.Update(current)
+                            .Property(a => a.Id).IsModified = false;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }
+                    catch (Exception ex)
+                    {
+                        result = "Gagal memperbarui data dengan error " + ex;
+                        throw;
+                    }
+                }
+            }
+            return Json(result);
+        }
+
+        /*Tangki*/
+        [AuthorizedAction]
+        public IActionResult RateTangki()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Tangki" && a.Active == true).ToList();
+            return View(data);
+        }
+
+        
+
+
+
+
+
+
+
+        /*untuk show rates sebelum di edit*/
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult SingleRates(string No)
+        {
+            if(No =="" || No == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                var Rates = _context.ModelRateMaster.Where(a => a.RateNo == No).SingleOrDefault();
+                if(Rates == null)
+                {
+                    return Json(false);
+                }
+                else
+                {
+                    return Json(Rates);
+                }
+            }
+        }
+
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult HideRates(string No)
+        {
+            var result = "";
+            if(No =="" || No == null)
+            {
+                result = "Gagal mendapatkan Rates No";
+            }
+            else
+            {
+                var hide = _context.ModelRateMaster.Where(a => a.RateNo == No).SingleOrDefault();
+                if(hide == null)
+                {
+                    result = "Rate dengan nomor "+No+" tidak ditemukan";
+                }
+                else
+                {
+                    hide.Active = false;
+                    hide.LastModifiedAt = DateTime.Now;
+                    hide.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelRateMaster.Update(hide).Property(a => a.Id).IsModified = false;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }
+                    catch(Exception ex)
+                    {
+                        result = "Gagal menghapus data";
+                        throw;
+                    }
                 }
             }
             return Json(result);

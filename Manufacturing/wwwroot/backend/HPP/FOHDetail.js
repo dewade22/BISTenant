@@ -85,6 +85,12 @@ $(function () {
         }
     })
 
+    $('#SPSpeed').keyup(function () {
+        if ($('#SubProcessSize').val() != '' || $('#SubProcessSize').val() != null || $('#SPSpeed').val() != '' || $('#SPSpeed').val() != null || $('#SPQuantity').val() != '' || $('#SPQuantity').val() != null) {
+            $('#SPDuration').val($('#SubProcessSize').val() / ($('#SPQuantity').val() * $('#SPSpeed').val()))
+        }
+    })
+
     //Simpan form Add
     $('#AddNew').click(function () {
         if ($('#formInput').valid()) {
