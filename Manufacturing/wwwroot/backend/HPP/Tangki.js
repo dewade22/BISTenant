@@ -69,6 +69,35 @@ $(function () {
             })            
         }
     })
+
+    //Simpan form Update
+    $('#updateform').click(function () {
+        if ($('#formInput').valid()) {
+            $.ajax({
+                type: 'PUT',
+                url: baseUrl + '/HPPItem/RateTank',
+                data: $('#formInput').serialize(),
+                success: function (result) {
+                    if (result == 'sukses') {
+                        Swal.fire(
+                            'Sukses!',
+                            'Data berhasil diubah',
+                            'success'
+                        ).then((result) => {
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            '' + result,
+                            'error'
+                        )
+                    }
+                }
+                })
+            
+        }
+    })
 })
 
 function Add() {
@@ -78,4 +107,65 @@ function Add() {
     $('.fg-line').removeClass('fg-toggled')
     $('.cost-line').addClass('fg-toggled')
     $('.modal-title').html('Add New Tank Rates')
+}
+
+function PushUpdate(No, Name) {
+    $('#modalForm').modal()
+    $('#updateform').show()
+    $('#AddNew').hide()
+    $('.modal-title').html(`Edit - ${Name} Rates`)
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPItem/SingleRates?No=' + No,
+        success: function (result) {
+            if (result != false) {
+                $('#RateNo').val(result.rateNo)
+                $('#RateName').val(result.rateName)
+                $('#Price').val(result.price)
+                $('#SetupPrice').val(result.setupPrice)
+                $('#MaintenancePrice').val(result.maintenancePrice)
+                $('#SalvageValue').val(result.salvageValue)
+                $('#AgeUsedMonth').val(result.ageUsedMonth)
+                $('#Capacity').val(result.capacity)
+                $('.fg-line').addClass('fg-toggled')
+            }
+        }
+    })
+}
+
+function PushDelete(No, Name) {
+    Swal.fire({
+        title: 'Warning!',
+        text: 'Hapus Rate untuk ' + Name,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Kembali'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PUT',
+                url: baseUrl + '/HPPItem/HideRates?No=' + No,
+                success: function (result) {
+                    if (result == 'sukses') {
+                        Swal.fire(
+                            'Sukses',
+                            'Rate ' + Name + ' Telah dihapus',
+                            'success'
+                        ).then((result) => {
+                            location.reload()
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            '' + result,
+                            'error'
+                        )
+                    }
+                }
+            })
+        }
+    })
 }

@@ -49,6 +49,7 @@ namespace Manufacturing.Data
         public virtual DbSet<ModelSubProcess>ModelSubProcess { get; set; }
         public virtual DbSet<ModelRateType>ModelRateTypes { get; set; }
         public virtual DbSet<ModelRateMaster>ModelRateMaster { get; set; }
+        public virtual DbSet<UnitOfMeasures> UnitOfMeasures { get; set; }
 
 
         /*Store Procedure Model*/

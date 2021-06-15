@@ -1,0 +1,86 @@
+﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
+@{
+    ViewData["Title"] = "Consumable Rate";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <button onclick="Add()" class="btn btn-primary">Add Rates</button>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <table id="TablesData" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="RateNo" data-visible="false">Rate No</th>
+                                    <th data-column-id="RateName">Name</th>
+                                    <th data-column-id="Price" data-formatter="Price">Unit Price</th>
+                                    <th data-column-id="Unit">Rate Per</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.lisRateMaster)
+                                {
+                                    <tr>
+                                        <td>@item.RateNo</td>
+                                        <td>@item.RateName</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.Unit</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Modal Start-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInput">
+                                        <fieldset id="submitForm">
+                                            <input type="hidden" id="RateNo" name="RateNo" />
+                                            <input type="hidden" id="RateType" name="RateType" value="Consumables" />
+                                            
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal End-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/Consumables.js"></script>
+}
