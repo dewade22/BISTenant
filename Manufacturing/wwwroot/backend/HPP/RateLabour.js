@@ -77,7 +77,7 @@ $(function () {
             else {
                 $.ajax({
                     type: 'PUT',
-                    url: baseUrl + '/HPPItem/RateLabours',
+                    url: baseUrl + '/HPPItem/RatesUpdate',
                     data: $('#formInput').serialize(),
                     success: function (result) {
                         if (result == 'sukses') {

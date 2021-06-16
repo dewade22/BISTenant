@@ -13,18 +13,18 @@ namespace Manufacturing.Data.Entities
         [Required]
         public string RateType { get; set; }
         [Required]
-        public string RateName { get; set; }
-        public Decimal? RegularRate { get; set; }
-        public Decimal? Price { get; set; }
-        public Decimal? LemburRate { get; set; }
-        public Decimal? WeekendRate { get; set; }
-        public string Unit { get; set; }
-        public Decimal? SetupPrice { get; set; }
-        public Decimal? PeakHourRate { get; set; }
-        public Decimal? MaintenancePrice { get; set; }
-        public int? Capacity { get; set; }
-        public int? AgeUsedMonth { get; set; }
-        public Decimal? SalvageValue { get; set; }
+        public string RateName { get; set; } = "";
+        public Decimal? RegularRate { get; set; } = 0;
+        public Decimal? Price { get; set; } = 0;
+        public Decimal? LemburRate { get; set; } = 0;
+        public Decimal? WeekendRate { get; set; } = 0;
+        public string Unit { get; set; } = "";
+        public Decimal? SetupPrice { get; set; } = 0;
+        public Decimal? PeakHourRate { get; set; } = 0;
+        public Decimal? MaintenancePrice { get; set; } = 0;
+        public int? Capacity { get; set; } = 0;
+        public int? AgeUsedMonth { get; set; } = 0;
+        public Decimal? SalvageValue { get; set; } = 0;
         [Required]
         public Boolean Active { get; set; } = true;
         [Required]
@@ -33,6 +33,6 @@ namespace Manufacturing.Data.Entities
         public string CreatedBy { get; set; }
         public DateTime? LastModifiedAt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Decimal? MOQ { get; set; }
+        public Decimal? MOQ { get; set; } = 0;
     }
 }

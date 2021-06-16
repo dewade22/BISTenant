@@ -815,68 +815,9 @@ namespace Manufacturing.Controllers
             return Json(result);
         }
 
-        /*Labour*/
-        [AuthorizedAction]
-        public IActionResult RateLabour()
-        {
-            var data = new ModelRateViewModel();
-            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
-            return View(data);
-        }
-
         [AuthorizedAPI]
         [HttpPut]
-        public JsonResult RateLabours(ModelRateMaster model)
-        {
-            var result = "";
-            if (model == null)
-            {
-                result = "Gagal Mendapatkan Data";
-            }
-            else
-            {
-                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
-                if(current == null)
-                {
-                    result = "Rates dengan No "+model.RateNo+" Tidak ditemukan !!";
-                }
-                else
-                {
-                    current.RateName = model.RateName;
-                    current.RegularRate = model.RegularRate;
-                    current.LemburRate = model.LemburRate;
-                    current.WeekendRate = model.WeekendRate;
-                    current.Unit = model.Unit;
-                    current.LastModifiedAt = DateTime.Now;
-                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
-                    try
-                    {
-                        _context.ModelRateMaster.Update(current)
-                            .Property(a => a.Id).IsModified = false;
-                        _context.SaveChanges();
-                        result = "sukses";
-                    }catch(Exception ex)
-                    {
-                        result = "Gagal memperbarui data dengan error " + ex;
-                        throw;
-                    }
-                }
-            }
-            return Json(result);
-        }
-
-        /*Utility*/
-        [AuthorizedAction]
-        public IActionResult RateUtility()
-        {
-            var data = new ModelRateViewModel();
-            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Utility" && a.Active == true).ToList();
-            return View(data);
-        }
-
-        [AuthorizedAPI]
-        [HttpPut]
-        public JsonResult RateUtilities(ModelRateMaster model)
+        public JsonResult RatesUpdate(ModelRateMaster model)
         {
             var result = "";
             if (model == null)
@@ -894,8 +835,18 @@ namespace Manufacturing.Controllers
                 {
                     current.RateName = model.RateName;
                     current.RegularRate = model.RegularRate;
+                    current.Price = model.Price;
+                    current.LemburRate = model.LemburRate;
+                    current.WeekendRate = model.WeekendRate;
                     current.SetupPrice = model.SetupPrice;
                     current.PeakHourRate = model.PeakHourRate;
+                    current.Unit = model.Unit;
+                    current.MaintenancePrice = model.MaintenancePrice;
+                    current.Capacity = model.Capacity;
+                    current.AgeUsedMonth = model.AgeUsedMonth;
+                    current.SalvageValue = model.SalvageValue;
+                    current.MOQ = model.MOQ;
+
                     current.LastModifiedAt = DateTime.Now;
                     current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
                     try
@@ -911,9 +862,30 @@ namespace Manufacturing.Controllers
                         throw;
                     }
                 }
+
             }
             return Json(result);
         }
+
+        /*Labour*/
+        [AuthorizedAction]
+        public IActionResult RateLabour()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
+            return View(data);
+        }
+
+
+        /*Utility*/
+        [AuthorizedAction]
+        public IActionResult RateUtility()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Utility" && a.Active == true).ToList();
+            return View(data);
+        }
+
 
         /*Tangki*/
         [AuthorizedAction]
@@ -924,50 +896,6 @@ namespace Manufacturing.Controllers
             return View(data);
         }
 
-        [AuthorizedAPI]
-        [HttpPut]
-        public JsonResult RateTank(ModelRateMaster model)
-        {
-            var result = "";
-            if (model == null)
-            {
-                result = "Gagal Mendapatkan Data";
-            }
-            else
-            {
-                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
-                if(current == null)
-                {
-                    result = "Rates dengan No " + model.RateNo + " Tidak ditemukan !!";
-                }
-                else
-                {
-                    current.RateName = model.RateName;
-                    current.Price = model.Price;
-                    current.SetupPrice = model.SetupPrice;
-                    current.MaintenancePrice = model.MaintenancePrice;
-                    current.SalvageValue = model.SalvageValue;
-                    current.AgeUsedMonth = model.AgeUsedMonth;
-                    current.Capacity = model.Capacity;
-                    current.LastModifiedAt = DateTime.Now;
-                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
-                    try
-                    {
-                        _context.ModelRateMaster.Update(current)
-                            .Property(a=>a.Id).IsModified=false;
-                        _context.SaveChanges();
-                        result = "sukses";
-                    }
-                    catch (Exception ex)
-                    {
-                        result = "Gagal memperbarui data dengan error " + ex;
-                        throw;
-                    }
-                }
-                
-            }
-            return Json(result);
-        }
 
         //Consumable
         [AuthorizedAction]
@@ -980,47 +908,6 @@ namespace Manufacturing.Controllers
             return View(data);
         }
 
-        [AuthorizedAPI]
-        [HttpPut]
-        public JsonResult RateConsumables(ModelRateMaster model)
-        {
-            var result = "";
-            if (model == null)
-            {
-                result = "Gagal Mendapatkan Data";
-            }
-            else
-            {
-                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
-                if (current == null)
-                {
-                    result = "Rates dengan No " + model.RateNo + " Tidak ditemukan !!";
-                }
-                else
-                {
-                    current.RateName = model.RateName;
-                    current.Price = model.Price;
-                    current.Unit = model.Unit;
-                    current.MOQ = model.MOQ;
-                    current.LastModifiedAt = DateTime.Now;
-                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
-                    try
-                    {
-                        _context.ModelRateMaster.Update(current)
-                            .Property(a => a.Id).IsModified = false;
-                        _context.SaveChanges();
-                        result = "sukses";
-                    }
-                    catch (Exception ex)
-                    {
-                        result = "Gagal memperbarui data dengan error " + ex;
-                        throw;
-                    }
-                }
-
-            }
-            return Json(result);
-        }
 
         //Raw & Support Mats
         [AuthorizedAction]
@@ -1033,6 +920,7 @@ namespace Manufacturing.Controllers
             return View(data);
         }
 
+        //Cukai
         [AuthorizedAction]
         public IActionResult RateCukai()
         {
@@ -1041,6 +929,13 @@ namespace Manufacturing.Controllers
             List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a => a.DefaultUnitOfMeasure).ToList();
             ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
             return View(data);
+        }
+
+        //Packaging Material
+        [AuthorizedAction]
+        public IActionResult RatesPackaging()
+        {
+            return Json("sukses");
         }
 
 

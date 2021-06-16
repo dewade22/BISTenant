@@ -75,7 +75,7 @@ $(function () {
         if ($('#formInput').valid()) {
             $.ajax({
                 type: 'PUT',
-                url: baseUrl + '/HPPItem/RateTank',
+                url: baseUrl + '/HPPItem/RatesUpdate',
                 data: $('#formInput').serialize(),
                 success: function (result) {
                     if (result == 'sukses') {
