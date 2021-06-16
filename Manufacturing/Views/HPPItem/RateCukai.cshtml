@@ -1,6 +1,6 @@
 ﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
 @{
-    ViewData["Title"] = "Consumable Rate";
+    ViewData["Title"] = "Cukai Rate";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
@@ -27,23 +27,21 @@
                             <thead>
                                 <tr>
                                     <th data-column-id="RateNo" data-visible="false">Rate No</th>
-                                    <th data-column-id="RateName">Name</th>
-                                    <th data-column-id="Price" data-formatter="Price">Unit Price</th>
-                                    <th data-column-id="Unit">Rate Per</th>
-                                    <th data-column-id="MOQ" data-formatter="MOQ">Minimum Order</th>
+                                    <th data-column-id="RateName">Golongan</th>
+                                    <th data-column-id="Price">Tarif Pajak</th>
+                                    <th data-column-id="Unit">Tarif Per</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.lisRateMaster)
                                 {
-                                    <tr>
-                                        <td>@item.RateNo</td>
-                                        <td>@item.RateName</td>
-                                        <td>@item.Price</td>
-                                        <td>@item.Unit</td>
-                                        <td>@item.MOQ</td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.RateNo</td>
+                                    <td>@item.RateName</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Unit</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -59,32 +57,28 @@
                                     <form id="formInput">
                                         <fieldset id="submitForm">
                                             <input type="hidden" id="RateNo" name="RateNo" />
-                                            <input type="hidden" id="RateType" name="RateType" value="Consumables" />
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="text" class="form-control" name="RateName" id="RateName" required />
-                                                    <label class="fg-label">Name<span class="text-danger">*</span></label>
+                                            <input type="hidden" id="RateType" name="RateType" value="Cukai" />
+                                            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="text" class="form-control" name="RateName" id="RateName" required/>
+                                                        <label class="fg-label">Golongan <span class="text-danger">*</span></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line">
-                                                    <input type="number" class="form-control" name="Price" id="Price" required />
-                                                    <label class="fg-label">Price<span class="text-danger">*</span></label>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" name="Price" id="Price" required />
+                                                        <label class="fg-label">Tarif Pajak<span class="text-danger">*</span></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <p class="f-500 c-black m-b-15">Rate Unit<span class="text-danger">*</span></p>
-                                                <div class="fg-line">
-                                                    <select asp-for="rateMaster.Unit" asp-items="@ViewBag.UnitList" name="Unit" class="chosen" id="Unit">
-                                                        <option value="">Choose One</option>
-                                                    </select>
-                                                    <label id="errorselect" class="text-danger"></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line def-toggled">
-                                                    <input type="number" class="form-control" name="MOQ" id="MOQ" value="0" required />
-                                                    <label class="fg-label">Minimum Order<span class="text-danger">*</span></label>
+                                                <div class="form-group fg-float">
+                                                    <p class="f-500 c-black m-b-15">Rate Per<span class="text-danger">*</span></p>
+                                                    <div class="fg-line">
+                                                        <select asp-items="@ViewBag.UnitList" name="Unit" class="chosen" id="Unit">
+                                                            <option value="">Choose One</option>
+                                                        </select>
+                                                        <label id="errorselect" class="text-danger"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -110,5 +104,5 @@
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
-    <script type="text/javascript" src="~/backend/HPP/Consumables.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/RateCukai.js"></script>
 }

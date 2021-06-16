@@ -1,6 +1,6 @@
 ﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
 @{
-    ViewData["Title"] = "Consumable Rate";
+    ViewData["Title"] = "Raw & Support Material Rate";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
@@ -59,7 +59,7 @@
                                     <form id="formInput">
                                         <fieldset id="submitForm">
                                             <input type="hidden" id="RateNo" name="RateNo" />
-                                            <input type="hidden" id="RateType" name="RateType" value="Consumables" />
+                                            <input type="hidden" id="RateType" name="RateType" value="RawNSupp" />
                                             <div class="form-group fg-float">
                                                 <div class="fg-line">
                                                     <input type="text" class="form-control" name="RateName" id="RateName" required />
@@ -110,5 +110,5 @@
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
-    <script type="text/javascript" src="~/backend/HPP/Consumables.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/RateRawSupport.js"></script>
 }

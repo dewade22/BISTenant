@@ -119,7 +119,7 @@ function Add() {
     $('#AddNew').show()
     $('.fg-line').removeClass('fg-toggled')
     $('.def-toggled').addClass('fg-toggled')
-    $('.modal-title').html('Add New Consumables Rates')
+    $('.modal-title').html('Add New Raw or Support Mats ')
 }
 
 function PushUpdate(No, Name) {

@@ -975,13 +975,76 @@ namespace Manufacturing.Controllers
         {
             var data = new ModelRateViewModel();
             data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Consumables" && a.Active == true).ToList();
-            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderBy(a=>a.DefaultUnitOfMeasure).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a=>a.DefaultUnitOfMeasure).ToList();
             ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
             return View(data);
         }
-        
 
-        
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult RateConsumables(ModelRateMaster model)
+        {
+            var result = "";
+            if (model == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                var current = _context.ModelRateMaster.Where(a => a.RateNo == model.RateNo).SingleOrDefault();
+                if (current == null)
+                {
+                    result = "Rates dengan No " + model.RateNo + " Tidak ditemukan !!";
+                }
+                else
+                {
+                    current.RateName = model.RateName;
+                    current.Price = model.Price;
+                    current.Unit = model.Unit;
+                    current.MOQ = model.MOQ;
+                    current.LastModifiedAt = DateTime.Now;
+                    current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelRateMaster.Update(current)
+                            .Property(a => a.Id).IsModified = false;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }
+                    catch (Exception ex)
+                    {
+                        result = "Gagal memperbarui data dengan error " + ex;
+                        throw;
+                    }
+                }
+
+            }
+            return Json(result);
+        }
+
+        //Raw & Support Mats
+        [AuthorizedAction]
+        public IActionResult RateRawSupport()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "RawNSupp" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a => a.DefaultUnitOfMeasure).ToList();
+            ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
+            return View(data);
+        }
+
+        [AuthorizedAction]
+        public IActionResult RateCukai()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Cukai" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a => a.DefaultUnitOfMeasure).ToList();
+            ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
+            return View(data);
+        }
+
+
+
 
 
 

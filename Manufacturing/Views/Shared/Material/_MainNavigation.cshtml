@@ -27,7 +27,7 @@
             <li class="@Url.MakeActiveClass("/HPPItem/MesinMaster")">
                 <a asp-action="MesinMaster" asp-controller="HPPItem">Machine Master</a>
             </li>
-            <li class="sub-menu @Url.MakeActiveClass("/HPPItem/RateLabour") @Url.MakeActiveClass("/HPPItem/RateUtility") @Url.MakeActiveClass("/HPPItem/RateTangki") @Url.MakeActiveClass("/HPPItem/Consumables")">
+            <li class="sub-menu @Url.MakeActiveClass("/HPPItem/RateLabour") @Url.MakeActiveClass("/HPPItem/RateUtility") @Url.MakeActiveClass("/HPPItem/RateTangki") @Url.MakeActiveClass("/HPPItem/Consumables") @Url.MakeActiveClass("/HPPItem/RateRawSupport") @Url.MakeActiveClass("/HPPItem/RateCukai")">
                 <a href="#" data-ma-action="submenu-toggle">Master Rate</a>
                 <ul>
                     <li class="@Url.MakeActiveClass("/HPPItem/RateLabour")">
@@ -41,6 +41,12 @@
                     </li>
                     <li class="@Url.MakeActiveClass("/HPPItem/Consumables")">
                         <a asp-controller="HPPItem" asp-action="Consumables">Consumable</a>
+                    </li>
+                    <li class="@Url.MakeActiveClass("/HPPItem/RateRawSupport")">
+                        <a asp-controller="HPPItem" asp-action="RateRawSupport">Raw & Support Mats</a>
+                    </li>
+                    <li class="@Url.MakeActiveClass("/HPPItem/RateCukai")">
+                        <a asp-controller="HPPItem" asp-action="RateCukai">Cukai</a>
                     </li>
                 </ul>
             </li>
