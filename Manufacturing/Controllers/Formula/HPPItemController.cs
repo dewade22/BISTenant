@@ -935,7 +935,11 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult RatesPackaging()
         {
-            return Json("sukses");
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "Packaging" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a => a.DefaultUnitOfMeasure).ToList();
+            ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
+            return View(data);
         }
 
 
