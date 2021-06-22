@@ -1,49 +1,68 @@
-﻿let baseurl = localStorage.getItem('thisAddress');
+﻿let baseUrl = localStorage.getItem('thisAddress');
 
-$('#selectMMEA').change(function () {
-    if ($('#selectMMEA').val() !== null) {
-        $('#sMMEA2').empty();
-        $('#sMMEA2').append(`<option value="">Choose BOM</option>`)
-        $.ajax({
-            type: 'GET',
-            url: baseurl + '/HPPItem/selectBOMLine',
-            contentType: 'application/json',
-            data: {
-                productId : $('#selectMMEA').val()
-            },
-            success: function (result) {
-                result.forEach(function (result) {
-                    
-                    $('#sMMEA2').append(`<option value="${result.value}">${result.text}</option>`);
-                })
-                $('#sMMEA2').trigger("chosen:updated");
+$(function () {
+    $('#btnNext').hide()
+    $('.card-hide').hide()
+    $('#tableLookup').bootgrid({
+        caseSensitive: false,
+        formatters: {
+            'commands': function (column, row) {
+                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"Push(\'" + row.ModelId + "\',\'" + row.ModelName + "\')\"><span class=\"zmdi zmdi-check-circle\"></span></button>"
             }
-        })
-    }
-});
+        }
+    })
 
-$('#btnNext').click(function () {
-    let sMMEA2 = $('#sMMEA2 option:selected').html()
-    if (sMMEA2.toLowerCase().indexOf("choose") == -1){
-        Swal.fire({
-            title: 'Next Process',
-            text: "You Will Go To The Next Step",
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#03b6fc',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Next'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = baseurl + '/HPPItem/PraMixing?BoMId=' + $('#sMMEA2').val();
-
-            }
-        })
-    } else {
-        Swal.fire(
-            'Null List of BOM',
-            'Please Choose the Options',
-            'warning'
-        )
-    }
 })
+
+function LookUp() {
+    $('#modalForm').modal()
+    $('.modal-title').html('Add New Packaging Material Rates')
+}
+
+function Push(Id, Name) {
+    $('#ModelId').val(Id)
+    $('#modalForm').modal('toggle')
+    $('#tableList tbody').empty()
+    CekModelExist(Id)
+}
+
+function CekModelExist(Id) {
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPItem/CekModelDetail?Id=' + Id,
+        success: function (result) {
+            console.log(result.length)
+            if (result.length > 0) {
+                let tabel = `<tr>
+                                <td>${result[result.length-1].modelDetailNo}</td>
+                                <td>${result[result.length - 1].modelId}</td>
+                                <td>${result[result.length - 1].processName}</td>
+                                <td>${result[result.length - 1].description}</td>
+                            </tr>`
+                $('#tableList tbody').append(tabel)
+                $('#tableList').bootgrid({
+                    caseSensitive: false,
+                    formatters: {
+                        'command': function (column, row) {
+                            return `<button type="button" class="btn btn-primary"><i class="zmdi zmdi-edit"></i></button>`
+                        }
+                    }
+                })
+                $('.card-hide').show()
+                $('#btnNext').hide()
+            }
+            else {
+                $('#btnNext').show()
+                $('.card-hide').hide()
+            }
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error!',
+                'error' + jqXHR.status,
+                'error'
+            )
+        }
+    })
+    
+}

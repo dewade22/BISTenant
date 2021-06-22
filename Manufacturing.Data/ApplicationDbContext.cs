@@ -50,6 +50,7 @@ namespace Manufacturing.Data
         public virtual DbSet<ModelRateType>ModelRateTypes { get; set; }
         public virtual DbSet<ModelRateMaster>ModelRateMaster { get; set; }
         public virtual DbSet<UnitOfMeasures> UnitOfMeasures { get; set; }
+        public virtual DbSet<ModelDetail> ModelDetail { get; set; }
 
 
         /*Store Procedure Model*/

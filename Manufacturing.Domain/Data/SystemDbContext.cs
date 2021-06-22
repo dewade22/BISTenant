@@ -19,6 +19,7 @@ namespace Manufacturing.Domain.Data
         public DbSet<SystemRoles> SystemRoles { get; set; }
         public DbSet<SystemUserMenu> SystemUserMenu { get; set; }
         public DbSet<SystemUserRoles> SystemUserRoles { get; set; }
+        public DbSet<WebLoginActivity> webLoginActivity { get; set; }
 
         public SystemDbContext(DbContextOptions<SystemDbContext> options)
             : base(options)

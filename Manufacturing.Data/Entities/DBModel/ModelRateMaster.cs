@@ -25,6 +25,8 @@ namespace Manufacturing.Data.Entities
         public int? Capacity { get; set; } = 0;
         public int? AgeUsedMonth { get; set; } = 0;
         public Decimal? SalvageValue { get; set; } = 0;
+        public Decimal? Tax { get; set; } = 0;
+        public Decimal? Insurance { get; set; } = 0;
         [Required]
         public Boolean Active { get; set; } = true;
         [Required]

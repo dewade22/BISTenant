@@ -155,6 +155,13 @@ function getSalesBoard() {
                                 </tbody>
                            </table>`
             jQuery("#tempatTable").append(summary)
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !',
+                '' + exception + ' ' + jqXHR.status,
+                'error'
+            )
         }
     })
 }

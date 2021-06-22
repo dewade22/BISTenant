@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Manufacturing.Models.Hpp;
 using Manufacturing.Data.Entities;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 
 namespace Manufacturing.Controllers
 {
@@ -33,10 +31,20 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult Formula()
         {
-            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.Blocked == 0 && a.InventoryPostingGroup == "MMEA").ToList();
-            ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
-            return View();
+            var data = new ModelMasterVM();
+            var ListMaster = (from master in _context.ModelMaster
+                              join item in _context.Items
+                              on master.ProductID_SKUID equals item.ItemNo
+                              where master.Active == true
+                              select new ModelMasterViewModel
+                              {
+                                  itemTable = item,
+                                  masterModel = master
+                              }).ToList();
+            data.ListMaster = ListMaster;
+            return View(data);
         }
+
         [AuthorizedAPI]
         [HttpGet]
         public JsonResult selectBOMLine(string productId)
@@ -846,9 +854,12 @@ namespace Manufacturing.Controllers
                     current.AgeUsedMonth = model.AgeUsedMonth;
                     current.SalvageValue = model.SalvageValue;
                     current.MOQ = model.MOQ;
+                    current.Tax = model.Tax;
+                    current.Insurance = model.Insurance;
 
                     current.LastModifiedAt = DateTime.Now;
                     current.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+
                     try
                     {
                         _context.ModelRateMaster.Update(current)
@@ -942,6 +953,26 @@ namespace Manufacturing.Controllers
             return View(data);
         }
 
+        //Gedung dan Kendaraan
+        [AuthorizedAction]
+        public IActionResult RatesGedungKendaraan()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "GnK" && a.Active == true).ToList();
+            return View(data);
+        }
+
+        //ProductionCapacity
+        [AuthorizedAction]
+        public IActionResult RateProductionCapacity()
+        {
+            var data = new ModelRateViewModel();
+            data.lisRateMaster = _context.ModelRateMaster.Where(a => a.RateType == "PC" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> ListUnit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).OrderByDescending(a => a.DefaultUnitOfMeasure).ToList();
+            ViewBag.UnitList = new SelectList(ListUnit, "UOMCode", "UOMDescription");
+            return View(data);
+        }
+
 
 
 
@@ -1009,6 +1040,14 @@ namespace Manufacturing.Controllers
                 }
             }
             return Json(result);
+        }
+
+        //Cek Model di DB
+        [HttpGet]
+        public JsonResult CekModelDetail(string Id)
+        {
+            var data = _context.ModelDetail.Where(a => a.ModelId == Id).ToList();
+            return Json(data);
         }
 
 

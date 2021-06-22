@@ -7,11 +7,8 @@ $(function () {
                 return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"PushUpdate(\'" + row.RateNo + "\',\'" + row.RateName + "\')\"><span class=\"zmdi zmdi-edit\"></span></button>" +
                     "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" onclick=\"PushDelete(\'" + row.RateNo + "\',\'" + row.RateName + "\')\"><span class=\"zmdi zmdi-delete\"></span></button>"
             },
-            'Price': function (column, row) {
-                return `Rp. ${parseFloat(row.Price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-            },
-            'MOQ': function (column, row) {
-                return `${parseFloat(row.MOQ)} ${row.Unit}`
+            'Capacity': function (column, row) {
+                return `${parseFloat(row.Capacity).toLocaleString('id')} ${row.Unit}`
             }
         }
     })
@@ -33,7 +30,7 @@ $(function () {
     $('#AddNew').click(function () {
         if ($('#formInput').valid()) {
             if ($('#Unit').val() == '') {
-                $('#errorselect').html('Rate Unit Wajib Diisi')
+                $('#errorselect').html('Unit Wajib Diisi')
             }
             else {
                 $.ajax({
@@ -76,7 +73,7 @@ $(function () {
     $('#updateform').click(function () {
         if ($('#formInput').valid()) {
             if ($('#Unit').val() == '' || $('#Unit').val() == null) {
-                $('#errorselect').html('Rate Unit Wajib Diisi')
+                $('#errorselect').html('Unit Wajib Diisi')
             }
             else {
                 $.ajax({
@@ -111,14 +108,15 @@ $(function () {
             }
         }
     })
+
 })
 
 function Add() {
     $('#modalForm').modal()
     $('#updateform').hide()
     $('#AddNew').show()
-    $('.rm-toggled').removeClass('fg-toggled')
-    $('.modal-title').html('Add New Packaging Material Rates')
+    $('.fg-line').removeClass('fg-toggled')
+    $('.modal-title').html('Add New Production Capacity ')
 }
 
 function PushUpdate(No, Name) {
@@ -135,9 +133,8 @@ function PushUpdate(No, Name) {
 
                 $('#RateNo').val(result.rateNo)
                 $('#RateName').val(result.rateName)
-                $('#Price').val(result.price)
+                $('#Capacity').val(result.capacity)
                 $('#Unit').val(result.unit)
-                $('#MOQ').val(result.moq)
                 $('#Unit').trigger('chosen:updated')
                 $('.fg-line').addClass('fg-toggled')
             }
@@ -155,7 +152,7 @@ function PushUpdate(No, Name) {
 function PushDelete(No, Name) {
     Swal.fire({
         title: 'Warning!',
-        text: 'Hapus Rate untuk ' + Name,
+        text: 'Hapus Golongan ' + Name,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -171,7 +168,7 @@ function PushDelete(No, Name) {
                     if (result == 'sukses') {
                         Swal.fire(
                             'Sukses',
-                            'Rate ' + Name + ' Telah dihapus',
+                            'Golongan ' + Name + ' Telah dihapus',
                             'success'
                         ).then((result) => {
                             location.reload()

@@ -78,6 +78,13 @@ function Days(date = fullDT) {
 
             SummaryMonth(myDate, monthlyRevenue, monthlyLiters, result);
             SummaryYear(myDate, yearlyRevenue, yearlyLiters, result);
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !',
+                '' + exception + ' ' + jqXHR.status,
+                'error'
+            )
         }
     })
 }

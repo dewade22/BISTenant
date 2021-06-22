@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Manufacturing.Data;
-using Manufacturing.Models;
 using System.Data;
 using System.Text;
 using System.Reflection;
@@ -14,7 +11,6 @@ using Manufacturing.Domain.Data;
 using Manufacturing.Domain.Multitenancy;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -53,7 +49,7 @@ namespace Manufacturing.Controllers
         //dibawah untuk JWT
         //[AllowAnonymous]
         [HttpPost]
-        public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null)
+        public IActionResult Validate(SystemUsers SystemUsers, string returnUrl = null, string ClientOs = "", string ClientBrowser = "", int ClientMemory = 0, int ClientCore = 0)
         {
             IActionResult response = Unauthorized(); 
             
@@ -97,6 +93,26 @@ namespace Manufacturing.Controllers
                             //Get Tenant Active
                             string tenantActive = GetFullTenant();
                             HttpContext.Session.SetString("tenant", tenantActive);
+
+                            //Save Login Information
+                            var LogActivity = new WebLoginActivity();
+                            LogActivity.Email = HttpContext.Session.GetString("EMailAddress");
+                            LogActivity.IP_Addr = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                            LogActivity.LastLoginTime = DateTime.Now;
+                            LogActivity.ClientOS = ClientOs;
+                            LogActivity.ClientBrowser = ClientBrowser;
+                            LogActivity.ClientMemory = ClientMemory;
+                            LogActivity.ClientCore = ClientCore;
+                            try
+                            {
+                                _context.webLoginActivity.Add(LogActivity);
+                                _context.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                return Json(new { status = false, message = "Couldn't Get Login Information!" });
+                                //throw;
+                            }
 
                             return Json(new { status = true, message = "Login Successfull!", returnUrl = returnUrl, token = tokenString });
                             

@@ -30,6 +30,13 @@ function Sales() {
                                  </tr>`
                 jQuery("#tableSales tbody").append(transaksi);
             }
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !',
+                '' + exception + ' ' + jqXHR.status,
+                'error'
+            )
         }
     }).done(function () {
         initDataTable();

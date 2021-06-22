@@ -43,7 +43,14 @@ function SBToday(date = fullDT){
             $('#total-Days').html(result.hasil[0].daysMonth)
             isiThead(result, date)
             isiBody(result)
-            customScrolling() 
+            //customScrolling() 
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !',
+                '' + exception + ' ' + jqXHR.status,
+                'error'
+            )
         }
     })
 }
@@ -163,9 +170,9 @@ function isiDailyRevenue(result, loop) {
 }
 
 
-function customScrolling() {
+/*function customScrolling() {
     var $th = $('.wraptable').find('thead th')
     $('.wraptable').on('scroll', function () {
         $th.css('transform', 'translateY(' + this.scrollTop + 'px)')
     });
-}
+}*/

@@ -27,7 +27,7 @@
             <li class="@Url.MakeActiveClass("/HPPItem/MesinMaster")">
                 <a asp-action="MesinMaster" asp-controller="HPPItem">Machine Master</a>
             </li>
-            <li class="sub-menu @Url.MakeActiveClass("/HPPItem/RateLabour") @Url.MakeActiveClass("/HPPItem/RateUtility") @Url.MakeActiveClass("/HPPItem/RateTangki") @Url.MakeActiveClass("/HPPItem/Consumables") @Url.MakeActiveClass("/HPPItem/RateRawSupport") @Url.MakeActiveClass("/HPPItem/RateCukai") @Url.MakeActiveClass("/HPPItem/RatesPackaging")">
+            <li class="sub-menu @Url.MakeActiveClass("/HPPItem/RateLabour") @Url.MakeActiveClass("/HPPItem/RateUtility") @Url.MakeActiveClass("/HPPItem/RateTangki") @Url.MakeActiveClass("/HPPItem/Consumables") @Url.MakeActiveClass("/HPPItem/RateRawSupport") @Url.MakeActiveClass("/HPPItem/RateCukai") @Url.MakeActiveClass("/HPPItem/RatesPackaging") @Url.MakeActiveClass("/HPPItem/RatesGedungKendaraan") @Url.MakeActiveClass("/HPPItem/RateProductionCapacity")">
                 <a href="#" data-ma-action="submenu-toggle">Master Rate</a>
                 <ul>
                     <li class="@Url.MakeActiveClass("/HPPItem/RateLabour")">
@@ -51,7 +51,16 @@
                     <li class="@Url.MakeActiveClass("/HPPItem/RatesPackaging")">
                         <a asp-controller="HPPItem" asp-action="RatesPackaging">Packaging Material</a>
                     </li>
+                    <li class="@Url.MakeActiveClass("/HPPItem/RatesGedungKendaraan")">
+                        <a asp-controller="HPPItem" asp-action="RatesGedungKendaraan">Gedung & Kendaraan</a>
+                    </li>
+                    <li class="@Url.MakeActiveClass("/HPPItem/RateProductionCapacity")">
+                        <a asp-controller="HPPItem" asp-action="RateProductionCapacity">Production Capacity</a>
+                    </li>
                 </ul>
+            </li>
+            <li class="@Url.MakeActiveClass("/HPPItem/Formula")">
+                <a asp-controller="HPPItem" asp-action="Formula">Calculate HPP</a>
             </li>
         </ul>
     </li>

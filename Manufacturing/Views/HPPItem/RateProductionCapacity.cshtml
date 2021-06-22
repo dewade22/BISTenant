@@ -1,6 +1,6 @@
 ﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
 @{
-    ViewData["Title"] = "Packaging Material Rates";
+    ViewData["Title"] = "Production Capacity Rate";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
@@ -27,10 +27,9 @@
                             <thead>
                                 <tr>
                                     <th data-column-id="RateNo" data-visible="false">Rate No</th>
-                                    <th data-column-id="RateName">Item Name</th>
-                                    <th data-column-id="Price" data-formatter="Price">Price</th>
-                                    <th data-column-id="Unit">Rate Per</th>
-                                    <th data-column-id="MOQ" data-formatter="MOQ">Minimum Order</th>
+                                    <th data-column-id="RateName">Golongan</th>
+                                    <th data-column-id="Capacity" data-formatter="Capacity"> Capacity per Month</th>
+                                    <th data-column-id="Unit" data-visible="false">Unit</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
                                 </tr>
                             </thead>
@@ -40,9 +39,8 @@
                                     <tr>
                                         <td>@item.RateNo</td>
                                         <td>@item.RateName</td>
-                                        <td>@item.Price</td>
+                                        <td>@item.Capacity</td>
                                         <td>@item.Unit</td>
-                                        <td>@item.MOQ</td>
                                     </tr>
                                 }
                             </tbody>
@@ -50,7 +48,7 @@
                     </div>
                     <!--Modal Start-->
                     <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title"></h4>
@@ -59,32 +57,27 @@
                                     <form id="formInput">
                                         <fieldset id="submitForm">
                                             <input type="hidden" id="RateNo" name="RateNo" />
-                                            <input type="hidden" id="RateType" name="RateType" value="Packaging" />
+                                            <input type="hidden" id="RateType" name="RateType" value="PC" />
                                             <div class="form-group fg-float">
-                                                <div class="fg-line rm-toggled">
+                                                <div class="fg-line">
                                                     <input type="text" class="form-control" id="RateName" name="RateName" required />
-                                                    <label class="fg-label">Item Name <span class="text-danger">*</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line rm-toggled">
-                                                    <input type="number" class="form-control" id="Price" name="Price" required />
-                                                    <label class="fg-label">Price <span class="text-danger">*</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group fg-float">
-                                                <div class="fg-line rm-toggled">
-                                                    <select asp-items="@ViewBag.UnitList" id="Unit" name="Unit" class="chosen" required>
-                                                        <option value="">Choose Unit</option>
-                                                    </select>
-                                                    <label id="errorselect" class="text-danger"></label>
+                                                    <label class="fg-label">Golongan <span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
                                             <div class="form-group fg-float">
                                                 <div class="fg-line">
-                                                    <input type="number" class="form-control" id="MOQ" name="MOQ" value="0" required />
-                                                    <label class="fg-label">Minimum Order <span class="text-danger">*</span></label>
+                                                    <input type="number" class="form-control" id="Capacity" name="Capacity" required />
+                                                    <label class="fg-label">Estimate Prod. Capacity Per Month <span class="text-danger">*</span></label>
                                                 </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <p class="f-500 c-black m-b-15">Capacity Unit<span class="text-danger">*</span></p>
+                                                <div class="fg-line">
+                                                    <select asp-items="@ViewBag.UnitList" class="chosen" id="Unit" name="Unit">
+                                                        <option value="">Choose One</option>
+                                                    </select>
+                                                </div>
+                                                <label id="errorselect" class="text-danger"></label>
                                             </div>
                                         </fieldset>
                                     </form>
@@ -104,10 +97,11 @@
     </div>
 </section>
 
+
 @section Scripts{
     <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
-    <script type="text/javascript" src="~/backend/HPP/Rates_Packaging_Material.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/RateProductionCapacity.js"></script>
 }

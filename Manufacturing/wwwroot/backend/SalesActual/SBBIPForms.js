@@ -43,6 +43,13 @@ function SBToday(date = fullDT) {
             isiThead(result, date)
             isiBody(result)
             customScrolling()
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !',
+                '' + exception + ' ' + jqXHR.status,
+                'error'
+            )
         }
     })
 }

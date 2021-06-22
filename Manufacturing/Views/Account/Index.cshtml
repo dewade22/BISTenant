@@ -52,6 +52,10 @@
     </script>
 
     <script>
+        let ClientOs = navigator.appVersion
+        let ClientBrowser = navigator.vendor
+        let ClientMemory = navigator.deviceMemory
+        let ClientCore = navigator.hardwareConcurrency
         function Validate() {
             $("#form-show-error").hide();
             if ($("#email").val() == null || $("#email").val() == "") {
@@ -69,7 +73,11 @@
                         data: {
                             EMailAddress : $('#email').val(),
                             UserPassword: $('#password').val(),
-                            returnUrl: '@Html.Raw(ViewBag.ReturnUrl)'
+                            returnUrl: '@Html.Raw(ViewBag.ReturnUrl)',
+                            ClientOs: ClientOs,
+                            ClientBrowser: ClientBrowser,
+                            ClientMemory: ClientMemory,
+                            ClientCore: ClientCore
                         },
 
                         error: function (result) {

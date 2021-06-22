@@ -1,11 +1,11 @@
-﻿
+﻿@model Manufacturing.Models.Hpp.ModelMasterVM
 @{
     ViewData["Title"] = "Formula";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
-    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
- }
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+}
 
 <section id="content">
     <div class="container">
@@ -18,27 +18,88 @@
             </div>
             <div class="card-body card-padding">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <!--Chosen 1st-->
-                        <p class="f-500 c-black m-b-15">List of MMEA</p>
-                        <select asp-items="@ViewBag.ListMMEA" id="selectMMEA" class="chosen" data-placeholder="Choose MMEA">
-                            <option value="">Choose MMEA</option>
-                        </select>
-                        <br /><br />
-                        <p class="f-500 c-black m-b-15">List of BOM</p>
-                        <select id="sMMEA2" class="chosen" data-placeholder="Choose BOM">
-                            <option value="">Choose BOM</option>
-                        </select>
+                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label class="fg-label">Model ID</label>
+                            <div class="form-inline">
+                                <input type="text" class="form-control" id="ModelId" name="ModelId" style="width:80%" readonly required />
+                                <button type="button" class="btn btn-primary" onclick="LookUp()" style="width:15%">Select Model</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-2 col-xl-2 col-md-offset-8 col-lg-offset-10 col-xl-offset-10">
+                        <button type="button" class="btn btn-primary form-control" id="btnNext">Next</button>
+                    </div>
+
+                    <!--Modal-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table id="tableLookup" class="table table-condensed table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th data-column-id="Action" data-formatter="commands" data-sortable="false">Select</th>
+                                                    <th data-column-id="ModelId">Model Id</th>
+                                                    <th data-column-id="ModelName">Model Name</th>
+                                                    <th data-column-id="Product">Product</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.ListMaster)
+                                                {
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>@item.masterModel.ModelId</td>
+                                                        <td>@item.masterModel.ModelName</td>
+                                                        <td>@item.itemTable.Description</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <br />
-                <center><button type="button" class="btn btn-primary" id="btnNext">Next</button></center>
+            </div>
+        </div>
+        <div class="card card-hide">
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table id="tableList" class="table table-condensed table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th data-column-id="DetailId">Detail Id</th>
+                                        <th data-column-id="MasterId">Master Id</th>
+                                        <th data-column-id="ProcessName">Last Process</th>
+                                        <th data-column-id="Description">Description</th>
+                                        <th data-column-id="command" data-formatter="command" data-sortable="false">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-@section Scripts{ 
-    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script type="text/javascript" src="~/backend/HPP/formulaForm.js"></script>
 }

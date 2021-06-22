@@ -1,0 +1,131 @@
+﻿@model Manufacturing.Models.Hpp.ModelRateViewModel
+@{
+    ViewData["Title"] = "Gedung & Kendaraan Rate";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <button onclick="Add()" class="btn btn-primary">Add Rates</button>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <table id="TablesData" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="RateNo" data-visible="false">Rate No</th>
+                                    <th data-column-id="RateName">Name</th>
+                                    <th data-column-id="Price" data-formatter="Price">Unit Value</th>
+                                    <th data-column-id="Tax" data-formatter="Tax">Pajak</th>
+                                    <th data-column-id="MaintenanceCost" data-formatter="MTCost">Maintenance Cost</th>
+                                    <th data-column-id="AgeUse">Age Used (Month)</th>
+                                    <th data-column-id="Insurance" data-formatter="Insurance">Insurance</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.lisRateMaster)
+                                {
+                                    <tr>
+                                        <td>@item.RateNo</td>
+                                        <td>@item.RateName</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.Tax</td>
+                                        <td>@item.MaintenancePrice</td>
+                                        <td>@item.AgeUsedMonth</td>
+                                        <td>@item.Insurance</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--Modal Start-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInput">
+                                        <fieldset id="submitForm">
+                                            <input type="hidden" id="RateNo" name="RateNo" />
+                                            <input type="hidden" id="RateType" name="RateType" value="GnK" />
+                                            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line rm-toggled">
+                                                        <input type="text" class="form-control" id="RateName" name="RateName" required />
+                                                        <label class="fg-label">Name <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line rm-toggled">
+                                                        <input type="number" class="form-control" id="Price" name="Price" required />
+                                                        <label class="fg-label">Unit Value <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="Tax" name="Tax" value="0" required/>
+                                                        <label class="fg-label">Tax <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="MaintenancePrice" name="MaintenancePrice" value="0" required />
+                                                        <label class="fg-label">Maintenance Cost <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="AgeUsedMonth" name="AgeUsedMonth" value="0" required />
+                                                        <label class="fg-label">Age Used (Month) <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="Insurance" name="Insurance" value="0" required />
+                                                        <label class="fg-label">Insurance <span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal End-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/HPP/GedungDanKendaraan.js"></script>
+}
