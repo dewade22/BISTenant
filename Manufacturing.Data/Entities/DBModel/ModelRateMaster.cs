@@ -18,6 +18,7 @@ namespace Manufacturing.Data.Entities
         public Decimal? Price { get; set; } = 0;
         public Decimal? LemburRate { get; set; } = 0;
         public Decimal? WeekendRate { get; set; } = 0;
+        public Decimal? BeginPrice { get; set; } = 0;
         public string Unit { get; set; } = "";
         public Decimal? SetupPrice { get; set; } = 0;
         public Decimal? PeakHourRate { get; set; } = 0;

@@ -1,175 +1,93 @@
-﻿
+﻿@model Manufacturing.Models.Hpp.ModelMasterVM
 @{
     ViewData["Title"] = "Pra Mixing";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
-    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" rel="stylesheet" />
 }
 
 <section id="content">
     <div class="container">
         <div class="c-header">
-            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+            <h2 class="text-capitalize">@ViewData["Title"]</h2>
         </div>
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">Calculate Formula</h2>
             </div>
             <div class="card-body card-padding">
-                <p class="m-b-25 m-t-25 c-black f-500">Data</p>
-                <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
                 <div class="row">
-                   <div class="col-sm-6">
+                    <p class="m-b-25 m-t-25 c-black f-500">Data</p>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="QtyKompor" value="0">
-                                <label class="fg-label">Qty Kompor</label>
+                            <p class="m-b-25 m-t-25 c-black f-500">Choose Burner Machine<span class="text-danger">*</span></p>
+                            <div class="fg-line fg-toggled">
+                                <select class="js-example-basic-single" asp-items="@ViewBag.ListBurner" name="Machine" style="width:100%">
+                                    <option value="">Choose One</option>
+                                </select>
                             </div>
                         </div>
-                        <!--TextBox 1-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour" value="0">
-                                <label class="fg-label">Total Labour</label>
+                                <input type="number" class="form-control" id="QtyKompor" name="Qty" required />
+                                <label class="fg-label">Qty Burner<span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!--Combo Box-->
-                        <p class="f-500 c-black m-b-15">Labour Type</p>
-                        <select id="LabourType" class="chosen" data-placeholder="Choose Labour Type">
-                            <option value="">Choose Labour</option>
-                            <option value="35000">Production Staff</option>
-                            <option value="45000">Supervisor</option>
-                            <option value="15625">Daily Worker</option>
-                            <option value="50000">Tenaga Ahli</option>
-                        </select>
-                        <br /><br />
-                        <!--TextBox 4-->
                         <div class="form-group fg-float">
                             <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="LabourHour" value="0">
-                                <label class="fg-label">Labour Hour</label>
+                                <input type="number" class="form-control" id="Batch" name="Batch" required />
+                                <label class="fg-label">Batch to Burn<span class="text-danger">*</span></label>
                             </div>
                         </div>
-
+                        <div class="form-group fg-float">
+                            <p class="m-b-25 m-t-25 c-black f-500">Labour Type<span class="text-danger">*</span></p>
+                            <div class="fg-line fg-toggled">
+                                <select class="js-example-basic-single" asp-items="@ViewBag.LabourType" name="LabourType" style="width:100%">
+                                    <option value="">Choose One</option>
+                                </select>
+                            </div>
+                        </div>
+                       
                     </div>
-                    <!--Row 3-->
-                   <div class="col-sm-6">
-                       <div class="form-group fg-float">
-                           <div class="fg-line">
-                               <input type="number" class="input-sm form-control fg-input" id="MixerCapacity" value="0">
-                               <label class="fg-label">Mixer Capacity (Kg)</label>
-                           </div>
-                       </div>
-                       <!--TextBox 1-->
-                       <div class="form-group fg-float">
-                           <div class="fg-line">
-                               <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" value="0">
-                               <label class="fg-label">FOH Electricity (KW)</label>
-                           </div>
-                       </div>
-                       <!--TextBox 2-->
-                       <div class="form-group fg-float">
-                           <div class="fg-line">
-                               <input type="number" class="input-sm form-control fg-input" id="FOHFuel" value="0">
-                               <label class="fg-label">FOH Fuel (Liters)</label>
-                           </div>
-                       </div>
-                       <!--TextBox 3-->
-                       <div class="form-group fg-float">
-                           <div class="fg-line">
-                               <input type="number" class="input-sm form-control fg-input" id="FOHWater" value="0">
-                               <label class="fg-label">FOH Water (Liters)</label>
-                           </div>
-                       </div>
-                       <!--TextBox 4-->
-                       <div class="form-group fg-float">
-                           <div class="fg-line">
-                               <input type="number" class="input-sm form-control fg-input" id="FOHGas" value="0">
-                               <label class="fg-label">FOH Gas (Kg)</label>
-                           </div>
-                       </div>
-                   </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group fg-float">
+                            <p class="m-b-25 m-t-25 c-black f-500">Working Type<span class="text-danger">*</span></p>
+                            <div class="fg-line fg-toggled">
+                                <select class="js-example-basic-single" name="WorkingType" style="width:100%">
+                                    <option value="">Choose One</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Lembur">Lembur</option>
+                                    <option value="Weekend">Week End</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="form-control" id="Labour" name="Labour" required />
+                                <label class="fg-label">Qty Labour <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="number" class="form-control" id="Labour" name="LabourRate" required />
+                                <label class="fg-label">Labour Rate<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 xol-xs-12 col-lg-offset-10 col-xl-offset-10 col-md-offset-10">
+                        <button type="button" class="btn btn-success" id="save-header" style="width:100%">Save Header</button>
+                    </div>
                 </div>
-                <hr />
-                <br />
+            </div>
+        </div>
+        <div class="card card-hide">
+            <div class="card-body card-padding">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="table-responsive">
-                            <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Item Name</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Type</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Kompor</td>
-                                        <td id="TQTYKompor">0</td>
-                                        <td class="harga" id="TPriceKompor">0</td>
-                                        <td id="TTypeKompor">FOH</td>
-                                        <td class="total harga" id="TTotalKompor">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td id="labourText">Labour</td>
-                                        <td id="TQTYLabour">0</td>
-                                        <td class="harga" id="TPriceLabour">0</td>
-                                        <td id="TTypeLabour">Labour</td>
-                                        <td class="total harga" id="TTotalLabour">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Electricity</td>
-                                        <td id="TQTYElectricity">0</td>
-                                        <td class="harga" id="TPriceElectricity">1614.008</td>
-                                        <td id="TTypeElectricity">FOH</td>
-                                        <td class="total harga" id="TTotalElectricity">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fuel</td>
-                                        <td id="TQTYFuel">0</td>
-                                        <td class="harga" id="TPriceFuel">0</td>
-                                        <td id="TTypeFuel">FOH</td>
-                                        <td class="total harga" id="TTotalFuel">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Water</td>
-                                        <td id="TQTYWater">0</td>
-                                        <td class="harga" id="TPriceWater">22</td>
-                                        <td id="TTypeWater">FOH</td>
-                                        <td class="total harga" id="TTotalWater">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GAS</td>
-                                        <td id="TQTYGas">0</td>
-                                        <td class="harga" id="TPriceGas">11625</td>
-                                        <td id="TTypeGas">FOH</td>
-                                        <td class="total harga" id="TTotalGas">0</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr />
-                        <br /><br /><br />
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" value="0" disabled>
-                                <label class="fg-label">Total Per Machine Capacity</label>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" value="0" disabled>
-                                <label class="fg-label">Total Per Unit of Measure</label>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary">Add Item</button><br />
+                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
                     </div>
                 </div>
             </div>
@@ -178,6 +96,6 @@
 </section>
 
 @section Scripts{
-    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="~/backend/HPP/praMixingForm.js"></script>
 }

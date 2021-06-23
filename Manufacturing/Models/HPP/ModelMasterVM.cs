@@ -8,5 +8,7 @@ namespace Manufacturing.Models.Hpp
     {
         public ModelRateMaster detailMaster { get; set; }
         public IEnumerable<ModelMasterViewModel>ListMaster { get; set; }
+        public ModelRateMaster rateMaster { get; set; }
+        public ModelPraMixing praMixing { get; set; }
     }
 }

@@ -11,6 +11,9 @@ $(function () {
             }
         }
     })
+    $('#btnNext').click(function () {
+        window.location = baseUrl + '/HPPItem/Mixing?ModelId=' + $('#ModelId').val()
+    })
 
 })
 
@@ -44,7 +47,7 @@ function CekModelExist(Id) {
                     caseSensitive: false,
                     formatters: {
                         'command': function (column, row) {
-                            return `<button type="button" class="btn btn-primary"><i class="zmdi zmdi-edit"></i></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="Edit('${row.MasterId}')"><i class="zmdi zmdi-edit"></i></button>`
                         }
                     }
                 })
@@ -65,4 +68,8 @@ function CekModelExist(Id) {
         }
     })
     
+}
+
+function Edit(Id) {
+    window.location = baseUrl + '/HPPItem/Mixing?ModelId=' +Id
 }

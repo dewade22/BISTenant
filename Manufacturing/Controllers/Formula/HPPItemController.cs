@@ -61,25 +61,35 @@ namespace Manufacturing.Controllers
             return new JsonResult(BomLine);
         }
 
-        public string GetBOMName(string BoMId)
+        public string GetBOMName(string ModelId)
         {
-            string BoMName = _context.ProductionBomheader.Where(a => a.ProductionBomheaderNo == BoMId).Select(a => a.Description).FirstOrDefault();
+            string BoMName = (from master in _context.ModelMaster
+                              join item in _context.Items
+                              on master.ProductID_SKUID equals item.ItemNo
+                              where master.ModelId == ModelId
+                              select new ModelMasterViewModel
+                              {
+                                  itemTable = item,
+                                  masterModel = master
+                              }).Select(a=>a.itemTable.Description).FirstOrDefault();
             return BoMName;
         }
 
         [AuthorizedAction]
-        public IActionResult PraMixing(string BoMId)
+        public IActionResult PraMixing()
         {
-            ViewBag.BomId = BoMId;
-            ViewBag.BomName = GetBOMName(BoMId);
+            List<Manufacturing.Data.Entities.ModelMachineMaster> Machine = _context.ModelMachineMaster.Where(a => a.MachineType == "ENG-0011" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.ModelRateMaster> LabourType = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
+            ViewBag.ListBurner = new SelectList(Machine, "MachineNo", "MachineName");
+            ViewBag.LabourType = new SelectList(LabourType, "RateNo", "RateName");
             return View();
         }
         
         [AuthorizedAction]
-        public IActionResult Mixing(string BoMId)
+        public IActionResult Mixing(string ModelId)
         {
-            ViewBag.BomId = BoMId;
-            ViewBag.BomName = GetBOMName(BoMId);
+            ViewBag.ModelId = ModelId;
+            ViewBag.Product = GetBOMName(ModelId);
             return View();
         }
 
@@ -167,7 +177,7 @@ namespace Manufacturing.Controllers
         {
             var ids = RegisterModelId();
             ViewData["id"] = ids;
-            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FGInTrans").ToList();
+            List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FG").ToList();
             ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
             return View();
         }
@@ -203,7 +213,7 @@ namespace Manufacturing.Controllers
             {
                 try
                 {
-                    List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FGInTrans").ToList();
+                    List<Manufacturing.Data.Entities.Items> MMEA = _context.Items.Where(a => a.RowStatus == 0 && a.InventoryPostingGroup == "FG").ToList();
                     ViewBag.ListMMEA = new SelectList(MMEA, "ItemNo", "Description");
                     models = _context.ModelMaster.Where(a => a.ModelId == ModelId).FirstOrDefault();
                 }
