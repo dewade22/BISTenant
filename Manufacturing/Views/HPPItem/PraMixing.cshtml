@@ -6,6 +6,7 @@
 @section Styles{
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/app.css" />
 }
 
 <section id="content">
@@ -15,79 +16,47 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">Calculate Formula</h2>
+                <h2 class="card-title">Calculate Process</h2>
             </div>
-            <div class="card-body card-padding">
-                <div class="row">
-                    <p class="m-b-25 m-t-25 c-black f-500">Data</p>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group fg-float">
-                            <p class="m-b-25 m-t-25 c-black f-500">Choose Burner Machine<span class="text-danger">*</span></p>
-                            <div class="fg-line fg-toggled">
-                                <select class="js-example-basic-single" asp-items="@ViewBag.ListBurner" name="Machine" style="width:100%">
-                                    <option value="">Choose One</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="form-control" id="QtyKompor" name="Qty" required />
-                                <label class="fg-label">Qty Burner<span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="form-control" id="Batch" name="Batch" required />
-                                <label class="fg-label">Batch to Burn<span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <div class="form-group fg-float">
-                            <p class="m-b-25 m-t-25 c-black f-500">Labour Type<span class="text-danger">*</span></p>
-                            <div class="fg-line fg-toggled">
-                                <select class="js-example-basic-single" asp-items="@ViewBag.LabourType" name="LabourType" style="width:100%">
-                                    <option value="">Choose One</option>
-                                </select>
-                            </div>
-                        </div>
-                       
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group fg-float">
-                            <p class="m-b-25 m-t-25 c-black f-500">Working Type<span class="text-danger">*</span></p>
-                            <div class="fg-line fg-toggled">
-                                <select class="js-example-basic-single" name="WorkingType" style="width:100%">
-                                    <option value="">Choose One</option>
-                                    <option value="Regular">Regular</option>
-                                    <option value="Lembur">Lembur</option>
-                                    <option value="Weekend">Week End</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="form-control" id="Labour" name="Labour" required />
-                                <label class="fg-label">Qty Labour <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="form-control" id="Labour" name="LabourRate" required />
-                                <label class="fg-label">Labour Rate<span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 xol-xs-12 col-lg-offset-10 col-xl-offset-10 col-md-offset-10">
-                        <button type="button" class="btn btn-success" id="save-header" style="width:100%">Save Header</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card card-hide">
             <div class="card-body card-padding">
                 <div class="row">
                     <div class="col-12">
-                        <button type="button" class="btn btn-primary">Add Item</button><br />
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                        <form id="form-Input">
+                            <fieldset id="submitForm">
+                                <input type="hidden" id="WIPHeaderId" />
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input type="text" class="form-control" id="Description" name="Description" required />
+                                        <label class="fg-label">Process Description<span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input type="text" class="form-control" id="ItemOutput" name="ItemOutput" required />
+                                        <label class="fg-label">Item Output Name<span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <input type="number" class="form-control" id="QtyOutput" name="QtyOutput" required />
+                                        <label class="fg-label">Qty Output<span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group fg-float">
+                                    <p class="f-500 c-black m-b-15">Qty Output Unit<span class="text-danger">*</span></p>
+                                    <div class="fg-line">
+                                        <select asp-items="@ViewBag.Unit" class="js-example-basic-single" name="QtyOutputUnit" id="QtyOutputUnit" style="width:100%">
+                                            <option value="">Choose One</option>
+                                        </select>
+                                        <label id="error-select" class="text-danger"></label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>                        
+                    </div>
+
+                    <div class="col-lg-2 col-xl-2 col-md-2 col-sm-12 xol-xs-12 col-lg-offset-10 col-xl-offset-10 col-md-offset-10">
+                        <button type="button" class="btn btn-success" id="save-header" style="width:100%">Save Header</button>
                     </div>
                 </div>
             </div>
@@ -97,5 +66,7 @@
 
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
     <script type="text/javascript" src="~/backend/HPP/praMixingForm.js"></script>
 }

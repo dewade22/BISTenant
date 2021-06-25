@@ -52,6 +52,10 @@ namespace Manufacturing.Data
         public virtual DbSet<UnitOfMeasures> UnitOfMeasures { get; set; }
         public virtual DbSet<ModelDetail> ModelDetail { get; set; }
 
+        //HPPMixing Model
+        public virtual DbSet<ModelWIPProcessHeader> ModelWIPProcessHeader { get; set; }
+        public virtual DbSet<ModelWIPProcessLine> ModelWIPProcessLine { get; set; }
+
 
         /*Store Procedure Model*/
         public virtual DbSet<spRptSalesActualModel> SpRptSalesActualModels { get; set; }

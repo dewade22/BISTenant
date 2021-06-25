@@ -10,5 +10,6 @@ namespace Manufacturing.Models.Hpp
         public IEnumerable<ModelMasterViewModel>ListMaster { get; set; }
         public ModelRateMaster rateMaster { get; set; }
         public ModelPraMixing praMixing { get; set; }
+        public IEnumerable<ModelWIPProcessHeader> ListWipHeader { get; set; }
     }
 }

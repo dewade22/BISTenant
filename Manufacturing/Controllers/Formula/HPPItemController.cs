@@ -76,15 +76,54 @@ namespace Manufacturing.Controllers
         }
 
         [AuthorizedAction]
+        public IActionResult ListPraMixing()
+        {
+            var data = new ModelMasterVM();
+            data.ListWipHeader = _context.ModelWIPProcessHeader.ToList();
+            return View(data);
+        }
+
+        [AuthorizedAction]
         public IActionResult PraMixing()
         {
             List<Manufacturing.Data.Entities.ModelMachineMaster> Machine = _context.ModelMachineMaster.Where(a => a.MachineType == "ENG-0011" && a.Active == true).ToList();
             List<Manufacturing.Data.Entities.ModelRateMaster> LabourType = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> Unit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).ToList();
             ViewBag.ListBurner = new SelectList(Machine, "MachineNo", "MachineName");
             ViewBag.LabourType = new SelectList(LabourType, "RateNo", "RateName");
+            ViewBag.Unit = new SelectList(Unit, "UOMCode", "UOMDescription");
             return View();
         }
-        
+
+        public JsonResult SaveHeaderPraMixing(ModelWIPProcessHeader model)
+        {
+            var result = "";
+            model.ModelHeaderId = GenerateWIPHeaderID();
+            model.Description = model.Description +" "+ DateTime.Now;
+            model.CreatedAt = DateTime.Now;
+            model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+            try
+            {
+                _context.ModelWIPProcessHeader.Add(model);
+                _context.SaveChanges();
+                result = "sukses";
+            }
+            catch(Exception ex)
+            {
+                result = ex.ToString();
+            }
+
+            return Json(new { result = result, ModelId = model.ModelHeaderId });
+        }
+
+        [AuthorizedAction]
+        public IActionResult PraMixings(string Header)
+        {
+            var data = new ModelMasterVM();
+            data.ListWipHeader = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == Header);
+            return View(data);
+        }
+
         [AuthorizedAction]
         public IActionResult Mixing(string ModelId)
         {
@@ -1220,6 +1259,38 @@ namespace Manufacturing.Controllers
                 else
                 {
                     Id = "RT-" + (currentIds + 1);
+                }
+            }
+            return Id;
+        }
+
+        public string GenerateWIPHeaderID()
+        {
+            string Id = "WIP-00001";
+            var MaxId = _context.ModelWIPProcessHeader.OrderByDescending(a => a.Id).Select(a => a.ModelHeaderId).FirstOrDefault();
+            if (MaxId != null)
+            {
+                char[] trimmed = { 'W', 'I', 'P', '-' };
+                int currentIds = Convert.ToInt32(MaxId.Trim(trimmed));
+                if (currentIds < 10)
+                {
+                    Id = "WIP-0000" + (currentIds + 1);
+                }
+                else if (currentIds < 100)
+                {
+                    Id = "WIP-000" + (currentIds + 1);
+                }
+                else if (currentIds < 1000)
+                {
+                    Id = "WIP-00" + (currentIds + 1);
+                }
+                else if (currentIds < 10000)
+                {
+                    Id = "WIP-0" + (currentIds + 1);
+                }
+                else
+                {
+                    Id = "WIP-" + (currentIds + 1);
                 }
             }
             return Id;

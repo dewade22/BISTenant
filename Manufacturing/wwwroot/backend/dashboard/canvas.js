@@ -15,7 +15,7 @@ const last = [];
 function getData() {
     let tahun = tanggal.getFullYear();
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: alamat+"/DataSales?tahun=" + tahun,
         success: function (res) {
             $.each(res.label, function (i) {
