@@ -13,6 +13,7 @@ namespace Manufacturing.Data.Entities
         public string ModelWIPLineId { get; set; }
         public string ItemType { get; set; }
         public string ItemNo { get; set; }
+        public string ItemName { get; set; }
         public Decimal? ItemQty { get; set; }
         public string ItemUnit { get; set; }
         public Decimal? ItemPrice { get; set; }

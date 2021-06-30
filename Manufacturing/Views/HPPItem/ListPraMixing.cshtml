@@ -36,7 +36,7 @@
                                     <tr>
                                         <td>@item.ModelHeaderId</td>
                                         <td>@item.Description</td>
-                                        <td>@item.ItemOutput</td>
+                                        <td>@item.ItemOutputName</td>
                                         <td>@item.CreatedAt</td>
                                     </tr>
                                  }
@@ -64,7 +64,10 @@
             })
         })
         function AddPraMixing() {
-            window.location = 'PraMixing';
+            window.location = 'PraMixing'
+        }
+        function Update(Id) {
+            window.location ='PraMixings?Header='+Id
         }
     </script>
 }

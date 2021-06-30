@@ -10,9 +10,10 @@ namespace Manufacturing.Data.Entities
         public int Id { get; set; }
         [Key]
         public string ModelHeaderId { get; set; }
-        public string Description { get; set; } = "";
         [Required]
-        public string ItemOutput { get; set; }
+        public string ItemOutputId { get; set; }
+        public string Description { get; set; } = "";
+        public string ItemOutputName { get; set; }
         [Required]
         public Decimal QtyOutput { get; set; }
         public string QtyOutputUnit { get; set; }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Manufacturing.Data.Entities;
-using Manufacturing.Models.Hpp;
 
 namespace Manufacturing.Models.Hpp
 {
@@ -11,5 +10,6 @@ namespace Manufacturing.Models.Hpp
         public ModelRateMaster rateMaster { get; set; }
         public ModelPraMixing praMixing { get; set; }
         public IEnumerable<ModelWIPProcessHeader> ListWipHeader { get; set; }
+        public IEnumerable<Manufacturing.Data.Entities.Items> ListItems { get; set; }
     }
 }

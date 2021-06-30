@@ -1,5 +1,115 @@
-﻿@model Manufacturing.Models.Hpp.ModelMasterVM
+﻿@model Manufacturing.Models.Hpp.ModelPraMixing
 @{
-    ViewData["Title"] = "List Pra Mixing";
+    ViewData["Title"] = "Pra Mixing";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+
+@section Styles{
+    <style>
+        .judul-label {
+            width: 30%
+        }
+    </style>
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"]</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Calculate Process</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <div class="form-inline">
+                                    <label class="judul-label">Model Header Id</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.ModelHeaderId)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Description</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.Description)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Output Name</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.ItemOutputName)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Output Qty</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.QtyOutput)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <div class="form-inline">
+                                    <label class="judul-label">Output unit</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.QtyOutputUnit)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Date Created</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.CreatedAt)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Created By</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.CreatedBy)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success" id="AddItem">Add Item</button>
+                        <div class="table-responsive">
+                            <table id="tableForm" class="table table-condensed table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th data-column-id="Id" data-visible="false">Line Id</th>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="ItemQty">Qty</th>
+                                        <th data-column-id="Cost" data-formatter="cost">Cost</th>
+                                        <th data-column-id="Amount" data-formatter="Amount">Amount</th>
+                                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.listLine)
+                                    {
+                                        <tr>
+                                            <td>@item.ModelWIPLineId</td>
+                                            <td>@item.ItemName</td>
+                                            <td>@item.ItemQty</td>
+                                            <td>@item.ItemPrice</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/PraMixing/PraMixingList.js"></script>
 }

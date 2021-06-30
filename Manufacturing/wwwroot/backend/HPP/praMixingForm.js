@@ -2,9 +2,17 @@
 
 $(function () {
     $('.js-example-basic-single').select2({
-        width: 'resolve',        
+        width: 'resolve',
+        theme: 'bootstrap'
     })
-
+    $('#tableLookup').bootgrid({
+        caseSensitive: false,
+        formatters: {
+            'commands': function (column, row) {
+                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" onclick=\"Push(\'" + row.ItemNo + "\')\"><span class=\"zmdi zmdi-check-circle\"></span></button>"
+            }
+        }
+    })
     //Validasi
     $('#form-Input').validate({
         onkeyup: function (element) { $(element).valid() }
@@ -49,4 +57,39 @@ $(function () {
     })
 
 })
+function LookUpItem() {
+    $('#modalForm').modal()
+    $('.modal-title').html('Item List')
+}
+function Push(ItemNo) {
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPHelper/Items?No=' + ItemNo,
+        success: function (result) {
+            if (Object.keys(result).length > 0) {
+                $('#ItemOutputId').val(result.itemNo)
+                $('#ItemOutputName').val(result.description)
+                $('#QtyOutputUnit').val(result.baseUnitofMeasure)
+                $('.js-example-basic-single').trigger('change.select2')
+                $('#modalForm').modal('toggle')
+                $('#outname').addClass('fg-toggled')
+            } else {
+                Swal.fire(
+                    'Error..!',
+                    '404 - Record Not Found',
+                    'error'
+                )}
+            
+                
+           
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'ERROR..!',
+                'Error ' + jqXHR.status,
+                'error'
+            )
+        }
+    })
+}
 

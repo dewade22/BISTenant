@@ -86,20 +86,17 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult PraMixing()
         {
-            List<Manufacturing.Data.Entities.ModelMachineMaster> Machine = _context.ModelMachineMaster.Where(a => a.MachineType == "ENG-0011" && a.Active == true).ToList();
-            List<Manufacturing.Data.Entities.ModelRateMaster> LabourType = _context.ModelRateMaster.Where(a => a.RateType == "Labour" && a.Active == true).ToList();
+            var data = new ModelMasterVM();
+            data.ListItems = _context.Items.Where(a => a.RowStatus == 0).ToList();
             List<Manufacturing.Data.Entities.UnitOfMeasures> Unit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).ToList();
-            ViewBag.ListBurner = new SelectList(Machine, "MachineNo", "MachineName");
-            ViewBag.LabourType = new SelectList(LabourType, "RateNo", "RateName");
             ViewBag.Unit = new SelectList(Unit, "UOMCode", "UOMDescription");
-            return View();
+            return View(data);
         }
 
         public JsonResult SaveHeaderPraMixing(ModelWIPProcessHeader model)
         {
             var result = "";
             model.ModelHeaderId = GenerateWIPHeaderID();
-            model.Description = model.Description +" "+ DateTime.Now;
             model.CreatedAt = DateTime.Now;
             model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
             try
@@ -119,8 +116,9 @@ namespace Manufacturing.Controllers
         [AuthorizedAction]
         public IActionResult PraMixings(string Header)
         {
-            var data = new ModelMasterVM();
-            data.ListWipHeader = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == Header);
+            var data = new ModelPraMixing();
+            data.header = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == Header).FirstOrDefault();
+            data.listLine = _context.ModelWIPProcessLine.Where(a => a.ModelWIPHeaderId == Header).ToList();
             return View(data);
         }
 

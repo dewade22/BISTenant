@@ -94,7 +94,7 @@ namespace Manufacturing.Controllers
                             string tenantActive = GetFullTenant();
                             HttpContext.Session.SetString("tenant", tenantActive);
 
-                            //Save Login Information
+                            /*//Save Login Information
                             var LogActivity = new WebLoginActivity();
                             LogActivity.Email = HttpContext.Session.GetString("EMailAddress");
                             LogActivity.IP_Addr = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -112,7 +112,7 @@ namespace Manufacturing.Controllers
                             {
                                 return Json(new { status = false, message = "Couldn't Get Login Information!" });
                                 //throw;
-                            }
+                            }*/
 
                             return Json(new { status = true, message = "Login Successfull!", returnUrl = returnUrl, token = tokenString });
                             
