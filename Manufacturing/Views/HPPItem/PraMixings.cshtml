@@ -11,6 +11,7 @@
             width: 30%
         }
     </style>
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
     <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
     <link rel="stylesheet" href="~/css/app.css" />
 }
@@ -46,17 +47,12 @@
                                 <div class="form-inline">
                                     <label class="judul-label">Output Qty</label>
                                     <label>:</label>
-                                    @Html.DisplayFor(a => a.header.QtyOutput)
+                                    <label>@Html.DisplayFor(a => a.header.QtyOutput) @Html.DisplayFor(a => a.header.QtyOutputUnit)</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <div class="form-inline">
-                                    <label class="judul-label">Output unit</label>
-                                    <label>:</label>
-                                    @Html.DisplayFor(a => a.header.QtyOutputUnit)
-                                </div>
                                 <div class="form-inline">
                                     <label class="judul-label">Date Created</label>
                                     <label>:</label>
@@ -67,9 +63,86 @@
                                     <label>:</label>
                                     @Html.DisplayFor(a => a.header.CreatedBy)
                                 </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Date Modified</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.LastModifiedAt)
+                                </div>
+                                <div class="form-inline">
+                                    <label class="judul-label">Modified By</label>
+                                    <label>:</label>
+                                    @Html.DisplayFor(a => a.header.LastModifiedBy)
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--Modal Begin-->
+                    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formInput">
+                                        <fieldset id="submitForm">
+                                            <input type="hidden" id="ModelWIPHeaderId" name="ModelWIPHeaderId" value="@Html.ValueFor(a=>a.header.ModelHeaderId)" />
+                                            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <p class="f-500 c-black m-b-15">Type</p>
+                                                    <div class="fg-line">
+                                                        <select asp-items="@ViewBag.RateList" id="selectRate" name="ItemType" class="chosen">
+                                                            <option value="">Choose One</option>
+                                                            <option value="Item">Items</option>
+                                                        </select>
+                                                        <p class="text-danger" id="ErrorSelect1"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <p class="f-500 c-black m-b-15" id="itemname"></p>
+                                                    <div class="fg-line">
+                                                        <select id="ItemNo" name="ItemNo" class="chosen">
+                                                            <option value="">Choose One</option>
+                                                        </select>
+                                                        <p class="text-danger" id="ErrorSelect2"></p>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="ItemName" id="ItemName" />
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" id="ItemQty" name="ItemQty" required />
+                                                        <label class="fg-label">Qty<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group fg-float">
+                                                    <p class="f-500 c-black m-b-15" id="unit">Unit</p>
+                                                    <div class="fg-line">
+                                                        <select asp-items="@ViewBag.Unit" id="ItemUnit" name="ItemUnit" class="chosen">
+                                                            <option value="">Choose One</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control"id="ProcessHour" name="ProcessHour" required />
+                                                        <label class="fg-label">Process Hour<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Modal-->
                 </div>
             </div>
             <div class="card-body card-padding">
@@ -82,7 +155,9 @@
                                     <tr>
                                         <th data-column-id="Id" data-visible="false">Line Id</th>
                                         <th data-column-id="ItemName">Item Name</th>
-                                        <th data-column-id="ItemQty">Qty</th>
+                                        <th data-column-id="ItemType" data-visible="false">Item Type</th>
+                                        <th data-column-id="ItemQty" data-formatter="Qty">Qty</th>
+                                        <th data-column-id="Hour">Hour</th>
                                         <th data-column-id="Cost" data-formatter="cost">Cost</th>
                                         <th data-column-id="Amount" data-formatter="Amount">Amount</th>
                                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Action</th>
@@ -90,14 +165,16 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.listLine)
-                                    {
-                                        <tr>
-                                            <td>@item.ModelWIPLineId</td>
-                                            <td>@item.ItemName</td>
-                                            <td>@item.ItemQty</td>
-                                            <td>@item.ItemPrice</td>
-                                        </tr>
-                                    }
+                                     {
+                                     <tr>
+                                        <td>@item.ModelWIPLineId</td>
+                                        <td>@item.ItemName</td>
+                                        <td>@item.ItemType</td>
+                                        <td>@item.ItemQty</td>
+                                        <td>@item.ProcessHour</td>
+                                        <td>@item.ItemPrice</td>
+                                     </tr>
+                                     }
                                 </tbody>
                             </table>
                         </div>
@@ -108,6 +185,7 @@
     </div>
 </section>
 @section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
     <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>

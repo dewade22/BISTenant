@@ -119,6 +119,10 @@ namespace Manufacturing.Controllers
             var data = new ModelPraMixing();
             data.header = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == Header).FirstOrDefault();
             data.listLine = _context.ModelWIPProcessLine.Where(a => a.ModelWIPHeaderId == Header).ToList();
+            List<Manufacturing.Data.Entities.ModelRateType> RateList = _context.ModelRateType.Where(a => a.Active == true).ToList();
+            List<Manufacturing.Data.Entities.UnitOfMeasures> Unit = _context.UnitOfMeasures.Where(a => a.RowStatus == 0).ToList();
+            ViewBag.Unit = new SelectList(Unit, "UOMCode", "UOMDescription");
+            ViewBag.RateList = new SelectList(RateList, "RateTypeCode", "RateTypeName");
             return View(data);
         }
 

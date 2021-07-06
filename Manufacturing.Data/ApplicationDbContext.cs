@@ -47,7 +47,7 @@ namespace Manufacturing.Data
         public virtual DbSet<ModelMachineMaster>ModelMachineMaster { get; set; }
         public virtual DbSet<ModelDetailFOHBreakdown> ModelDetailFOHBreakdown { get; set; }
         public virtual DbSet<ModelSubProcess>ModelSubProcess { get; set; }
-        public virtual DbSet<ModelRateType>ModelRateTypes { get; set; }
+        public virtual DbSet<ModelRateType>ModelRateType { get; set; }
         public virtual DbSet<ModelRateMaster>ModelRateMaster { get; set; }
         public virtual DbSet<UnitOfMeasures> UnitOfMeasures { get; set; }
         public virtual DbSet<ModelDetail> ModelDetail { get; set; }

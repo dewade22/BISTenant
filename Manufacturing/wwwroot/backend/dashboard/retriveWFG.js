@@ -796,73 +796,73 @@ $('#panelRaw').click(function () {
 
 //function untuk klik button di RAW
 $('#btnAlkohol').click(function () {
-    window.open(baseurl + '/' + tenant +'/DashboardDetail/stock?productGroup=Alkohol')
+    window.location = baseurl + '/' + tenant +'/DashboardDetail/stock?productGroup=Alkohol'
 })
 $('#btnGula').click(function () {
     //window.open(baseurl+'/'+tenant+'/DashboardDetail/Gula')
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Gula')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Gula'
 })
 $('#btnSW').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=ShrinkWrap')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=ShrinkWrap'
 })
 $('#btnDOP').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=DOPGabus')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=DOPGabus'
 })
 $('#btnCukai').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/Cukai')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/Cukai'
 })
 $('#btnBtlScotch').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolScotch')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolScotch'
 })
 $('#btnBtl9').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolVodka')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolVodka'
 })
 $('#btnBtlSpirit').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolSpririt')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolSpririt'
 })
 $('#btnBtlWhisky').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolWhisky')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolWhisky'
 })
 $('#btnBtlLiq').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolLiq')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolLiq'
 })
 $('#btnBtlGalon').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolGalon')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BotolGalon'
 })
 $('#btnBtl250').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Botol250')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Botol250'
 })
 $('#btnLblWhisky').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelWhisky')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelWhisky'
 })
 $('#btnLblBlanco').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelBlanco')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelBlanco'
 })
 $('#btnLblBM').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelBM')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelBM'
 })
 $('#btnLbl9').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelVodka')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelVodka'
 })
 $('#btnLblLiq').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelLiq')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=LabelLiq'
 })
 $('#btnBoxScotch').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxScotch')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxScotch'
 })
 $('#btnBoxWhisky').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxWhisjy')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxWhisjy'
 })
 $('#btnBoxSpirit').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxSpirit')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxSpirit'
 })
 $('#btnBox250').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Box250')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=Box250'
 })
 $('#btnBoxVodka').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxVodka')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxVodka'
 })
 $('#btnBoxLiqueurs').click(function () {
-    window.open(baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxLiqueurs')
+    window.location = baseurl + '/' + tenant + '/DashboardDetail/stock?productGroup=BoxLiqueurs'
 })
 
