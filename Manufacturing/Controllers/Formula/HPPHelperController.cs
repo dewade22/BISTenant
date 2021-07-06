@@ -48,6 +48,14 @@ namespace Manufacturing.Controllers.Formula
             }
         }
 
+
+
+
+
+
+
+        /*CRUD Function*/
+
         [AuthorizedAPI]
         [HttpPost]
         public JsonResult SavePramixing(ModelWIPProcessLine model)
@@ -55,31 +63,7 @@ namespace Manufacturing.Controllers.Formula
             var result = "Data Tidak Dapat Ditambahkan";
             if(ModelState.IsValid) {
                 model.ModelWIPLineId = WIPLineId();
-                if(model.ItemType == "Item")
-                {
-                    model.ItemPrice = _context.Items.Where(a => a.ItemNo == model.ItemNo).Select(a => a.LastDirectCost).FirstOrDefault();
-                }
-                else
-                {
-                    var getFOHParam = _context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).FirstOrDefault();
-                    if (getFOHParam.AgeUsedMonth != 0)
-                    {
-                        var baseItemPrice = getFOHParam.RegularRate;
-                        if(baseItemPrice == 0)
-                        {
-                            baseItemPrice = getFOHParam.Price;
-                        }
-                        model.ItemPrice = Math.Ceiling((decimal)(model.ProcessHour / 24)) / 30 * (baseItemPrice / getFOHParam.AgeUsedMonth);
-                    }
-                    else
-                    {
-                        model.ItemPrice = _context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).Select(a => a.RegularRate).FirstOrDefault();
-                        if (model.ItemPrice == 0)
-                        {
-                            model.ItemPrice = _context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).Select(a => a.Price).FirstOrDefault();
-                        }
-                    } 
-                }
+                model.ItemPrice = ItemPriceWIPLine(model);
                 model.CreatedAt = DateTime.Now;
                 model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
                 try
@@ -104,26 +88,80 @@ namespace Manufacturing.Controllers.Formula
             return Json(data);
         }
 
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult UpdatePramixing(ModelWIPProcessLine model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Gagal Mendapatkan Data";
+            }
+            else
+            {
+                //get current val
+                var current = _context.ModelWIPProcessLine.Where(a => a.ModelWIPLineId == model.ModelWIPLineId).SingleOrDefault();
+                if(current == null)
+                {
+                    result = "Data dengan Id = " + model.ModelWIPLineId + " Tidak ditemukan";
+                }
+                else
+                {
+                    current.ItemType = model.ItemType;
+                    current.ItemNo = model.ItemNo;
+                    current.ItemName = model.ItemName;
+                    current.ItemQty = model.ItemQty;
+                    current.ItemUnit = model.ItemUnit;
+                    current.ItemPrice = ItemPriceWIPLine(model);
+                    current.ProcessHour = model.ProcessHour;
+                    current.LastModifiedAt = DateTime.Now;
+                    current.lastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelWIPProcessLine.Update(current).Property(a => a.Id).IsModified = false; ;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }catch(Exception ex)
+                    {
+                        result = "Gagal Menyimpan Data !";
+                    }
+                }
+            }
+            return Json(result);
+        }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public decimal ItemPriceWIPLine(ModelWIPProcessLine model)
+        {
+            decimal price;
+            if (model.ItemType == "Item")
+            {
+                price = (decimal)_context.Items.Where(a => a.ItemNo == model.ItemNo).Select(a => a.LastDirectCost).FirstOrDefault();
+            }
+            else
+            {
+                var getFOHParam = _context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).FirstOrDefault();
+                if (getFOHParam.AgeUsedMonth != 0)
+                {
+                    var baseItemPrice = getFOHParam.RegularRate;
+                    if (baseItemPrice == 0)
+                    {
+                        baseItemPrice = getFOHParam.Price;
+                    }
+                    price = (decimal)(Math.Ceiling((decimal)(model.ProcessHour / 24)) / 30 * (baseItemPrice / getFOHParam.AgeUsedMonth));
+                }
+                else
+                {
+                    price = (decimal)_context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).Select(a => a.RegularRate).FirstOrDefault();
+                    if (price == 0)
+                    {
+                        price = (decimal)_context.ModelRateMaster.Where(a => a.RateNo == model.ItemNo).Select(a => a.Price).FirstOrDefault();
+                    }
+                }
+            }
+            return price;
+        }
         //ID Auto Generate
         public string WIPLineId()
         {

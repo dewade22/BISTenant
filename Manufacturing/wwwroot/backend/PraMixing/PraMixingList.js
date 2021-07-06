@@ -67,6 +67,57 @@ $(function () {
             }
         }
     })
+
+    //Jika modal di hide
+    $('#modalForm').on('hidden.bs.modal', function () {
+        $('#modalForm form')[0].reset()
+        $('.chosen').val('')
+        $('.chosen').trigger('chosen:updated')
+
+    })
+
+    //Simpan form Update
+    $('#updateform').click(function () {
+        if ($('#formInput').valid()) {
+            if ($('#selectRate').val() == null) {
+                $('#ErrorSelect1').html('Please Select One!!')
+            }
+            else if ($('#ItemNo').val() == null) {
+                $('#ErrorSelect2').html('Please Select One!!')
+            }
+            else {
+                 $.ajax({
+                    type: 'PUT',
+                     url: baseUrl + '/HPPHelper/UpdatePramixing',
+                    data: $('#formInput').serialize(),
+                    success: function (result) {
+                        if (result == 'sukses') {
+                            Swal.fire(
+                                'Sukses!',
+                                'Data berhasil diubah',
+                                'success'
+                            ).then((result) => {
+                                location.reload()
+                            })
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                '' + result,
+                                'error'
+                            )
+                        }
+                     },
+                     error: function (jqXHR) {
+                         Swal.fire(
+                             'Error..!',
+                             'Error ' + jqXHR.status,
+                             'error'
+                         )
+                     }
+                 })
+            }
+        }
+    })
 })
 
 $('#AddItem').click(function () {
@@ -88,7 +139,7 @@ $('#ItemNo').change(function () {
     $('#ItemName').val($('#ItemNo option:selected').text())
 })
 
-function AppendItemNo(ItemType) {
+function AppendItemNo(ItemType, ItemNo='') {
     $('#ItemNo').empty()
     $('#ItemNo').append(`<option value="">Choose One</option>`)
     $.ajax({
@@ -98,7 +149,8 @@ function AppendItemNo(ItemType) {
             result.forEach(function (result) {
                 $('#ItemNo').append(`<option value="${result.valueCode}">${result.valueName}</option>`)
             })
-            $('#ItemNo').trigger('chosen:updated')
+            $('#ItemNo').val(ItemNo)
+            $('.chosen').trigger('chosen:updated')
         },
         error: function (jqXHR, exception) {
             Swal.fire(
@@ -126,11 +178,12 @@ function PushUpdate(No, Name) {
                 $('#AddNew').hide()
                 $('.modal-title').html(`Edit - ${Name}`)
 
-                AppendItemNo(result.itemType)
+                AppendItemNo(result.itemType, result.itemNo)
 
                 $('#ModelWIPHeaderId').val(result.modelWIPHeaderId)
+                $('#ModelWIPLineId').val(result.modelWIPLineId)
                 $('#selectRate').val(result.itemType)
-                $('#ItemNo').val(result.itemNo)
+                //$('#ItemNo').val(result.itemNo).trigger('chosen:updated')
                 $('#ItemName').val(result.itemName)
                 $('#ItemQty').val(result.itemQty)
                 $('#ItemUnit').val(result.itemUnit)

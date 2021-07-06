@@ -21,6 +21,7 @@ namespace Manufacturing.Data.Entities
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? LastModifiedAt { get; set; }
+        public string lastModifiedBy { get; set; }
 
     }
 }
