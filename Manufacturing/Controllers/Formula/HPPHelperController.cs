@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Manufacturing.Data;
+using Manufacturing.Models;
 using Manufacturing.Helpers;
 using System.Linq;
 using Manufacturing.Data.Entities;
@@ -47,7 +48,6 @@ namespace Manufacturing.Controllers.Formula
                 return Json(data);
             }
         }
-
 
 
 
@@ -130,8 +130,147 @@ namespace Manufacturing.Controllers.Formula
             return Json(result);
         }
 
+        [AuthorizedAPI]
+        [HttpPut]
+        public JsonResult DisposePramixingLine(string No)
+        {
+            var result = "";
+            if(No == null || No == "")
+            {
+                result = "Couldn't Get Id From Input";
+            }
+            else
+            {
+                var data = _context.ModelWIPProcessLine.Where(a => a.ModelWIPLineId == No).SingleOrDefault();
+                if(data == null)
+                {
+                    result = "Item With Id = " + No + " Not Found!";
+                }
+                else
+                {
+                    data.Active = false;
+                    data.LastModifiedAt = DateTime.Now;
+                    data.lastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                    try
+                    {
+                        _context.ModelWIPProcessLine.Update(data).Property(a=>a.Id).IsModified= false;
+                        _context.SaveChanges();
+                        result = "sukses";
+                    }catch(Exception e)
+                    {
+                        result = "Gagal menghapus data " + e;
+                    }
+                }
+            }
+            return Json(result);
+        }
+
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult CalculateWIPLine(string No)
+        {
+            if(No == null|| No == "")
+            {
+                return Json(0);
+            }
+            else
+            {
+                var data = _context.ModelWIPProcessLine.Where(a => a.ModelWIPHeaderId == No && a.Active == true).ToList();
+                var batc = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == No).SingleOrDefault();
+                if(data == null)
+                {
+                    return Json(0);
+                }
+                else
+                {
+                    var hasil = (from d in data
+                                 group d by new { d.ModelWIPHeaderId }
+                                 into res
+                                 select new ModelCalculatePraMixing {
+                                    BatchCost = (res.Sum(a=>a.ItemType == "Labour" ? a.ItemQty * a.ItemPrice * a.ProcessHour : a.ItemQty*a.ItemPrice)),
+                                    UnitCost = (res.Sum(a =>a.ItemType == "Labour" ? (a.ItemQty * a.ItemPrice * a.ProcessHour)/batc.QtyOutput : (a.ItemQty * a.ItemPrice) / batc.QtyOutput))
+                                 });
+                    return Json(hasil);
+                }
+            }
+        }
+
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult SaveWIPLineCost(ModelCalculatePraMixing model)
+        {
+            var result = "";
+            if(model == null)
+            {
+                result = "Couldn't get calculation result !";
+            }
+            else
+            {
+                var getItemNo = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == model.WIPHeaderId).FirstOrDefault();
+                if(getItemNo == null)
+                {
+                    result = "Couldn't get Process Id, Please Reload Page";
+                }
+                else
+                {
+                    var baseItem = _context.Items.Where(a => a.ItemNo == getItemNo.ItemOutputId).FirstOrDefault();
+                    var newItem = _context.ModelWIPOutput.Where(a => a.ItemNo == baseItem.ItemNo).FirstOrDefault();
+                       
+                //Cek apakah sudah tersimpan di DB baru
+                
+                    if(newItem == null)
+                    {
+                        //insert
+                        newItem = new ModelWIPOutput();
+                        newItem.Description = baseItem.Description;
+                        newItem.BaseUnitOfMeasure = baseItem.BaseUnitofMeasure;
+                        newItem.InventoryPostingGroup = baseItem.InventoryPostingGroup;
+                        newItem.ItemNo = baseItem.ItemNo;
+                        newItem.ItemCost = model.UnitCost;
+                        newItem.CreatedAt = DateTime.Now;
+                        newItem.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                        try
+                        {
+                            _context.ModelWIPOutput.Add(newItem);
+                            _context.SaveChanges();
+                            result = "sukses";
+                        }catch(Exception e)
+                        {
+                            result = "Couldn't Add New Record";
+                            throw;
+                        }
+                    }
+                    else
+                    {
+                        //Update
+                        newItem.Description = baseItem.Description;
+                        newItem.BaseUnitOfMeasure = baseItem.BaseUnitofMeasure;
+                        newItem.InventoryPostingGroup = baseItem.InventoryPostingGroup;
+                        newItem.LastItemCost = model.UnitCost;
+                        newItem.LastModifiedAt = DateTime.Now;
+                        newItem.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
+                        try
+                        {
+                            _context.ModelWIPOutput.Update(newItem).Property(a => a.ItemId).IsModified = false;
+                            _context.SaveChanges();
+                            result = "sukses";
+                        }
+                        catch (Exception e)
+                        {
+                            result = "Couldn't Update The Record.! ";
+                            throw;
+                        }
+                    }
+                    
+                }
+            }
+            return Json(result);
+        }
 
 
+
+
+        //CRUD Helper Class
         public decimal ItemPriceWIPLine(ModelWIPProcessLine model)
         {
             decimal price;
@@ -162,6 +301,9 @@ namespace Manufacturing.Controllers.Formula
             }
             return price;
         }
+
+
+
         //ID Auto Generate
         public string WIPLineId()
         {

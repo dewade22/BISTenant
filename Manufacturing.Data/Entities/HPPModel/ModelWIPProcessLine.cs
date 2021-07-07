@@ -18,6 +18,7 @@ namespace Manufacturing.Data.Entities
         public string ItemUnit { get; set; }
         public Decimal? ItemPrice { get; set; }
         public Decimal? ProcessHour { get; set; }
+        public Boolean Active { get; set; } = true;
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? LastModifiedAt { get; set; }

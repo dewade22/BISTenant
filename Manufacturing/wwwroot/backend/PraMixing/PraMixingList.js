@@ -1,4 +1,5 @@
-﻿let baseUrl = localStorage.getItem('thisAddress')
+﻿
+let baseUrl = localStorage.getItem('thisAddress')
 $(function () {
     HideErrorMsg()
     $('#tableForm').bootgrid({
@@ -20,8 +21,11 @@ $(function () {
         }
     })
 
+    CalculateProcess()
+
+
     //Validasi
-    $('#formInput').validate({
+    $('#formInput #saveProcess').validate({
         onkeyup: function (element) { $(element).valid() }
     })
 
@@ -118,25 +122,71 @@ $(function () {
             }
         }
     })
-})
 
-$('#AddItem').click(function () {
-    $('#modalForm').modal()
-    $('#updateform').hide()
-    $('#AddNew').show()
-    $('.modal-title').html('Add New Items')
-})
+    $('#AddItem').click(function () {
+        $('#modalForm').modal()
+        $('#updateform').hide()
+        $('#AddNew').show()
+        $('.modal-title').html('Add New Items')
+    })
 
-$('#selectRate').change(function () {
-    if ($('#selectRate').val() != null || $('#selectRate').val() != '') {
-        $('#itemname').html($('#selectRate option:selected').text())
+    $('#selectRate').change(function () {
+        if ($('#selectRate').val() != null || $('#selectRate').val() != '') {
+            $('#itemname').html($('#selectRate option:selected').text())
+
+            AppendItemNo($('#selectRate').val())
+        }
+    })
+
+    $('#ItemNo').change(function () {
+        $('#ItemName').val($('#ItemNo option:selected').text())
+    })
+
+    $('#savePramixing').click(function () {
+        Swal.fire({
+            title: 'Save',
+            text: 'Save This Calculation Result ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!',
+            cancelButtonText: 'Kembali'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: baseUrl + '/HPPHelper/SaveWIPLineCost',
+                    data: $('#saveProcess').serialize(),
+                    success: function (result) {
+                        if (result == 'sukses') {
+                            Swal.fire(
+                                'Success !!',
+                                'Data Has Been Saved',
+                                'success'
+                            ).then((result) => {
+                                window.location.reload()
+                            })
+                        } else {
+                            Swal.fire(
+                                'Error !',
+                                'Error ' + result,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function (jqXHR) {
+                        Swal.fire(
+                            'Error !',
+                            'Error ' + jqXHR.status,
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
         
-        AppendItemNo($('#selectRate').val())
-    }
-})
-
-$('#ItemNo').change(function () {
-    $('#ItemName').val($('#ItemNo option:selected').text())
+    })
 })
 
 function AppendItemNo(ItemType, ItemNo='') {
@@ -207,5 +257,72 @@ function PushUpdate(No, Name) {
             )
         }
        
+    })
+}
+
+function PushDelete(No, Name) {
+    Swal.fire({
+        title: 'Warning!',
+        text: 'Delete ' + Name,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Kembali'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'PUT',
+                url: baseUrl + '/HPPHelper/DisposePramixingLine?No=' + No,
+                success: function (result) {
+                    if (result == 'sukses') {
+                        Swal.fire(
+                            'Sukses',
+                            'Data Berhasil Dihapus',
+                            'success'
+                        ).then((result) => {
+                            window.location.reload()
+                        })
+                    } else {
+                        Swal.fire(
+                            'Error !',
+                            result.result,
+                            'error'
+                        )
+                    }
+                },
+                error: function (jqXHR) {
+                    Swal.fire(
+                        'Error !',
+                        'Error ' + jqXHR.status,
+                        'error'
+                    )
+                }
+            })
+        }
+    })
+}
+
+function CalculateProcess() {
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPHelper/CalculateWIPLine?No=' + $('#ModelWIPHeaderId').val(),
+        success: function (result) {
+            if (result == 0) {
+                $('#BatchCost').val(0)
+                $('#UnitCost').val(0)
+            } else {
+                $('#BatchCost').val((result[0].batchCost).toFixed(2))
+                $('#UnitCost').val((result[0].unitCost).toFixed(2))
+            }
+        },
+        error: function (jqXHR) {
+            Swal.fire(
+                'Error !',
+                'Error ' + jqXHR.status,
+                'error'
+            )
+        }
     })
 }
