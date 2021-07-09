@@ -81,23 +81,23 @@
                                     <th data-column-id="FOHType">Type</th>
                                     <th data-column-id="OperationName">Operation Name</th>
                                     <th data-column-id="Machine">Machine</th>
-                                    <th data-column-id="Duration" data-formatter="Duration">Duration (Hour)</th>
                                     <th data-column-id="Quantity" data-formatter="Quantity">Quantity</th>
+                                    <th data-column-id="Duration" data-formatter="Duration">Duration (Hour)</th>
                                     <th data-column-id="Amount" data-formatter="Amount">Amount Unit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach(var item in Model.listTableFOH)
                                  {
-                                    <tr>
-                                        <td>@item.ModelId</td>
-                                        <td>@item.FOHType</td>
-                                        <td>@item.OperationName</td>
-                                        <td>@item.MachineName</td>
-                                        <td>@item.SPDuration</td>
-                                        <td>@item.SPQuantity</td>
-                                        <td>@item.FOHAmount</td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.ModelId</td>
+                                    <td>@item.FOHType</td>
+                                    <td>@item.OperationName</td>
+                                    <td>@item.MachineName</td>
+                                    <td>@item.SPQuantity</td>
+                                    <td>@item.SPDuration</td>
+                                    <td>@item.FOHAmount</td>
+                                </tr>
                                  }
                             </tbody>
                         </table>

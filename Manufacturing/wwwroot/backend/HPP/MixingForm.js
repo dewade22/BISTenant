@@ -10,4 +10,18 @@ $(function () {
             },
         }
     })
+    $('#tableFOH').bootgrid({
+        caseSensitive: false,
+        formatters: {
+            'Duration': function (column, row) {
+                return `${row.Duration != "" ? parseFloat(row.Duration).toFixed(3) : ""}`
+            },
+            'Quantity': function (column, row) {
+                return `${parseFloat(row.Quantity).toFixed()}`
+            },
+            'Amount': function (column, row) {
+                return `${row.FOHType == 'electricity' ? row.Amount + ' KWh' : row.FOHType == 'gas' ? row.Amount + ' KG' : row.Amount + ' L'}`
+            }
+        }
+    })
 })
