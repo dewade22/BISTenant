@@ -1,272 +1,107 @@
-﻿
+﻿@model Manufacturing.Models.Hpp.ModelMixing
 @{
     ViewData["Title"] = "Mixing";
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
+    <style>
+        .judul-label {
+            width: 30%
+        }
+    </style>
     <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
 }
 
 <section id="content">
     <div class="container">
         <div class="c-header">
-            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.BomName</h2>
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.Product</h2>
         </div>
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">Mixing Data</h2>
+                <h2 class="card-title">List Item for Mixing @ViewBag.Product</h2>
             </div>
             <div class="card-body card-padding">
-                <input type="text" id="BomId" class="hide" value="@ViewBag.BomId" />
+                <input type="text" id="BomId" class="hide" value="@ViewBag.ModelId" />
                 <div class="row">
-                    <div class="col-sm-4">
-                        <!--TextBox 1-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="QtyMixer" value="0">
-                                <label class="fg-label">Qty Mixer</label>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <label class="judul-label">Description</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.master.Description)
                             </div>
-                        </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="MixerCapacity" value="0">
-                                <label class="fg-label">Mixer Capacity</label>
-                            </div>
-                        </div>
-                        <!--TextBox 3-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="JamKerjaMesin" value="0" disabled>
-                                <label class="fg-label">Jam Kerja Mesin</label>
-                            </div>
-                        </div>
-                        <!--TextBox 4-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiTerpakai" value="0">
-                                <label class="fg-label">Tank Used</label>
-                            </div>
-                        </div>
-                        <!--TextBox 5-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TangkiKapasitas" value="0">
-                                <label class="fg-label">Tank Capacity</label>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--Row 2-->
-                    <div class="col-sm-4">
-                        <!--TextBox 1-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="TotalLabour" value="0">
-                                <label class="fg-label">Total Labour</label>
-                            </div>
-                        </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="Batch" value="0">
-                                <label class="fg-label">1 Batch</label>
-                            </div>
-                        </div>
-                        <!--Combo Box-->
-                        <p class="f-500 c-black m-b-15">Labour Type</p>
-                        <select id="LabourType" class="chosen" data-placeholder="Choose Labour Type">
-                            <option value="">Choose Labour</option>
-                            <option value="35000">Production Staff</option>
-                            <option value="45000">Supervisor</option>
-                            <option value="15625">Daily Worker</option>
-                            <option value="50000">Tenaga Ahli</option>
-                        </select>
-                        <br /><br />
-                        <!--TextBox 4-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="LabourHour" value="0">
-                                <label class="fg-label">Labour Hour</label>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--Row 3-->
-                    <div class="col-sm-4">
-                        <!--TextBox 1-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHElectricity" value="0" disabled>
-                                <label class="fg-label">FOH Electricity</label>
-                            </div>
-                        </div>
-                        <!--TextBox 2-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHFuel" value="0">
-                                <label class="fg-label">FOH Fuel</label>
-                            </div>
-                        </div>
-                        <!--TextBox 3-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHWater" value="0">
-                                <label class="fg-label">FOH Water</label>
-                            </div>
-                        </div>
-                        <!--TextBox 4-->
-                        <div class="form-group fg-float">
-                            <div class="fg-line">
-                                <input type="number" class="input-sm form-control fg-input" id="FOHGas" value="0">
-                                <label class="fg-label">FOH Gas</label>
+                            <div class="form-inline">
+                                <label class="judul-label">Batch Size</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
                             </div>
                         </div>
                     </div>
-                </div>
-                <hr />
-                <br />
-
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">FOH Electricity</h2>
-            </div>
-            <div class="card-body card-padding">
-                <div class="row">
-                    <div class="col-sm-8 m-b-25">
-                        <p class="f-500 c-black m-b-15">Tampung Air</p>
-                        <select id="PompaTampungAir" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="0">Choose Pompa</option>
-                            <option value="0.75">Pompa A - 0.75KW</option>
-                            <option value="0.43">Pompa Ebara - 0.43KW</option>
-                        </select>
+                    <!--Button untuk Add Item-->
+                    <button type="button" class="btn btn-primary" id="AddItem" style="width:200px">Add Item</button>
+                    <div class="table-responsive">
+                        <table id="tableItem" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false">Process No</th>
+                                    <th data-column-id="ItemDescription">Description</th>
+                                    <th data-column-id="Qty" data-formatter="Qty">Qty</th>
+                                    <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
+                                    <th data-column-id="ProcessHour" data-formatter="ProcessHour">Process Hour</th>
+                                    <th data-column-id="Amount" data-formatter="Amount">Amount</th>
+                                    <th data-column-id="Action" data-formatter="Action" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.listDetailProcess)
+                                {
+                                    <tr>
+                                        <td>@item.ProcessNo</td>
+                                        <td>@item.ItemDescription</td>
+                                        <td>@item.ItemQty</td>
+                                        <td>@item.ItemCost</td>
+                                        <td>@item.ProcessHour</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-sm-4 m-b-25">
-                        <br />
-                        <div class="form-group fg-line">
-                            <label>Waktu (Menit)</label>
-                            <input type="number" id="WaktuTampungAir" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 m-b-25">
-                        <p class="f-500 c-black m-b-15">Masukkan Alkohol</p>
-                        <select id="PompaMasukAlkohol" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="0">Choose Pompa</option>
-                            <option value="0.75">Pompa A - 0.75KW</option>
-                            <option value="0.43">Pompa Ebara - 0.43KW</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 m-b-25">
-                        <br />
-                        <div class="form-group fg-line">
-                            <label>Waktu (Menit)</label>
-                            <input type="number" id="WaktuMasukAlkohol" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 m-b-25">
-                        <p class="f-500 c-black m-b-15">Masukkan Air</p>
-                        <select id="PompaMasukAir" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="0">Choose Pompa</option>
-                            <option value="0.75">Pompa A - 0.75KW</option>
-                            <option value="0.43">Pompa Ebara - 0.43KW</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 m-b-25">
-                        <br />
-                        <div class="form-group fg-line">
-                            <label>Waktu (Menit)</label>
-                            <input type="number" id="WaktuMasukAir" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 m-b-25">
-                        <p class="f-500 c-black m-b-15">Sirkulasi</p>
-                        <select id="PompaSirkulasi" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="0">Choose Pompa</option>
-                            <option value="0.75">Pompa A - 0.75KW</option>
-                            <option value="0.43">Pompa Ebara - 0.43KW</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 m-b-25">
-                        <br />
-                        <div class="form-group fg-line">
-                            <label>Waktu (Menit)</label>
-                            <input type="number" id="WaktuSirkulasi" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8 m-b-25">
-                        <p class="f-500 c-black m-b-15">Transfer</p>
-                        <select id="PompaTransfer" class="chosen" data-placeholder="Choose Pompa">
-                            <option value="0">Choose Pompa</option>
-                            <option value="0.75">Pompa A - 0.75KW</option>
-                            <option value="0.43">Pompa Ebara - 0.43KW</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 m-b-25">
-                        <br />
-                        <div class="form-group fg-line">
-                            <label>Waktu (Menit)</label>
-                            <input type="number" id="WaktuTransfer" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Summary Table</h2>
-            </div>
-            <div class="card-body card-padding">
-                <div class="table-responsive">
-                    <table id="tableSummary" class="table table-valign-middle table-bordered table-hover display nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Item Name</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Type</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mesin Mixer</td>
-                                <td id="TQtyMixer">0</td>
-                                <td id="TPriceMixer">5000000</td>
-                                <td id="TTypeMixer">FOH</td>
-                                <td class="total" id="TTotalMixer">0</td>
-                            </tr>
-                        </tbody>
-                    </table>
                     <br /><br /><br />
-                    <div class="form-group fg-float">
-                        <div class="fg-line">
-                            <input type="number" class="input-sm form-control fg-input" id="TotalPerMachine" disabled>
-                            <label class="fg-label">Total Per Machine Capacity</label>
-                        </div>
+                    <h2 class="card-title">List FOH for @ViewBag.Product</h2>
+                    <div class="table-responsive">
+                        <table id="tableFOH" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false">Id</th>
+                                    <th data-column-id="FOHType">Type</th>
+                                    <th data-column-id="OperationName">Operation Name</th>
+                                    <th data-column-id="Machine">Machine</th>
+                                    <th data-column-id="Duration" data-formatter="Duration">Duration (Hour)</th>
+                                    <th data-column-id="Quantity" data-formatter="Quantity">Quantity</th>
+                                    <th data-column-id="Amount" data-formatter="Amount">Amount Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model.listTableFOH)
+                                 {
+                                    <tr>
+                                        <td>@item.ModelId</td>
+                                        <td>@item.FOHType</td>
+                                        <td>@item.OperationName</td>
+                                        <td>@item.MachineName</td>
+                                        <td>@item.SPDuration</td>
+                                        <td>@item.SPQuantity</td>
+                                        <td>@item.FOHAmount</td>
+                                    </tr>
+                                 }
+                            </tbody>
+                        </table>
                     </div>
-                    <br />
-                    <div class="form-group fg-float">
-                        <div class="fg-line">
-                            <input type="number" class="input-sm form-control fg-input" id="TotalPerUoM" disabled>
-                            <label class="fg-label">Total Per Unit of Measure</label>
-                        </div>
-                    </div>
-                    <br />
-                    <br />
-                    <button type="button" class="btn btn-primary pull-right" id="btnNext" style="width:200px">Next</button>
                 </div>
             </div>
         </div>
@@ -274,5 +109,8 @@
 </section>
 @section Scripts{
     <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
     <script type="text/javascript" src="~/backend/HPP/MixingForm.js"></script>
 }

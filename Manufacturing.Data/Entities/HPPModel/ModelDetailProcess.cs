@@ -1,28 +1,27 @@
-﻿
-
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Manufacturing.Data.Entities
 {
-    public partial class ModelWIPOutput
+    public partial class ModelDetailProcess
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ItemId { get; set; }
+        public int Id { get; set; }
         [Key]
         [Required]
-        [StringLength(maximumLength:20)]
+        public string ProcessNo { get; set; }
+        [Required]
+        public string ModelId { get; set; }
+        [Required]
+        public string SubProcessId { get; set; }
+        public string Type { get; set; }
         public string ItemNo { get; set; }
-        [StringLength(maximumLength:75)]
-        public string Description { get; set; }
-        [StringLength(maximumLength:10)]
-        public string BaseUnitOfMeasure { get; set; }
-        [StringLength(maximumLength:20)]
-        public string InventoryPostingGroup { get; set; }
-        public decimal? ItemCost { get; set; }
-        public decimal? LastItemCost { get; set; }
+        public string ItemDescription { get; set; }
         public decimal? ItemQty { get; set; }
+        public decimal? ItemCost { get; set; }
+        public decimal? ProcessHour { get; set; } = 0;
+        public Boolean? Active { get; set; } = true;
         [Required]
         public DateTime CreatedAt { get; set; }
         [Required]

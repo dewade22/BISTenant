@@ -131,7 +131,29 @@ namespace Manufacturing.Controllers
         {
             ViewBag.ModelId = ModelId;
             ViewBag.Product = GetBOMName(ModelId);
-            return View();
+            var data = new ModelMixing();
+            data.master = _context.ModelMaster.Where(a => a.ModelId == ModelId).FirstOrDefault();
+            data.listDetailProcess = _context.ModelDetailProcess.Where(a => a.Active == true && a.ModelId == ModelId).ToList();
+            data.fOHBreakdown = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == ModelId).FirstOrDefault();
+            data.listTableFOH = (from foh in _context.ModelDetailFOHBreakdown
+                                 join machine in _context.ModelMachineMaster
+                                 on foh.SPMachineID equals machine.MachineNo into machinefoh
+                                 from machine in machinefoh.DefaultIfEmpty()
+                                 where foh.SPID == "SUB-00002" && foh.ModelId == ModelId
+                                 select new TableFOHViewModel {
+                                     ModelId = foh.ModelId,
+                                     FOHType = foh.FOHType,
+                                     SubProcessSize  = foh.SubProcessSize,
+                                     OperationName = foh.OperationName,
+                                     SPMachineID = foh.SPMachineID,
+                                     SPSpeed = foh.SPSpeed,
+                                     SPDuration = foh.SPDuration,
+                                     SPQuantity = foh.SPQuantity,
+                                     MachineName = machine.MachineName,
+                                     PowerConsumption = foh.SPMachineID == null ? 0 : machine.PowerConsumption,
+                                     FOHAmount = foh.SPMachineID == null ? foh.SPQuantity : machine.PowerConsumption * foh.SPQuantity* foh.SPDuration
+                                 }).OrderBy(a=>a.FOHType).ToList();
+            return View(data);
         }
 
         [AuthorizedAction]

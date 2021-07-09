@@ -227,6 +227,7 @@ namespace Manufacturing.Controllers.Formula
                         newItem.InventoryPostingGroup = baseItem.InventoryPostingGroup;
                         newItem.ItemNo = baseItem.ItemNo;
                         newItem.ItemCost = model.UnitCost;
+                        newItem.ItemQty = getItemNo.QtyOutput;
                         newItem.CreatedAt = DateTime.Now;
                         newItem.CreatedBy = HttpContext.Session.GetString("EMailAddress");
                         try
@@ -247,6 +248,7 @@ namespace Manufacturing.Controllers.Formula
                         newItem.BaseUnitOfMeasure = baseItem.BaseUnitofMeasure;
                         newItem.InventoryPostingGroup = baseItem.InventoryPostingGroup;
                         newItem.LastItemCost = model.UnitCost;
+                        newItem.ItemQty = getItemNo.QtyOutput;
                         newItem.LastModifiedAt = DateTime.Now;
                         newItem.LastModifiedBy = HttpContext.Session.GetString("EMailAddress");
                         try

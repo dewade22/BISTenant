@@ -59,11 +59,11 @@
                     </li>
                 </ul>
             </li>
+            <li class="@Url.MakeActiveClass("/HPPItem/ListPraMixing") @Url.MakeActiveClass("/HPPItem/PraMixing") @Url.MakeActiveClass("/HPPItem/PraMixings")">
+                <a asp-controller="HPPItem" asp-action="ListPraMixing">Pra Mixing</a>
+            </li>
             <li class="@Url.MakeActiveClass("/HPPItem/Formula")">
                 <a asp-controller="HPPItem" asp-action="Formula">Calculate HPP</a>
-            </li>
-            <li class="@Url.MakeActiveClass("/HPPItem/ListPraMixing")">
-                <a asp-controller="HPPItem" asp-action="ListPraMixing">Pra Mixing</a>
             </li>
         </ul>
     </li>
