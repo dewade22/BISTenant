@@ -49,6 +49,26 @@ namespace Manufacturing.Controllers.Formula
             }
         }
 
+        public JsonResult ModelProcessHeader(string ModelId)
+        {
+            if(ModelId == null)
+            {
+                return Json(0);
+            }
+            else
+            {
+                var res = _context.ModelDetailProcessHeader.Where(a => a.ModelId == ModelId).FirstOrDefault();
+                if(res == null)
+                {
+                    return Json(0);
+                }
+                else
+                {
+                    return Json(1);
+                }
+            }
+        }
+
 
 
 
@@ -265,6 +285,31 @@ namespace Manufacturing.Controllers.Formula
                     }
                     
                 }
+            }
+            return Json(result);
+        }
+
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult SaveDetailProcessHeader(ModelDetailProcessHeader model)
+        {
+            var result = "";
+            if(model != null)
+            {
+                try
+                {
+                    _context.ModelDetailProcessHeader.Add(model);
+                    _context.SaveChanges();
+                    result = "sukses";
+                }
+                catch(Exception e)
+                {
+                    result = "Terjadi kesalahan saat menyimpan data " + e;
+                }
+            }
+            else
+            {
+                result = "Terjadi kesalahan saat mencari model";
             }
             return Json(result);
         }

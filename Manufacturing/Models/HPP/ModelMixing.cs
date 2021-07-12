@@ -9,6 +9,7 @@ namespace Manufacturing.Models.Hpp
         public ModelWIPProcessHeader header { get; set; }
         public ModelWIPProcessLine line { get; set; }
         public ModelDetailProcess detailProcess { get; set; }
+        public ModelDetailProcessHeader detailProcessHeader { get; set; }
         public ModelDetailFOHBreakdown fOHBreakdown { get; set; }
         public IEnumerable<ModelWIPProcessHeader> listHeader { get; set; }
         public IEnumerable<ModelWIPProcessLine> listLine { get; set; }

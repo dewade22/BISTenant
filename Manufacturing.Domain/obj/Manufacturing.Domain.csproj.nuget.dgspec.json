@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {}
+    "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {}
   },
   "projects": {
-    "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {
+    "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
+        "projectUniqueName": "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
         "projectName": "Manufacturing.Domain",
-        "projectPath": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
-        "packagesPath": "C:\\Users\\IT-DEV\\.nuget\\packages\\",
-        "outputPath": "D:\\Source Code\\ASP.NET\\BISTenant\\Manufacturing.Domain\\obj\\",
+        "projectPath": "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Domain\\Manufacturing.Domain.csproj",
+        "packagesPath": "C:\\Users\\Ode Antara\\.nuget\\packages\\",
+        "outputPath": "D:\\MyDocument\\BIS\\BISTenant\\Manufacturing.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\IT-DEV\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ode Antara\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -96,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

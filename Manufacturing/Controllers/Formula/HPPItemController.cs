@@ -131,10 +131,12 @@ namespace Manufacturing.Controllers
         {
             ViewBag.ModelId = ModelId;
             ViewBag.Product = GetBOMName(ModelId);
+            var cekCurrent = currentDetailProcess(ModelId);
             var data = new ModelMixing();
             data.master = _context.ModelMaster.Where(a => a.ModelId == ModelId).FirstOrDefault();
             data.listDetailProcess = _context.ModelDetailProcess.Where(a => a.Active == true && a.ModelId == ModelId).ToList();
             data.fOHBreakdown = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == ModelId).FirstOrDefault();
+            data.detailProcessHeader = _context.ModelDetailProcessHeader.Where(a => a.ModelId == ModelId).FirstOrDefault();
             data.listTableFOH = (from foh in _context.ModelDetailFOHBreakdown
                                  join machine in _context.ModelMachineMaster
                                  on foh.SPMachineID equals machine.MachineNo into machinefoh
@@ -1318,6 +1320,11 @@ namespace Manufacturing.Controllers
                 }
             }
             return Id;
+        }
+
+        public bool currentDetailProcess(string ModelId)
+        {
+            return true;
         }
     }
 }

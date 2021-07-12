@@ -57,6 +57,7 @@ namespace Manufacturing.Data
         public virtual DbSet<ModelWIPProcessLine> ModelWIPProcessLine { get; set; }
         public virtual DbSet<ModelWIPOutput> ModelWIPOutput { get; set; }
         public virtual DbSet<ModelDetailProcess> ModelDetailProcess { get; set; }
+        public virtual DbSet<ModelDetailProcessHeader> ModelDetailProcessHeader { get; set; }
 
 
         /*Store Procedure Model*/

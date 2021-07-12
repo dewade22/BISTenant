@@ -19,7 +19,67 @@
         <div class="c-header">
             <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.Product</h2>
         </div>
-        <div class="card">
+        <!--untuk card header-->
+        <div class="card" id="card-header">
+            <div class="card-header">
+                <h2 class="card-title">Mixing @ViewBag.Product</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary" id="AddMixingSize" style="width:200px">Add Mixing Size</button><br /><br />
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <label class="judul-label">Description</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.master.Description)
+                            </div>
+                            <div class="form-inline">
+                                <label class="judul-label">Mixing Size</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.detailProcessHeader.ProcessSize)
+                            </div>
+                            <div class="form-inline">
+                                <label class="judul-label">FOH Batch Size</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modalHeader" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formHeader">
+                                        <fieldset id="submitForm">
+                                            <input type="hidden" id="ModelId" name="ModelId" value="@ViewBag.ModelId" />
+                                            <div class="col-12">
+                                                <div class="form-group fg-float">
+                                                    <div class="fg-line">
+                                                        <input type="number" class="form-control" name="ProcessSize" required />
+                                                        <label class="fg-label">Mixing Size (liters)<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" id="btnAddHeader"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Modal-->
+                </div>
+            </div>
+        </div>
+        <!--Akhir Card header-->
+        <div class="card" id="card-line">
             <div class="card-header">
                 <h2 class="card-title">List Item for Mixing @ViewBag.Product</h2>
             </div>
@@ -34,7 +94,12 @@
                                 @Html.DisplayFor(a => a.master.Description)
                             </div>
                             <div class="form-inline">
-                                <label class="judul-label">Batch Size</label>
+                                <label class="judul-label">Mixing Size</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.detailProcessHeader.ProcessSize)
+                            </div>
+                            <div class="form-inline">
+                                <label class="judul-label">FOH Batch Size</label>
                                 <label>:</label>
                                 @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
                             </div>

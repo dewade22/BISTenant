@@ -34,7 +34,7 @@ function CekModelExist(Id) {
         type: 'GET',
         url: baseUrl + '/HPPItem/CekModelDetail?Id=' + Id,
         success: function (result) {
-            console.log(result.length)
+            
             if (result.length > 0) {
                 let tabel = `<tr>
                                 <td>${result[result.length-1].modelDetailNo}</td>
