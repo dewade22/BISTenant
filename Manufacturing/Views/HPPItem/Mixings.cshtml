@@ -54,10 +54,11 @@
                             <thead>
                                 <tr>
                                     <th data-column-id="Id" data-visible="false">Id</th>
+                                    <th data-column-id="Type" data-visible="false">Type</th>
                                     <th data-column-id="ItemDescription">Description</th>
                                     <th data-column-id="Qty" data-formatter="Qty">Qty</th>
-                                    <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
                                     <th data-column-id="ProcessHour" data-formatter="ProcessHour">Process Hour</th>
+                                    <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
                                     <th data-column-id="Amount" data-formatter="Amount">Amount</th>
                                     <th data-column-id="Action" data-formatter="Action" data-sortable="false">Action</th>
                                 </tr>
@@ -67,10 +68,11 @@
                                 {
                                     <tr>
                                         <td>@item.Id</td>
+                                        <td>@item.Type</td>
                                         <td>@item.ItemDescription</td>
                                         <td>@item.ItemQty</td>
-                                        <td>@item.ItemCost</td>
                                         <td>@item.ProcessHour</td>
+                                        <td>@item.ItemCost</td>
                                         <td></td>
                                         <td></td>
                                     </tr>

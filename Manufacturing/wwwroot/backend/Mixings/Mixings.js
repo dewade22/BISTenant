@@ -8,6 +8,15 @@ $(function () {
                 return `<button type="button" class="btn btn-icon command-edit waves-effect waves-circle" onclick="PushUpdate('${row.Id}', '${row.ItemDescription}')"><span class="zmdi zmdi-edit"></span></button>` +
                     `<button type="button" class="btn btn-icon command-delete waves-effect" onclick="PushDelete('${row.Id}', '${row.ItemDescription}')"><span class="zmdi zmdi-delete"></span></button>`
             },
+            'Qty': function (column, row) {
+                return `${parseFloat(row.Qty).toFixed(4)}`
+            },
+            'ProcessHour': function (column, row) {
+                return `${parseFloat(row.ProcessHour).toFixed(3)} Hour`
+            },
+            'ItemCost': function (column, row) {
+                return `Rp. ${parseFloat(row.ItemCost).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`
+            }
         }
     })
     $('#tableFOH').bootgrid({

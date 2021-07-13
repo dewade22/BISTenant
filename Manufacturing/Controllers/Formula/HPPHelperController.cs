@@ -320,6 +320,24 @@ namespace Manufacturing.Controllers.Formula
             else
             {
                 //Hapus kemudian tambahkan Ulang
+                //hapus
+                var suksesHapus = RemoveSyncFOH(Model, SPID);
+                if(suksesHapus == true)
+                {
+                    var suksesTambah = AddSyncronFOH(Model, SPID, Header, type);
+                    if(suksesTambah == true)
+                    {
+                        result = "sukses";
+                    }
+                    else
+                    {
+                        result = "Terjadi kesalahan saat sinkronisasi data";
+                    }
+                }
+                else
+                {
+                    result = "Terjadi kesalahan saat sinkronisasi data";
+                }
 
             }
             return Json(result);
@@ -395,6 +413,23 @@ namespace Manufacturing.Controllers.Formula
             return true;
         }
 
+        public Boolean RemoveSyncFOH(string Model, string SPID)
+        {
+            var remove = _context.ModelDetailProcess.Where(a => a.Type == "electricity" && a.ModelId == Model && a.SubProcessId == SPID);
+            foreach (var item in remove)
+            {
+                try
+                {
+                    _context.ModelDetailProcess.Remove(item);
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public string MachineName(string ItemNo)
         {
             return _context.ModelMachineMaster.Where(a => a.MachineNo == ItemNo).Select(a => a.MachineName).SingleOrDefault();
@@ -410,7 +445,7 @@ namespace Manufacturing.Controllers.Formula
                 {
                     //machine maintenance price belum masuk
                     var baseItemPrice = getFOHParam.MachinePrice;
-                    price = (decimal)(Math.Ceiling((decimal)(ProcessHour / 24)) / 30 * (baseItemPrice / (getFOHParam.MaximumAgeUse*12)));
+                    price = (decimal)(ProcessHour / 24) / 30 * (baseItemPrice / (getFOHParam.MaximumAgeUse*12));
                 }
                 else
                 {
