@@ -26,21 +26,6 @@ D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Debug\netcoreapp3.1\Man
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.dll
 D:\Balimoon\Manufacturing_1_1_0_0\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.pdb
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.deps.json
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.json
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.dev.json
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.dll
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.pdb
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Domain.dll
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csprojAssemblyReference.cache
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.AssemblyInfoInputs.cache
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.AssemblyInfo.cs
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csproj.CoreCompileInputs.cache
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.dll
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.pdb
-D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.deps.json
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.json
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.dev.json
@@ -56,3 +41,18 @@ D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufactu
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.dll
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.pdb
 D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.deps.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.runtimeconfig.dev.json
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Data.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Domain.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\bin\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csprojAssemblyReference.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.AssemblyInfoInputs.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.AssemblyInfo.cs
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csproj.CoreCompileInputs.cache
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.dll
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.pdb
+D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Debug\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache

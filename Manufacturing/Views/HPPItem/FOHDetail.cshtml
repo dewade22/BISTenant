@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/Material/_Layouts.cshtml";
 }
 @section Styles{
+    <style>
+        .judul-label {
+            width: 30%
+        }
+    </style>
     <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
     <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
     <link rel="stylesheet" href="~/css/app.css" />
@@ -45,11 +50,12 @@
                                         <td>@item.ModelDetailFOHBreakdown.SubProcessSize</td>
                                         <td>@item.ModelSubProcess.SubProcessName</td>
                                         <td>@item.ModelDetailFOHBreakdown.OperationName</td>
-                                        @if(item.MachineMaster?.MachineName == null)
-                                         {
+                                        @if (item.MachineMaster?.MachineName == null)
+                                        {
                                             <td>-</td>
-                                         }
-                                        else {
+                                        }
+                                        else
+                                        {
                                             <td>@item.MachineMaster.MachineName</td>
                                         }
                                         <td>@item.ModelDetailFOHBreakdown.SPDuration</td>
@@ -112,7 +118,7 @@
                                                 <div class="form-group fg-float">
                                                     <div class="fg-line SubProcessSize">
                                                         <input type="number" class="form-control" id="SubProcessSize" name="SubProcessSize" required />
-                                                        <label class="fg-label">Process Size <span class="text-bold">(Liters)</span><span class="text-danger">*</span></label>
+                                                        <label class="fg-label">Process Size / Mixer Capacity (Liters)<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
                                                 <!--Machine-->
@@ -128,7 +134,7 @@
                                                 <!--Speed-->
                                                 <div class="form-group fg-float" id="text-speed">
                                                     <div class="fg-line text-speed">
-                                                        <input type="number" class="form-control" id="SPSpeed" name="SPSpeed"/>
+                                                        <input type="number" class="form-control" id="SPSpeed" name="SPSpeed" />
                                                         <label class="fg-label">Process Speed (L/h)<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
@@ -137,7 +143,7 @@
                                                 <!--Quantity-->
                                                 <div class="form-group fg-float" id="text-quantity">
                                                     <div class="fg-line">
-                                                        <input type="number" class="form-control" id="SPQuantity" name="SPQuantity" required/>
+                                                        <input type="number" class="form-control" id="SPQuantity" name="SPQuantity" required />
                                                         <label class="fg-label">Quantity <span id="text-satuan"></span><span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
@@ -148,6 +154,13 @@
                                                         <label class="fg-label">Duration (Hour)<span class="text-danger">*</span></label>
                                                     </div>
                                                 </div>
+                                                <!--Mixer Capacity-->
+                                                @*<div class="form-group fg-float" id="text-MixerCapacity">
+                                                    <div class="fg-line" id="MixerCapacity">
+                                                        <input type="number" class="form-control" id="SPMixerCapacity" name="SPMixerCapacity" required/>
+                                                        <label class="fg-label">Mixer Capacity (Liters)<span class="text-danger">*</span></label>
+                                                    </div>
+                                                </div>*@
                                             </div>
                                         </fieldset>
                                     </form>

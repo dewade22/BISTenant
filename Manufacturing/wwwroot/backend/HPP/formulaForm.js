@@ -36,23 +36,27 @@ function CekModelExist(Id) {
         success: function (result) {
             
             if (result.length > 0) {
-                let tabel = `<tr>
-                                <td>${result[result.length-1].modelDetailNo}</td>
-                                <td>${result[result.length - 1].modelId}</td>
-                                <td>${result[result.length - 1].processName}</td>
-                                <td>${result[result.length - 1].description}</td>
-                            </tr>`
-                $('#tableList tbody').append(tabel)
+                $.each(result, function (i, val) {
+                    let tabel = 
+                        `<tr>
+                            <td>${val.id}</td>
+                            <td>${val.modelId}</td>
+                            <td>${val.description}</td>
+                            <td>${val.processSize}</td>
+                        </tr>`
+                    $('#tableList tbody').append(tabel)
+                }) 
+                
                 $('#tableList').bootgrid({
                     caseSensitive: false,
                     formatters: {
                         'command': function (column, row) {
-                            return `<button type="button" class="btn btn-primary" onclick="Edit('${row.MasterId}')"><i class="zmdi zmdi-edit"></i></button>`
+                            return `<button type="button" class="btn btn-primary" onclick="Edit('${row.Id}', '${row.ModelId}')"><i class="zmdi zmdi-edit"></i></button>`
                         }
                     }
                 })
                 $('.card-hide').show()
-                $('#btnNext').hide()
+                $('#btnNext').show()
             }
             else {
                 $('#btnNext').show()
@@ -70,6 +74,6 @@ function CekModelExist(Id) {
     
 }
 
-function Edit(Id) {
-    window.location = baseUrl + '/HPPItem/Mixing?ModelId=' +Id
+function Edit(Id, ModelId) {
+    window.location = baseUrl + '/HPPItem/Mixings?ModelId=' +ModelId+'&Id='+Id
 }

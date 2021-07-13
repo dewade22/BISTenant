@@ -1,0 +1,138 @@
+﻿@model Manufacturing.Models.Hpp.ModelMixing
+@{
+    ViewData["Title"] = "Mixing";
+    Layout = "~/Views/Shared/Material/_Layouts.cshtml";
+}
+
+@section Styles{
+    <style>
+        .judul-label {
+            width: 30%
+        }
+    </style>
+    <link rel="stylesheet" href="~/sources/vendors/bowercomponents/chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/sources/vendors/bootgrid/jquery.bootgrid.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+<section id="content">
+    <div class="container">
+        <div class="c-header">
+            <h2 class="text-capitalize">@ViewData["Title"] - @ViewBag.Product</h2>
+        </div>
+        <!--Card 1-->
+        <div class="card" id="card-line">
+            <div class="card-header">
+                <h2 class="card-title">List Item for Mixing @ViewBag.Product</h2>
+            </div>
+            <div class="card-body card-padding">
+                <input type="text" id="BomId" class="hide" value="@ViewBag.ModelId" />
+                @Html.HiddenFor(a=>a.detailProcessHeader.Id, new {@Id="txtHeaderId"})
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <label class="judul-label">Description</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.master.Description)
+                            </div>
+                            <div class="form-inline">
+                                <label class="judul-label">Mixing Size</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.detailProcessHeader.ProcessSize)
+                            </div>
+                            <div class="form-inline">
+                                <label class="judul-label">Mixer Capacity</label>
+                                <label>:</label>
+                                @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
+                            </div>
+                        </div>
+                    </div>
+                    <!--Button untuk Add Item-->
+                    <button type="button" class="btn btn-primary" id="AddItem" style="width:200px">Add Item</button>
+                    <div class="table-responsive">
+                        <table id="tableItem" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false">Id</th>
+                                    <th data-column-id="ItemDescription">Description</th>
+                                    <th data-column-id="Qty" data-formatter="Qty">Qty</th>
+                                    <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
+                                    <th data-column-id="ProcessHour" data-formatter="ProcessHour">Process Hour</th>
+                                    <th data-column-id="Amount" data-formatter="Amount">Amount</th>
+                                    <th data-column-id="Action" data-formatter="Action" data-sortable="false">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.listDetailProcess)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.ItemDescription</td>
+                                        <td>@item.ItemQty</td>
+                                        <td>@item.ItemCost</td>
+                                        <td>@item.ProcessHour</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Card 2-->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">List FOH GFWE for @ViewBag.Product</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" id="AddUpdateFOH">Add or Update FOH Electricity (Penyusutan)</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableFOH" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false">Id</th>
+                                    <th data-column-id="FOHType">Type</th>
+                                    <th data-column-id="OperationName">Operation Name</th>
+                                    <th data-column-id="Machine">Machine</th>
+                                    <th data-column-id="Quantity" data-formatter="Quantity">Quantity</th>
+                                    <th data-column-id="Duration" data-formatter="Duration">Duration (Hour)</th>
+                                    <th data-column-id="Amount" data-formatter="Amount">Amount Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.listTableFOH)
+                                {
+                                    <tr>
+                                        <td>@item.ModelId</td>
+                                        <td>@item.FOHType</td>
+                                        <td>@item.OperationName</td>
+                                        <td>@item.MachineName</td>
+                                        <td>@item.SPQuantity</td>
+                                        <td>@item.SPDuration</td>
+                                        <td>@item.FOHAmount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            
+
+@section Scripts{
+    <script type="text/javascript" src="~/sources/vendors/bowercomponents/chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="~/sources/vendors/bootgrid/jquery.bootgrid.updated.min.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/plugins/jquery-validation/localization/messages_id.js"></script>
+    <script type="text/javascript" src="~/backend/Mixings/Mixings.js"></script>
+}

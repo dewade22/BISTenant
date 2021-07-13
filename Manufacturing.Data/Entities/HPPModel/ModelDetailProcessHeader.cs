@@ -10,6 +10,7 @@ namespace Manufacturing.Data.Entities
         public int Id { get; set; }
         [Required]
         public string ModelId { get; set; }
+        public string Description { get; set; }
         public decimal ProcessSize { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }

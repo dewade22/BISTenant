@@ -71,6 +71,15 @@ $(function () {
         }        
     })
 
+    //Saat Operation Dirubah
+    $('#SPID').change(function () {
+        if ($('#SPID').val() == 'SUB-00002') {
+            $('#text-MixerCapacity').show()
+        } else {
+            $('#text-MixerCapacity').hide()
+        }
+    })
+
     //Process Size text Change
     $('#SubProcessSize').keyup(function () {
         if ($('#SubProcessSize').val() != '' || $('#SubProcessSize').val() != null || $('#SPSpeed').val() != '' || $('#SPSpeed').val() != null || $('#SPQuantity').val() != '' || $('#SPQuantity').val() != null) {
@@ -239,9 +248,12 @@ function AddFOH() {
         url: baseUrl + '/HPPItem/ProcessSize?ModelId=' + $('#ModelId').val(),
         success: function (result) {
             if (result != false) {
-                $('#SubProcessSize').val(result)
+                $('#SubProcessSize').val(result.subProcessSize)
+                $('#SPMixerCapacity').val(result.spMixerCapacity)
                 $('.SubProcessSize').addClass('fg-toggled')
-                $('#SubProcessSize').prop('readonly', true)
+                $('#MixerCapacity').addClass('fg-toggled')
+                //$('#SubProcessSize').prop('readonly', true)
+                $('#SPMixerCapacity').prop('readonly', true)
             }
         }
     })
@@ -252,11 +264,13 @@ function HideElectricityField() {
     $('#text-duration').hide()
     $('#text-speed').hide()
     $('#text-machine').hide()
+    $('#text-MixerCapacity').hide()
 }
 function ShowElectricityField() {
     $('#text-duration').show()
     $('#text-speed').show()
     $('#text-machine').show()
+    $('#text-MixerCapacity').show()
     $('#duration').addClass('fg-toggled')
 }
 function PushUpdate(Id, Name, Process) {
@@ -283,7 +297,9 @@ function PushUpdate(Id, Name, Process) {
                 $('#SPSpeed').val(result.spSpeed)
                 $('#SPQuantity').val(result.spQuantity)
                 $('#SPDuration').val(result.spDuration)
-                $('#SubProcessSize').prop('readonly', true)
+                $('#SPMixerCapacity').val(result.spMixerCapacity)
+                $('#SPMixerCapacity').prop('readonly', true)
+                //$('#SubProcessSize').prop('readonly', true)
                 $('.fg-line').addClass('fg-toggled')
                 if (result.spMachineID == null) {
                    HideElectricityField()

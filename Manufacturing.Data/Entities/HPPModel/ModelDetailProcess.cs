@@ -6,11 +6,9 @@ namespace Manufacturing.Data.Entities
 {
     public partial class ModelDetailProcess
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Key]
-        [Required]
-        public string ProcessNo { get; set; }
         [Required]
         public string ModelId { get; set; }
         [Required]
@@ -19,6 +17,7 @@ namespace Manufacturing.Data.Entities
         public string Type { get; set; }
         public string ItemNo { get; set; }
         public string ItemDescription { get; set; }
+        public string Description { get; set; }
         public decimal? ItemQty { get; set; }
         public decimal? ItemCost { get; set; }
         public decimal? ProcessHour { get; set; } = 0;

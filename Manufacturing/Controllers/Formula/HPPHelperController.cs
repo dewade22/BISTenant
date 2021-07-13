@@ -6,6 +6,7 @@ using System.Linq;
 using Manufacturing.Data.Entities;
 using System;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Manufacturing.Controllers.Formula
 {
@@ -18,22 +19,22 @@ namespace Manufacturing.Controllers.Formula
         }
 
         public JsonResult Items(string No)
-        {  
+        {
             var res = _context.Items.Where(a => a.ItemNo == No).FirstOrDefault();
             return Json(res);
         }
 
         public JsonResult SelectItem(string No)
         {
-            if(No == "Item")
+            if (No == "Item")
             {
                 var data = (from item in _context.Items
-                        where item.RowStatus == 0
-                        select new Models.SelectListModel
-                        {
-                            ValueCode = item.ItemNo,
-                            ValueName = item.Description
-                        }).ToList();
+                            where item.RowStatus == 0
+                            select new Models.SelectListModel
+                            {
+                                ValueCode = item.ItemNo,
+                                ValueName = item.Description
+                            }).ToList();
                 return Json(data);
             }
             else
@@ -49,26 +50,6 @@ namespace Manufacturing.Controllers.Formula
             }
         }
 
-        public JsonResult ModelProcessHeader(string ModelId)
-        {
-            if(ModelId == null)
-            {
-                return Json(0);
-            }
-            else
-            {
-                var res = _context.ModelDetailProcessHeader.Where(a => a.ModelId == ModelId).FirstOrDefault();
-                if(res == null)
-                {
-                    return Json(0);
-                }
-                else
-                {
-                    return Json(1);
-                }
-            }
-        }
-
 
 
 
@@ -81,18 +62,18 @@ namespace Manufacturing.Controllers.Formula
         public JsonResult SavePramixing(ModelWIPProcessLine model)
         {
             var result = "Data Tidak Dapat Ditambahkan";
-            if(ModelState.IsValid) {
+            if (ModelState.IsValid) {
                 model.ModelWIPLineId = WIPLineId();
                 model.ItemPrice = ItemPriceWIPLine(model);
                 model.CreatedAt = DateTime.Now;
                 model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
                 try
-                {                   
+                {
                     _context.ModelWIPProcessLine.Add(model);
                     _context.SaveChanges();
                     result = "sukses";
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     result = "Gagal Menambahkan Data";
                 }
@@ -113,7 +94,7 @@ namespace Manufacturing.Controllers.Formula
         public JsonResult UpdatePramixing(ModelWIPProcessLine model)
         {
             var result = "";
-            if(model == null)
+            if (model == null)
             {
                 result = "Gagal Mendapatkan Data";
             }
@@ -121,7 +102,7 @@ namespace Manufacturing.Controllers.Formula
             {
                 //get current val
                 var current = _context.ModelWIPProcessLine.Where(a => a.ModelWIPLineId == model.ModelWIPLineId).SingleOrDefault();
-                if(current == null)
+                if (current == null)
                 {
                     result = "Data dengan Id = " + model.ModelWIPLineId + " Tidak ditemukan";
                 }
@@ -141,7 +122,7 @@ namespace Manufacturing.Controllers.Formula
                         _context.ModelWIPProcessLine.Update(current).Property(a => a.Id).IsModified = false; ;
                         _context.SaveChanges();
                         result = "sukses";
-                    }catch(Exception ex)
+                    } catch (Exception ex)
                     {
                         result = "Gagal Menyimpan Data !";
                     }
@@ -155,14 +136,14 @@ namespace Manufacturing.Controllers.Formula
         public JsonResult DisposePramixingLine(string No)
         {
             var result = "";
-            if(No == null || No == "")
+            if (No == null || No == "")
             {
                 result = "Couldn't Get Id From Input";
             }
             else
             {
                 var data = _context.ModelWIPProcessLine.Where(a => a.ModelWIPLineId == No).SingleOrDefault();
-                if(data == null)
+                if (data == null)
                 {
                     result = "Item With Id = " + No + " Not Found!";
                 }
@@ -173,10 +154,10 @@ namespace Manufacturing.Controllers.Formula
                     data.lastModifiedBy = HttpContext.Session.GetString("EMailAddress");
                     try
                     {
-                        _context.ModelWIPProcessLine.Update(data).Property(a=>a.Id).IsModified= false;
+                        _context.ModelWIPProcessLine.Update(data).Property(a => a.Id).IsModified = false;
                         _context.SaveChanges();
                         result = "sukses";
-                    }catch(Exception e)
+                    } catch (Exception e)
                     {
                         result = "Gagal menghapus data " + e;
                     }
@@ -189,7 +170,7 @@ namespace Manufacturing.Controllers.Formula
         [HttpGet]
         public JsonResult CalculateWIPLine(string No)
         {
-            if(No == null|| No == "")
+            if (No == null || No == "")
             {
                 return Json(0);
             }
@@ -197,7 +178,7 @@ namespace Manufacturing.Controllers.Formula
             {
                 var data = _context.ModelWIPProcessLine.Where(a => a.ModelWIPHeaderId == No && a.Active == true).ToList();
                 var batc = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == No).SingleOrDefault();
-                if(data == null)
+                if (data == null)
                 {
                     return Json(0);
                 }
@@ -207,8 +188,8 @@ namespace Manufacturing.Controllers.Formula
                                  group d by new { d.ModelWIPHeaderId }
                                  into res
                                  select new ModelCalculatePraMixing {
-                                    BatchCost = (res.Sum(a=>a.ItemType == "Labour" ? a.ItemQty * a.ItemPrice * a.ProcessHour : a.ItemQty*a.ItemPrice)),
-                                    UnitCost = (res.Sum(a =>a.ItemType == "Labour" ? (a.ItemQty * a.ItemPrice * a.ProcessHour)/batc.QtyOutput : (a.ItemQty * a.ItemPrice) / batc.QtyOutput))
+                                     BatchCost = (res.Sum(a => a.ItemType == "Labour" ? a.ItemQty * a.ItemPrice * a.ProcessHour : a.ItemQty * a.ItemPrice)),
+                                     UnitCost = (res.Sum(a => a.ItemType == "Labour" ? (a.ItemQty * a.ItemPrice * a.ProcessHour) / batc.QtyOutput : (a.ItemQty * a.ItemPrice) / batc.QtyOutput))
                                  });
                     return Json(hasil);
                 }
@@ -220,14 +201,14 @@ namespace Manufacturing.Controllers.Formula
         public JsonResult SaveWIPLineCost(ModelCalculatePraMixing model)
         {
             var result = "";
-            if(model == null)
+            if (model == null)
             {
                 result = "Couldn't get calculation result !";
             }
             else
             {
                 var getItemNo = _context.ModelWIPProcessHeader.Where(a => a.ModelHeaderId == model.WIPHeaderId).FirstOrDefault();
-                if(getItemNo == null)
+                if (getItemNo == null)
                 {
                     result = "Couldn't get Process Id, Please Reload Page";
                 }
@@ -235,10 +216,10 @@ namespace Manufacturing.Controllers.Formula
                 {
                     var baseItem = _context.Items.Where(a => a.ItemNo == getItemNo.ItemOutputId).FirstOrDefault();
                     var newItem = _context.ModelWIPOutput.Where(a => a.ItemNo == baseItem.ItemNo).FirstOrDefault();
-                       
-                //Cek apakah sudah tersimpan di DB baru
-                
-                    if(newItem == null)
+
+                    //Cek apakah sudah tersimpan di DB baru
+
+                    if (newItem == null)
                     {
                         //insert
                         newItem = new ModelWIPOutput();
@@ -255,7 +236,7 @@ namespace Manufacturing.Controllers.Formula
                             _context.ModelWIPOutput.Add(newItem);
                             _context.SaveChanges();
                             result = "sukses";
-                        }catch(Exception e)
+                        } catch (Exception e)
                         {
                             result = "Couldn't Add New Record";
                             throw;
@@ -283,7 +264,7 @@ namespace Manufacturing.Controllers.Formula
                             throw;
                         }
                     }
-                    
+
                 }
             }
             return Json(result);
@@ -294,15 +275,17 @@ namespace Manufacturing.Controllers.Formula
         public JsonResult SaveDetailProcessHeader(ModelDetailProcessHeader model)
         {
             var result = "";
-            if(model != null)
+            var Id = 0;
+            if (model != null)
             {
                 try
                 {
                     _context.ModelDetailProcessHeader.Add(model);
                     _context.SaveChanges();
                     result = "sukses";
+                    Id = model.Id;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     result = "Terjadi kesalahan saat menyimpan data " + e;
                 }
@@ -310,6 +293,34 @@ namespace Manufacturing.Controllers.Formula
             else
             {
                 result = "Terjadi kesalahan saat mencari model";
+            }
+            return new JsonResult(new { result = result, Id = Id });
+        }
+
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult SyncronFOH(string Model, int Header, string SPID)
+        {
+            var result = "";
+            var type = "electricity";
+            var cek = _context.ModelDetailProcess.Where(a => a.ModelId == Model && a.SubProcessId == SPID && a.Type == "electricity" && a.ProcessHeaderNo == Header).FirstOrDefault();
+            if (cek == null)
+            {
+                //Add
+                var sukses = AddSyncronFOH(Model, SPID, Header, type);
+                if(sukses == true)
+                {
+                    result = "sukses";
+                }
+                else
+                {
+                    result = "Terjadi kesalahan saat menambahkan data";
+                }
+            }
+            else
+            {
+                //Hapus kemudian tambahkan Ulang
+
             }
             return Json(result);
         }
@@ -348,6 +359,70 @@ namespace Manufacturing.Controllers.Formula
             }
             return price;
         }
+
+        public Boolean AddSyncronFOH(string Model, string SPID, int Header, string type)
+        {
+            //ambil data yang mau di add
+            List<Manufacturing.Data.Entities.ModelDetailFOHBreakdown> data = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == Model && a.SPID == SPID && a.FOHType == "electricity" && a.Active == true).ToList();
+            var modelBaru = new ModelDetailProcess();
+            foreach (ModelDetailFOHBreakdown value in data)
+            {
+                modelBaru.Id = 0;
+                modelBaru.ProcessHeaderNo = Header;
+                modelBaru.ModelId = Model;
+                modelBaru.SubProcessId = SPID;
+                modelBaru.Type = type;
+                modelBaru.ItemNo = value.SPMachineID;
+                modelBaru.ItemDescription = MachineName(value.SPMachineID);
+                modelBaru.Description = value.OperationName;
+                modelBaru.ItemQty = value.SPQuantity;
+                modelBaru.ItemCost = ItemCostForFOH("electricity", value.SPMachineID, value.SPDuration);
+                modelBaru.ProcessHour = value.SPDuration;
+                modelBaru.CreatedAt = DateTime.Now;
+                modelBaru.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+                try
+                {
+                    _context.ModelDetailProcess.Add(modelBaru);
+                    _context.SaveChanges();
+                    modelBaru.Id += 1;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        public string MachineName(string ItemNo)
+        {
+            return _context.ModelMachineMaster.Where(a => a.MachineNo == ItemNo).Select(a => a.MachineName).SingleOrDefault();
+        }
+
+        public decimal ItemCostForFOH(string Type, string ItemNo, decimal? ProcessHour)
+        {
+            decimal price = 0;
+            if (Type == "electricity")
+            {
+                var getFOHParam = _context.ModelMachineMaster.Where(a => a.MachineNo == ItemNo).FirstOrDefault();
+                if (getFOHParam.MaximumAgeUse != 0)
+                {
+                    //machine maintenance price belum masuk
+                    var baseItemPrice = getFOHParam.MachinePrice;
+                    price = (decimal)(Math.Ceiling((decimal)(ProcessHour / 24)) / 30 * (baseItemPrice / (getFOHParam.MaximumAgeUse*12)));
+                }
+                else
+                {
+                    price = (decimal)_context.ModelMachineMaster.Where(a => a.MachineNo == ItemNo).Select(a => a.MachinePrice).FirstOrDefault();
+                }
+            }
+
+            return price;
+        }
+
+        
+        
 
 
 
