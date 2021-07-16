@@ -27,60 +27,104 @@
             <div class="card-body card-padding">
                 <input type="text" id="BomId" class="hide" value="@ViewBag.ModelId" />
                 @Html.HiddenFor(a=>a.detailProcessHeader.Id, new {@Id="txtHeaderId"})
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <div class="form-inline">
-                                <label class="judul-label">Description</label>
-                                <label>:</label>
-                                @Html.DisplayFor(a => a.master.Description)
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label class="judul-label">Description</label>
+                            <label>:</label>
+                            @Html.DisplayFor(a => a.master.Description)
+                        </div>
+                        <div class="form-inline">
+                            <label class="judul-label">Mixing Size</label>
+                            <label>:</label>
+                            @Html.DisplayFor(a => a.detailProcessHeader.ProcessSize)
+                        </div>
+                        <div class="form-inline">
+                            <label class="judul-label">Mixer Capacity</label>
+                            <label>:</label>
+                            @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
+                        </div>
+                    </div>
+                </div>
+                <!--Button untuk Add Item-->
+                <button type="button" class="btn btn-primary" id="AddItem" style="width:200px">Add Item</button>
+                <div class="table-responsive">
+                    <table id="tableItem" class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th data-column-id="Id" data-visible="false">Id</th>
+                                <th data-column-id="Type" data-visible="false">Type</th>
+                                <th data-column-id="ItemDescription">ItemName</th>
+                                <th data-column-id="Description">Description</th>
+                                <th data-column-id="Qty" data-formatter="Qty">Qty</th>
+                                <th data-column-id="ProcessHour" data-formatter="ProcessHour">Process Hour</th>
+                                <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
+                                <th data-column-id="Amount" data-formatter="Amount">Amount</th>
+                                <th data-column-id="Action" data-formatter="Action" data-sortable="false">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.listDetailProcess)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Type</td>
+                                    <td>@item.ItemDescription</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.ItemQty</td>
+                                    <td>@item.ProcessHour</td>
+                                    <td>@item.ItemCost</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!--Moda Begin-->
+                <div class="modal fade" id="modalItem" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
                             </div>
-                            <div class="form-inline">
-                                <label class="judul-label">Mixing Size</label>
-                                <label>:</label>
-                                @Html.DisplayFor(a => a.detailProcessHeader.ProcessSize)
+                            <div class="modal-body">
+                                <form id="formInput">
+                                    <fieldset id="submitForm">
+                                        <input type="hidden" id="ProcessHeaderNo" name="=ProcessHeaderNo" value="@Html.ValueFor(a=>a.detailProcessHeader.Id)" />
+                                        <input type="hidden" id="ModelId" name="ModelId" value="@Html.ValueFor(a=>a.detailProcessHeader.ModelId)" />
+                                        <input type="hidden" id="SubProcessId" name="SubProcessId" value="SUB-00002" />
+                                        <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                           <!--Moda Sisi Kiri-->
+                                            <div class="form-group fg-float">
+                                                <p class="f-500 c-black m-b-15">Type</p>
+                                                <div class="fg-line">
+                                                    <select asp-items="@ViewBag.RateList" id="selectRate" name="ItemType" class="chosen">
+                                                        <option value="">Choose One</option>
+                                                        <option value="Item">Items</option>
+                                                        <option value="PraMixing">Pra Mixing Item</option>
+                                                    </select>
+                                                    <p class="text-danger" id="ErrorSelect1"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
+                                           <!--Modal Sisi Kanan-->
+                                        </div>
+                                    </fieldset>
+                                </form>
                             </div>
-                            <div class="form-inline">
-                                <label class="judul-label">Mixer Capacity</label>
-                                <label>:</label>
-                                @Html.DisplayFor(a => a.fOHBreakdown.SubProcessSize)
+                            <div class="modal-footer">
+                                <a href="#" class="btn btn-primary" id="AddNew"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                <a href="#" class="btn btn-primary" id="updateform"><span class="zmdi zmdi-save"> </span>  Save</a>
+                                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-                    <!--Button untuk Add Item-->
-                    <button type="button" class="btn btn-primary" id="AddItem" style="width:200px">Add Item</button>
-                    <div class="table-responsive">
-                        <table id="tableItem" class="table table-condensed table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th data-column-id="Id" data-visible="false">Id</th>
-                                    <th data-column-id="Type" data-visible="false">Type</th>
-                                    <th data-column-id="ItemDescription">Description</th>
-                                    <th data-column-id="Qty" data-formatter="Qty">Qty</th>
-                                    <th data-column-id="ProcessHour" data-formatter="ProcessHour">Process Hour</th>
-                                    <th data-column-id="ItemCost" data-formatter="ItemCost">Cost</th>
-                                    <th data-column-id="Amount" data-formatter="Amount">Amount</th>
-                                    <th data-column-id="Action" data-formatter="Action" data-sortable="false">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.listDetailProcess)
-                                {
-                                    <tr>
-                                        <td>@item.Id</td>
-                                        <td>@item.Type</td>
-                                        <td>@item.ItemDescription</td>
-                                        <td>@item.ItemQty</td>
-                                        <td>@item.ProcessHour</td>
-                                        <td>@item.ItemCost</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
+                <!--End Modal-->
+            </div>
             </div>
         </div>
         <!--Card 2-->

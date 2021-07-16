@@ -146,6 +146,8 @@ namespace Manufacturing.Controllers
             ViewBag.Product = GetBOMName(ModelId);
             var data = new ModelMixing();
             data.master = _context.ModelMaster.Where(a => a.ModelId == ModelId).FirstOrDefault();
+            List<Manufacturing.Data.Entities.ModelRateType> RateList = _context.ModelRateType.Where(a => a.Active == true).ToList();
+            ViewBag.RateList = new SelectList(RateList, "RateTypeCode", "RateTypeName");
             data.fOHBreakdown = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == ModelId && a.SPID == "SUB-00002").OrderByDescending(a=>a.Id).FirstOrDefault();
             data.detailProcessHeader = _context.ModelDetailProcessHeader.Where(a => a.ModelId == ModelId && a.Id == Id).FirstOrDefault();
             data.listDetailProcess = _context.ModelDetailProcess.Where(a => a.Active == true && a.ModelId == ModelId && a.ProcessHeaderNo == Id).ToList();
