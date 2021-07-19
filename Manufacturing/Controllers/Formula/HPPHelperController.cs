@@ -37,6 +37,16 @@ namespace Manufacturing.Controllers.Formula
                             }).ToList();
                 return Json(data);
             }
+            else if(No == "PraMixing")
+            {
+                var data = (from pramixing in _context.ModelWIPOutput
+                            select new Models.SelectListModel
+                            {
+                                ValueCode = pramixing.ItemNo,
+                                ValueName = pramixing.Description
+                            }).ToList();
+                return Json(data);
+            }
             else
             {
                 var data = (from RawSupp in _context.ModelRateMaster
@@ -380,6 +390,14 @@ namespace Manufacturing.Controllers.Formula
 
         public Boolean AddSyncronFOH(string Model, string SPID, int Header, string type)
         {
+            //Ambil SubProcess Size untuk dicompare dengan mixing Size
+            var size = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == Model && a.SPID == SPID).FirstOrDefault();
+            var fohCapacity = size.SubProcessSize;
+            var header = _context.ModelDetailProcessHeader.Where(a => a.Id == Header).FirstOrDefault();
+            var mixingSize = header.ProcessSize;
+            decimal pengali = Math.Ceiling(mixingSize / fohCapacity);
+
+
             //ambil data yang mau di add
             List<Manufacturing.Data.Entities.ModelDetailFOHBreakdown> data = _context.ModelDetailFOHBreakdown.Where(a => a.ModelId == Model && a.SPID == SPID && a.FOHType == "electricity" && a.Active == true).ToList();
             var modelBaru = new ModelDetailProcess();
@@ -394,8 +412,8 @@ namespace Manufacturing.Controllers.Formula
                 modelBaru.ItemDescription = MachineName(value.SPMachineID);
                 modelBaru.Description = value.OperationName;
                 modelBaru.ItemQty = value.SPQuantity;
-                modelBaru.ItemCost = ItemCostForFOH("electricity", value.SPMachineID, value.SPDuration);
-                modelBaru.ProcessHour = value.SPDuration;
+                modelBaru.ItemCost = pengali * ItemCostForFOH("electricity", value.SPMachineID, value.SPDuration);
+                modelBaru.ProcessHour = pengali * value.SPDuration;
                 modelBaru.CreatedAt = DateTime.Now;
                 modelBaru.CreatedBy = HttpContext.Session.GetString("EMailAddress");
                 try

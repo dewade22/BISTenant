@@ -1,4 +1,4 @@
-﻿let baseurl = localStorage.getItem('thisAddress');
+﻿let baseUrl = localStorage.getItem('thisAddress');
 
 $(function () {
     $('#tableItem').bootgrid({
@@ -52,7 +52,7 @@ $(function () {
             if (hasil.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: baseurl + '/HPPHelper/SyncronFOH?Model=' + $('#BomId').val() + '&Header=' + $('#txtHeaderId').val()+'&SPID=SUB-00002',
+                    url: baseUrl + '/HPPHelper/SyncronFOH?Model=' + $('#BomId').val() + '&Header=' + $('#txtHeaderId').val()+'&SPID=SUB-00002',
                     success: function (result) {
                         if (result == 'sukses') {
                             Swal.fire(
@@ -89,4 +89,42 @@ $(function () {
         $('#AddNew').show()
         $('.modal-title').html('Add New Items')
     })
+
+    //selectbox Type change function
+    $('#Type').change(function () {
+        if ($('#Type').val() != null || $('#Type').val() != '') {
+            $('#itemname').html($('#Type option:selected').text())
+            AppendItemNo($('#Type').val())
+        }
+    })
+
+    //Select Box ItemNo Change, get Text into Item Desc
+    $('#ItemNo').change(function () {
+        if ($('#ItemNo').val() != null || $('#ItemNo').val() != '') {
+            $('#ItemDescription').val($('#ItemNo option:selected').text())
+        }
+    })
 })
+
+function AppendItemNo(ItemType, ItemNo = '') {
+    $('#ItemNo').empty()
+    $('#ItemNo').append(`<option value="">Choose One</option>`)
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPHelper/SelectItem?No=' + ItemType,
+        success: function (result) {
+            result.forEach(function (result) {
+                $('#ItemNo').append(`<option value="${result.valueCode}">${result.valueName}</option>`)
+            })
+            $('#ItemNo').val(ItemNo)
+            $('.chosen').trigger('chosen:updated')
+        },
+        error: function (jqXHR, exception) {
+            Swal.fire(
+                'Error !!',
+                'Error ' + jqXHR.status,
+                'error'
+            )
+        }
+    })
+}

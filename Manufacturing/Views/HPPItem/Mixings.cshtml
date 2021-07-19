@@ -96,11 +96,11 @@
                                         <input type="hidden" id="ModelId" name="ModelId" value="@Html.ValueFor(a=>a.detailProcessHeader.ModelId)" />
                                         <input type="hidden" id="SubProcessId" name="SubProcessId" value="SUB-00002" />
                                         <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
-                                           <!--Moda Sisi Kiri-->
+                                            <!--Moda Sisi Kiri-->
                                             <div class="form-group fg-float">
                                                 <p class="f-500 c-black m-b-15">Type</p>
                                                 <div class="fg-line">
-                                                    <select asp-items="@ViewBag.RateList" id="selectRate" name="ItemType" class="chosen">
+                                                    <select asp-items="@ViewBag.RateList" id="Type" name="Type" class="chosen">
                                                         <option value="">Choose One</option>
                                                         <option value="Item">Items</option>
                                                         <option value="PraMixing">Pra Mixing Item</option>
@@ -108,9 +108,43 @@
                                                     <p class="text-danger" id="ErrorSelect1"></p>
                                                 </div>
                                             </div>
+                                            <div class="form-group fg-float">
+                                                <p class="f-500 c-black m-b-15" id="itemname"></p>
+                                                <div class="fg-line">
+                                                    <select id="ItemNo" name="ItemNo" class="chosen">
+                                                        <option value="">Choose One</option>
+                                                    </select>
+                                                    <p class="text-danger" id="ErrorSelect2"></p>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="ItemDescription" id="ItemDescription" />
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="text" class="form-control" name="Description" id="Description" />
+                                                    <label class="fg-label">Description</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
                                            <!--Modal Sisi Kanan-->
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" name="ItemQty" id="ItemQty" required />
+                                                    <label class="fg-label">Qty <span id="satuanQty"></span><span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" name="ItemCost" id="ItemCost" required />
+                                                    <label class="fg-label">Item Cost <span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group fg-float">
+                                                <div class="fg-line">
+                                                    <input type="number" class="form-control" name="ProcessHour" id="ProcessHour" value="0" required />
+                                                    <label class="fg-label">Process Hour <span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </fieldset>
                                 </form>

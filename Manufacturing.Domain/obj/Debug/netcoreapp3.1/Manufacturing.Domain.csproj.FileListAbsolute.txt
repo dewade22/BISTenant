@@ -43,3 +43,4 @@ D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufac
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.dll
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.genruntimeconfig.cache
+D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.csprojAssemblyReference.cache
