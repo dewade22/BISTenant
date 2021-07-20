@@ -95,7 +95,7 @@ namespace Manufacturing.Controllers
                             HttpContext.Session.SetString("tenant", tenantActive);
 
                             //Save Login Information
-                           /* var LogActivity = new WebLoginActivity();
+                            /*var LogActivity = new WebLoginActivity();
                             LogActivity.Email = HttpContext.Session.GetString("EMailAddress");
                             LogActivity.IP_Addr = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                             LogActivity.LastLoginTime = DateTime.Now;

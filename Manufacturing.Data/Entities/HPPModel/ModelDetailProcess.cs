@@ -13,7 +13,7 @@ namespace Manufacturing.Data.Entities
         public string ModelId { get; set; }
         [Required]
         public string SubProcessId { get; set; }
-        public int ProcessHeaderNo { get; set; }
+        public int? ProcessHeaderNo { get; set; }
         public string Type { get; set; }
         public string ItemNo { get; set; }
         public string ItemDescription { get; set; }

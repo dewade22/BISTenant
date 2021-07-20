@@ -60,6 +60,61 @@ namespace Manufacturing.Controllers.Formula
             }
         }
 
+        public JsonResult SpecificItem(string Type, string No, string Labour)
+        {
+            if(Type == "Item")
+            {
+                var data = (from item in _context.Items
+                            where item.ItemNo == No
+                            select new Models.CostItemViewModel
+                            {
+                                ItemNo = item.ItemNo,
+                                UnitofMeasure = item.BaseUnitofMeasure,
+                                UnitCost = item.LastDirectCost
+                            }).FirstOrDefault();
+                return Json(data);
+            }else if(Type == "PraMixing")
+            {
+                var data = (from item in _context.ModelWIPOutput
+                            where item.ItemNo == No
+                            select new Models.CostItemViewModel
+                            {
+                                ItemNo = item.ItemNo,
+                                UnitofMeasure = item.BaseUnitOfMeasure,
+                                UnitCost = item.LastItemCost
+                            }).FirstOrDefault();
+                return Json(data);
+            }
+            else
+            {
+                if(Type == "Labour")
+                {
+                    var data = (from item in _context.ModelRateMaster
+                                where item.RateNo == No
+                                select new Models.CostItemViewModel
+                                {
+                                    ItemNo = item.RateNo,
+                                    UnitofMeasure = "Labour",
+                                    UnitCost = Labour == "Regular" ? item.RegularRate : Labour == "Weekend" ? item.WeekendRate : item.LemburRate
+                                }).FirstOrDefault();
+                    return Json(data);
+                }
+                else
+                {
+                    var data = (from item in _context.ModelRateMaster
+                                where item.RateNo == No
+                                select new Models.CostItemViewModel
+                                {
+                                    ItemNo = item.RateNo,
+                                    UnitofMeasure = item.Unit,
+                                    UnitCost = item.RegularRate != 0 ? item.RegularRate : item.Price
+                                }).FirstOrDefault();
+                    return Json(data);
+                }
+                
+            }
+        }
+
 
 
 
@@ -353,6 +408,33 @@ namespace Manufacturing.Controllers.Formula
             return Json(result);
         }
 
+        [AuthorizedAPI]
+        [HttpPost]
+        public JsonResult SaveMixing(ModelDetailProcess model)
+        {
+            var result = "";
+            model.CreatedAt = DateTime.Now;
+            model.CreatedBy = HttpContext.Session.GetString("EMailAddress");
+            if(model.Type != "PraMixing" || model.Type !="Item" || model.Type != "Labour")
+            {
+                var itemcost = ItemCostForFOH(model.Type, model.ItemNo, model.ProcessHour);
+                model.ItemCost = itemcost;
+                
+            }
+            try
+            {
+                _context.ModelDetailProcess.Add(model);
+                _context.SaveChanges();
+                result = "sukses";
+            }
+            catch (Exception e)
+            {
+                result = "Couldn't Add The New Record with message " + e;
+                throw;
+            }
+            return Json(result);
+        }
+
 
 
 
@@ -468,6 +550,19 @@ namespace Manufacturing.Controllers.Formula
                 else
                 {
                     price = (decimal)_context.ModelMachineMaster.Where(a => a.MachineNo == ItemNo).Select(a => a.MachinePrice).FirstOrDefault();
+                }
+            }
+            else
+            {
+                var item = _context.ModelRateMaster.Where(a => a.RateNo == ItemNo).FirstOrDefault();
+                if(item.AgeUsedMonth != 0)
+                {
+                    var rate = item.RegularRate != 0 ? (decimal)item.RegularRate : (decimal)item.Price;
+                    price = (decimal)((ProcessHour / 24) / 30 * (rate / item.AgeUsedMonth));
+                }
+                else
+                {
+                    price = item.RegularRate != 0 ? (decimal)item.RegularRate : (decimal)item.Price;
                 }
             }
 

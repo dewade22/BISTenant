@@ -32,10 +32,10 @@ $(function () {
     //Save Modal
     $('#AddNew').click(function () {
         if ($('#formInput').valid()) {
-            if ($('#selectRate').val() == null) {
+            if ($('#selectRate').val() == null || $('#selectRate').val() == '') {
                 $('#ErrorSelect1').html('Please Select One!!')
             }
-            else if ($('#ItemNo').val() == null) {
+            else if ($('#ItemNo').val() == null || $('#ItemNo').val() == '') {
                 $('#ErrorSelect2').html('Please Select One!!')
             }
             else {

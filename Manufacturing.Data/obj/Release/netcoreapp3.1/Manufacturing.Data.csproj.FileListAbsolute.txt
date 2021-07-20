@@ -41,3 +41,18 @@ D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Ma
 D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.dll
 D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.pdb
 D:\Source Code\ASP.NET\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.deps.json
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.runtimeconfig.json
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.runtimeconfig.dev.json
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.dll
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Data.pdb
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Domain.dll
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\bin\Release\netcoreapp3.1\Manufacturing.Domain.pdb
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csprojAssemblyReference.cache
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.AssemblyInfoInputs.cache
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.AssemblyInfo.cs
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csproj.CoreCompileInputs.cache
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.csproj.CopyComplete
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.dll
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.pdb
+D:\MyDocument\BIS\BISTenant\Manufacturing.Data\obj\Release\netcoreapp3.1\Manufacturing.Data.genruntimeconfig.cache

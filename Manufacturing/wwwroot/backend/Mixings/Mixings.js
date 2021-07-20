@@ -1,6 +1,11 @@
 ﻿let baseUrl = localStorage.getItem('thisAddress');
 
+//Push global variabel
+let ItemUnitCost;
+
+
 $(function () {
+    $('#sbRateLabour').hide()
     $('#tableItem').bootgrid({
         caseSensitive: false,
         formatters: {
@@ -95,6 +100,11 @@ $(function () {
         if ($('#Type').val() != null || $('#Type').val() != '') {
             $('#itemname').html($('#Type option:selected').text())
             AppendItemNo($('#Type').val())
+            if ($('#Type').val() == 'Labour') {
+                $('#sbRateLabour').show()
+            } else {
+                $('#sbRateLabour').hide()
+            }
         }
     })
 
@@ -102,6 +112,70 @@ $(function () {
     $('#ItemNo').change(function () {
         if ($('#ItemNo').val() != null || $('#ItemNo').val() != '') {
             $('#ItemDescription').val($('#ItemNo option:selected').text())
+            GetCostofItem($(this).val(), $('#LabourRate').val())
+        }
+    })
+
+    //Rate Labour Type Change
+    $('#LabourRate').change(function () {
+        if (($('#ItemNo').val() != null || $('#ItemNo').val() != '') && ($('#ItemQty').val() != null || $('#ItemQty').val() != '')) {
+            GetCostofItem($('#ItemNo').val(), $(this).val())
+        }
+    })
+
+    $('#AddNew').click(function () {
+        if ($('#formInput').valid()) {
+            $('#ErrorSelect1').html('')
+            $('#ErrorSelect2').html('')
+            if ($('#Type').val() == null || $('#Type').val() == '') {
+                $('#ErrorSelect1').html('Please Choose One!')
+                $('#ErrorSelect2').html('Please Choose One!')
+            } else if ($('#ItemNo').val() == null || $('#ItemNo').val() == '') {
+                $('#ErrorSelect2').html('Please Choose One!')
+            } else {
+                Swal.fire({
+                    title: 'Save ?!',
+                    text: 'Simpan Record ini? ',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya!',
+                    cancelButtonText: 'Kembali'
+                }).then((jawab) => {
+                    if (jawab.isConfirmed) {
+                        $.ajax({
+                            type: 'POST',
+                            url: baseUrl + '/HPPHelper/SaveMixing',
+                            data: $('#formInput').serialize(),
+                            success: function (result) {
+                                if (result == 'sukses') {
+                                    Swal.fire(
+                                        'Sukses',
+                                        'Data Berhasil Ditambahkan',
+                                        'success',
+                                    ).then((hasil) => {
+                                        window.location.reload()
+                                    })
+                                } else {
+                                    Swal.fire(
+                                        'Error !!',
+                                        '' + result,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function (jqXHR) {
+                                Swal.fire(
+                                    'Error !',
+                                    'Error ' + jqXHR.status,
+                                    'error'
+                                )
+                            }
+                        })
+                    }
+                })
+            }
         }
     })
 })
@@ -122,6 +196,25 @@ function AppendItemNo(ItemType, ItemNo = '') {
         error: function (jqXHR, exception) {
             Swal.fire(
                 'Error !!',
+                'Error ' + jqXHR.status,
+                'error'
+            )
+        }
+    })
+}
+
+function GetCostofItem(No, Labour) {
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPHelper/SpecificItem?Type=' + $('#Type').val() + '&NO=' + No + '&Labour=' + Labour,
+        success: function (result) {
+            ItemUnitCost = result.unitCost
+            $('#satuanQty').html(result.unitofMeasure)
+            $('#ItemCost').val(ItemUnitCost).val()
+        },
+        error: function (jqXHR) {
+            Swal.fire(
+                'Error',
                 'Error ' + jqXHR.status,
                 'error'
             )
