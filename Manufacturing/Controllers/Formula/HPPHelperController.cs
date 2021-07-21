@@ -435,6 +435,29 @@ namespace Manufacturing.Controllers.Formula
             return Json(result);
         }
 
+        [AuthorizedAPI]
+        [HttpGet]
+        public JsonResult GetMixingLine(int? Id)
+        {
+            if(Id == null)
+            {
+                return Json (new { status = 0, result = "Gagal Mendapatkan Id"});
+            }
+            else
+            {
+                var data = _context.ModelDetailProcess.Where(a => a.Id == Id).FirstOrDefault();
+                if(data == null)
+                {
+                    return Json(new { status = 0, result = "Data dengan ID " + Id + " tidak dapat ditemukan" });
+                }
+                else
+                {
+                    return Json(new { status = 1, result = data });
+                }
+            }
+
+        }
+
 
 
 

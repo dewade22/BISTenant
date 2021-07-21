@@ -37,10 +37,10 @@ D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\bin\Debug\netcoreapp3.1\Manufac
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\bin\Debug\netcoreapp3.1\Manufacturing.Domain.runtimeconfig.dev.json
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\bin\Debug\netcoreapp3.1\Manufacturing.Domain.dll
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\bin\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
+D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.csprojAssemblyReference.cache
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.AssemblyInfoInputs.cache
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.AssemblyInfo.cs
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.csproj.CoreCompileInputs.cache
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.dll
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.pdb
 D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.genruntimeconfig.cache
-D:\MyDocument\BIS\BISTenant\Manufacturing.Domain\obj\Debug\netcoreapp3.1\Manufacturing.Domain.csprojAssemblyReference.cache

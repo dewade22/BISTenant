@@ -233,7 +233,6 @@ function PushUpdate(No, Name) {
                 $('#ModelWIPHeaderId').val(result.modelWIPHeaderId)
                 $('#ModelWIPLineId').val(result.modelWIPLineId)
                 $('#selectRate').val(result.itemType)
-                //$('#ItemNo').val(result.itemNo).trigger('chosen:updated')
                 $('#ItemName').val(result.itemName)
                 $('#ItemQty').val(result.itemQty)
                 $('#ItemUnit').val(result.itemUnit)

@@ -10,7 +10,7 @@ $(function () {
         caseSensitive: false,
         formatters: {
             'Action': function (column, row) {
-                return `${row.Type == 'electricity' ? `` : `<button type="button" class="btn btn-icon command-edit waves-effect waves-circle" onclick="PushUpdate('${ row.Id } ', '${ row.ItemDescription } ')"><span class="zmdi zmdi-edit"></span></button>` +
+                return `${row.Type == 'electricity' ? `` : `<button type="button" class="btn btn-icon command-edit waves-effect waves-circle" onclick="PushUpdate('${row.Id} ', '${row.Type}', '${row.ItemDescription}')"><span class="zmdi zmdi-edit"></span></button>` +
                     `<button type="button" class="btn btn-icon command-delete waves-effect" onclick="PushDelete('${row.Id}', '${row.ItemDescription}')"><span class="zmdi zmdi-delete"></span></button>`}`
             },
             'Qty': function (column, row) {
@@ -123,6 +123,7 @@ $(function () {
         }
     })
 
+    //Save Process
     $('#AddNew').click(function () {
         if ($('#formInput').valid()) {
             $('#ErrorSelect1').html('')
@@ -178,6 +179,14 @@ $(function () {
             }
         }
     })
+
+    //On Hiden Modal
+    $('#modalItem').on('hidden.bs.modal', function () {
+        $('#modalItem form')[0].reset()
+        $('.chosen').val('')
+        $('.chosen').trigger('chosen:updated')
+
+    })
 })
 
 function AppendItemNo(ItemType, ItemNo = '') {
@@ -215,6 +224,53 @@ function GetCostofItem(No, Labour) {
         error: function (jqXHR) {
             Swal.fire(
                 'Error',
+                'Error ' + jqXHR.status,
+                'error'
+            )
+        }
+    })
+}
+
+function PushUpdate(Id, Type, Name) {
+    if (Type == 'Labour') {
+        $('#sbRateLabour').show()
+    } else {
+        $('#sbRateLabour').hide()
+    }
+    $.ajax({
+        type: 'GET',
+        url: baseUrl + '/HPPHelper/GetMixingLine?Id=' + Id,
+        success: function (result) {
+            if (result.status == 0) {
+                Swal.fire(
+                    'Error !!',
+                    result.result,
+                    'error'
+                )
+            } else {
+                let res = result.result
+                $('#modalItem').modal()
+                $('#updateform').show()
+                $('#AddNew').hide()
+                $('.modal-title').html(`Edit - ${Name}`)
+
+                AppendItemNo(res.type, res.itemNo)
+
+                $('#ModelId').val(res.modelId)
+                $('#Type').val(res.type)
+                $('#SubProcessId').val(res.subProcessId)
+                $('#ProcessHeaderNo').val(res.processHeaderNo)
+                $('#Description').val(res.description)
+                $('#ItemQty').val(res.itemQty)
+                $('#ItemCost').val(res.itemCost)
+                $('#ProcessHour').val(res.processHour)
+                $('.chosen').trigger('chosen:updated')
+                $('.fg-line').addClass('fg-toggled')
+            }
+        },
+        error: function (jqXHR) {
+            Swal.fire(
+                'Error !!',
                 'Error ' + jqXHR.status,
                 'error'
             )
